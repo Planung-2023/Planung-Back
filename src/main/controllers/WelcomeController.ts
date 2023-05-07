@@ -8,4 +8,10 @@ export class WelcomeController {
       say_hello: 'Hello TS!'
     });
   }
+
+  public static getUsers(req: Request, res:Response){
+    res.json({
+      say_hello: "Está llegando a usuarios"
+    });
+  }
 }

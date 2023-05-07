@@ -10,5 +10,6 @@ export class WelcomeRoutes {
     //DEFINED ROUTES
 
     this.router.get("", WelcomeController.getWelcome);
+    this.router.get("/usuarios", WelcomeController.getUsers)
   }
 }
