@@ -1,12 +1,16 @@
-export class CategoriaRecurso{
-    
-    constructor (
-        private id : number,
-        private nombre : string,
-        private icono : string,
-    )
-    {
 
+
+export class CategoriaRecurso{
+
+    private id : number;
+    private nombre : string;
+    private icono : string; 
+    
+    constructor (id: number, nombre: string, icono: string) 
+      {
+        this.id = 1;
+        this.nombre = "Juan";
+        this.icono = "Icono";
     }
 
     public getId() : number{
