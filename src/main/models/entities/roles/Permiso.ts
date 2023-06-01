@@ -1,9 +1,12 @@
+import { Rol } from "./Rol";
+
 export class Permiso {
-	private id: number;
-	private nombre: string;
-	private descripcion: string;
-	//TODO: roles tipo Rol
-	private roles: any;
+	constructor(
+		private id: number,
+		private nombre: string,
+		private descripcion: string,
+		private roles: Rol[]
+	) {}
 
 	public getId(): number {
 		return this.id;
@@ -29,7 +32,15 @@ export class Permiso {
 		this.descripcion = descripcion;
 	}
 
-	public getRoles(): any {
+	public getRoles(): Rol[] {
 		return this.roles;
+	}
+
+	public setRoles(roles: Rol[]): void {
+		this.roles = roles;
+	}
+
+	public agregarRol(rol: Rol) {
+		this.roles.push(rol);
 	}
 }

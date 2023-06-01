@@ -3,11 +3,12 @@ import { PosibleEstadoRecurso } from "./PosibleEstadoRecurso";
 import { Recurso } from "./Recurso";
 
 export class EstadoRecurso {
-    constructor(
-        private posibleEstadoRecurso: PosibleEstadoRecurso,
-        private recurso: Recurso ,
-        private fechaHora: Date,
-    )
+
+
+    private posibleEstadoRecurso: PosibleEstadoRecurso;
+    private recurso: Recurso;
+    private fechaHora: Date;
+    constructor(posibleEstadoRecurso: PosibleEstadoRecurso, recurso: Recurso, fechaHora: Date)
     {
 
     }
