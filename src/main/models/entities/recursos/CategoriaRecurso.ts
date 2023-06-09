@@ -1,9 +1,10 @@
 export class CategoriaRecurso {
-	constructor(
-		private id: number,
-		private nombre: string,
-		private icono: string
-	) {}
+
+	private id: number;
+	private nombre: string;
+	private icono: string;
+
+	constructor() {}
 
 	public getId(): number {
 		return this.id;

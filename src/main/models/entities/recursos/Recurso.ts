@@ -2,15 +2,16 @@ import { Evento } from "../evento/Evento";
 import { CategoriaRecurso } from "./CategoriaRecurso";
 
 export class Recurso {
-	constructor(
-		private id: number,
-		private nombre: string,
-		private evento: Evento,
-		private descripcion: string,
-		private cantidad: number,
-		private categoria: CategoriaRecurso,
-		private proveedor?: string
-	) {}
+
+	private id: number;
+	private nombre: string;
+	private evento: Evento;
+	private descripcion: string;
+	private cantidad: number;
+	private categoria: CategoriaRecurso;
+	private proveedor?: string;
+
+	constructor() {}
 
 	public getId(): number {
 		return this.id;

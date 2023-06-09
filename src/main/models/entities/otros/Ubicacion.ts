@@ -1,11 +1,12 @@
 export class Ubicacion {
-	constructor(
-		private id: number,
-		private calle: string,
-		private altura: number,
-		private localidad: string,
-		private latitudLongitud: number[]
-	) {}
+
+	private id: number;
+	private calle: string;
+	private altura: number;
+	private localidad: string;
+	private latitudLongitud: number[];
+	
+	constructor() {}
 
 	public getId(): number {
 		return this.id;

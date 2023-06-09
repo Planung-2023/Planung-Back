@@ -5,14 +5,15 @@ import { AsistenteNotificacion } from "./AsistenteNotificacion";
 import { Invitacion } from "./Invitacion";
 
 export class Asistente {
-	constructor(
-		private id: number,
-		private evento: Evento,
-		private participante: Participante,
-		private rol: Rol,
-		private invitacion: Invitacion,
-		private asistenciaNotificaciones: AsistenteNotificacion[]
-	) {}
+
+	private id: number;
+	private evento: Evento;
+	private participante: Participante;
+	private rol: Rol;
+	private invitacion: Invitacion;
+	private asistenciaNotificaciones: AsistenteNotificacion[];
+	
+	constructor() {}
 
 	public getId(): number {
 		return this.id;

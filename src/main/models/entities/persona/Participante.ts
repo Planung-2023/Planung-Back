@@ -1,13 +1,14 @@
 import { Usuario } from "./Usuario";
 
 export class Participante {
-	constructor(
-		private id: number,
-		private usuario: Usuario,
-		private nombre: string,
-		private apellido: string,
-		private mail: string
-	) {}
+
+	private id: number;
+	private usuario: Usuario;
+	private nombre: string;
+	private apellido: string;
+	private mail: string;
+
+	constructor() {}
 
 	public getId(): number {
 		return this.id;

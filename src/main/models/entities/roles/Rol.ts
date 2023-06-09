@@ -1,11 +1,12 @@
 import { Permiso } from "./Permiso";
 
 export class Rol {
-	constructor(
-		private id: number,
-		private nombre: string,
-		private permisos: Permiso[]
-	) {}
+
+	private id: number;
+	private nombre: string;
+	private permisos: Permiso[];
+
+	constructor() {}
 
 	public getId(): number {
 		return this.id;

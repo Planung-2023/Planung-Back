@@ -2,12 +2,13 @@ import { Asistente } from "../asistencia/Asistente";
 import { PosibleEstadoEvento } from "./PosibleEstadoEvento";
 
 export class EstadoEvento {
-	constructor(
-		private id: number,
-		private fechaHora: Date,
-		private posibleEstadoEvento: PosibleEstadoEvento,
-		private asistenteCambioEstado: Asistente
-	) {}
+
+	private id: number;
+	private fechaHora: Date;
+	private posibleEstadoEvento: PosibleEstadoEvento;
+	private asistenteCambioEstado: Asistente;
+
+	constructor() {}
 
 	public getId(): number {
 		return this.id;

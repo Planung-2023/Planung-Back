@@ -1,9 +1,11 @@
 export class Usuario {
-	constructor(
-		private id: number,
-		private nombreUsuario: string,
-		private contrasenia: string
-	) {}
+
+	private id: number;
+	private nombreUsuario: string;
+	private contrasenia: string;
+	
+	constructor() { }
+	
 	public getId(): number {
 		return this.id;
 	}

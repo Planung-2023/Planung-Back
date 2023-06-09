@@ -1,11 +1,12 @@
 import { Asistente } from "./Asistente";
 
 export class Asistencia {
-	constructor(
-		private id: number,
-		private asistente: Asistente,
-		private fechaHora: Date
-	) {}
+
+	private id: number;
+	private asistente: Asistente;
+	private fechaHora: Date
+
+	constructor() {}
 
 	public getId(): number {
 		return this.id;

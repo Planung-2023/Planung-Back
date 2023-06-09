@@ -4,17 +4,18 @@ import { Recurso } from "../recursos/Recurso";
 import { EstadoEvento } from "./EstadoEvento";
 
 export abstract class Evento {
-	constructor(
-		private id: number,
-		private nombre: String,
-		private recursos: Recurso[],
-		private ubicacion: Ubicacion,
-		private fechaHora: Date,
-		private estadoEvento: EstadoEvento,
-		private eventoAnterior: Evento,
-		private asistentes: Asistente[],
-		private esVisible: boolean
-	) {}
+
+	private id: number;
+	private nombre: String;
+	private recursos: Recurso[];
+	private ubicacion: Ubicacion;
+	private fechaHora: Date;
+	private estadoEvento: EstadoEvento;
+	private eventoAnterior: Evento;
+	private asistentes: Asistente[];
+	private esVisible: boolean;
+	
+	constructor() {}
 
 	public getId(): number {
 		return this.id;

@@ -1,15 +1,16 @@
 import { Asistente } from "./Asistente";
 
 export class Invitacion {
-	constructor(
-		private id: number,
-		private asistente: Asistente,
-		private fechaHoraEnvio: Date,
-		private fechaHoraVisto: Date,
-		private fechaHoraRespuesta: Date,
-		private estaVisto: boolean,
-		private estaAceptado: boolean
-	) {}
+
+	private id: number;
+	private asistente: Asistente;
+	private fechaHoraEnvio: Date;
+	private fechaHoraVisto: Date;
+	private fechaHoraRespuesta: Date;
+	private estaVisto: boolean;
+	private estaAceptado: boolean;
+		
+	constructor() {}
 
 	public getId(): number {
 		return this.id;

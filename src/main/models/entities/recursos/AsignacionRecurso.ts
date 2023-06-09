@@ -2,14 +2,15 @@ import { Asistente } from "../asistencia/Asistente";
 import { Recurso } from "./Recurso";
 
 export class AsignacionRecurso {
-	constructor(
-		private id: number,
-		private recurso: Recurso,
-		private asistente: Asistente,
-		private fechaHora: Date,
-		private cantidad: number,
-		private comentarios: string
-	) {}
+
+	private id: number;
+	private recurso: Recurso;
+	private asistente: Asistente;
+	private fechaHora: Date;
+	private cantidad: number;
+	private comentarios: string;
+
+	constructor() {}
 
 	public getId(): number {
 		return this.id;

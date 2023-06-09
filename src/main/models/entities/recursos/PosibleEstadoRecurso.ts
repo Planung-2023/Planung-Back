@@ -1,5 +1,9 @@
 export class PosibleEstadoRecurso {
-	constructor(private id: number, private nombre: string) {}
+
+	private id: number;
+	private nombre: string;
+
+	constructor() {}
 
 	public getId(): number {
 		return this.id;

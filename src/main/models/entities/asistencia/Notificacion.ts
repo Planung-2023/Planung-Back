@@ -1,11 +1,10 @@
 export class Notificacion {
-	constructor(
-		private id: number,
-		private fechaHora: Date,
-		private mensaje: string
-	) {
-		//Esto es ímplicito el this.id = id, etc
-	}
+
+	private id: number;
+	private fechaHora: Date;
+	private mensaje: string;
+
+	constructor() {}
 
 	public getId(): number {
 		return this.id;
