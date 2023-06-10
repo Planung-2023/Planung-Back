@@ -1,7 +1,16 @@
-export class CategoriaRecurso {
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
+@Entity({
+	name: 'recurso_categoria'
+})
+export class CategoriaRecurso {
+	@PrimaryColumn()
 	private id: number;
+
+	@Column({ name: 'nombre', type: 'varchar', length: 255 })
 	private nombre: string;
+
+	@Column({ name: 'icono', type: 'varchar', length: 255 })
 	private icono: string;
 
 	constructor() {}
