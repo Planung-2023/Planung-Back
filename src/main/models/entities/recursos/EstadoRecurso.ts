@@ -1,10 +1,22 @@
+import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { PosibleEstadoRecurso } from "./PosibleEstadoRecurso";
 import { Recurso } from "./Recurso";
 
+@Entity({
+	name: "recurso_estado"
+})
 export class EstadoRecurso {
 
+	@PrimaryColumn()
+	private id: number;
+
+	@ManyToOne(() => PosibleEstadoRecurso)
 	private posibleEstadoRecurso: PosibleEstadoRecurso;
-	private recurso: Recurso;
+
+	@ManyToOne(() => Recurso, (recurso) => recurso.estadosRecurso)
+	recurso: Recurso;
+
+	@Column({ name: "fechaHora", type: "date" })
 	private fechaHora: Date;
 
 	constructor() {}

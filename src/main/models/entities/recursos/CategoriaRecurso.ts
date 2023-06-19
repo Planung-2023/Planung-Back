@@ -1,17 +1,21 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Recurso } from "./Recurso";
 
 @Entity({
-	name: 'recurso_categoria'
+	name: "recurso_categoria",
 })
 export class CategoriaRecurso {
 	@PrimaryColumn()
 	private id: number;
 
-	@Column({ name: 'nombre', type: 'varchar', length: 255 })
+	@Column({ name: "nombre", type: "varchar", length: 255 })
 	private nombre: string;
 
-	@Column({ name: 'icono', type: 'varchar', length: 255 })
+	@Column({ name: "icono", type: "varchar", length: 255 })
 	private icono: string;
+
+	@OneToMany(() => Recurso, recurso => recurso.categoria)
+	recursos: Recurso[];
 
 	constructor() {}
 
@@ -37,5 +41,13 @@ export class CategoriaRecurso {
 
 	public setIcono(icono: string): void {
 		this.icono = icono;
+	}
+
+	public getRecursos(): Recurso[] {
+		return this.recursos;
+	}
+
+	public setRecursos(recursos: Recurso[]): void {
+		this.recursos = recursos;
 	}
 }

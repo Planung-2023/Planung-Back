@@ -1,14 +1,32 @@
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 import { Evento } from "../evento/Evento";
 import { CategoriaRecurso } from "./CategoriaRecurso";
+import { EstadoRecurso } from "./EstadoRecurso";
 
+@Entity({
+	name: "recurso",
+})
 export class Recurso {
-
+	@PrimaryColumn()
 	private id: number;
+
+	@Column({ name: "nombre", type: "varchar", length: 255 })
 	private nombre: string;
 	private evento: Evento;
+
+	@Column({ name: "descripcion", type: "varchar", length: 255 })
 	private descripcion: string;
+
+	@Column({ name: "cantidad", type: "int" })
 	private cantidad: number;
-	private categoria: CategoriaRecurso;
+
+	@ManyToOne(() => CategoriaRecurso, (categoriaRecurso) => categoriaRecurso.recursos)
+	categoria: CategoriaRecurso;
+
+	@OneToMany(() => EstadoRecurso, estadoRecurso => estadoRecurso.recurso)
+	estadosRecurso: EstadoRecurso[];
+
+	@Column({ name: "proveedor", type: "varchar", length: 255 })
 	private proveedor?: string;
 
 	constructor() {}
