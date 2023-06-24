@@ -1,9 +1,18 @@
+import { Column, Entity, ManyToMany, PrimaryColumn } from "typeorm";
 import { Permiso } from "./Permiso";
 
+@Entity({
+	name: "rol",
+})
 export class Rol {
 
+	@PrimaryColumn()
 	private id: number;
+
+	@Column({ name: "nombre", type: "varchar", length: 255 })
 	private nombre: string;
+
+	@ManyToMany(() => Permiso)
 	private permisos: Permiso[];
 
 	constructor() {}

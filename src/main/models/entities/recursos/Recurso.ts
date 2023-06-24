@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 import { Evento } from "../evento/Evento";
 import { CategoriaRecurso } from "./CategoriaRecurso";
 import { EstadoRecurso } from "./EstadoRecurso";
@@ -24,6 +24,7 @@ export class Recurso {
 	private cantidad: number;
 
 	@ManyToOne(() => CategoriaRecurso, (categoriaRecurso) => categoriaRecurso.recursos)
+	@JoinColumn({ name: "recurso_categoria_id"})
 	categoria: CategoriaRecurso;
 
 	@OneToMany(() => EstadoRecurso, (estadoRecurso) => estadoRecurso.recurso)

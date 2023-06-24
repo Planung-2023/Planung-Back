@@ -11,13 +11,14 @@ export class EstadoRecurso {
 	private id: number;
 
 	@ManyToOne(() => PosibleEstadoRecurso)
-	@JoinColumn()
+	@JoinColumn({ name: "posible_estado_recurso_id" })
 	private posibleEstadoRecurso: PosibleEstadoRecurso;
 
 	@ManyToOne(() => Recurso, (recurso) => recurso.estadosRecurso)
+	@JoinColumn({ name: "recurso_id" })
 	recurso: Recurso;
 
-	@Column({ name: "fechaHora", type: "date" })
+	@Column({ name: "fecha_hora", type: "date" })
 	private fechaHora: Date;
 
 	constructor() {}

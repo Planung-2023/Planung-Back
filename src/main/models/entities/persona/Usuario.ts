@@ -1,7 +1,17 @@
+import { Column, Entity, PrimaryColumn } from "typeorm";
+
+@Entity({
+	name: "usuario",
+})
 export class Usuario {
 
+	@PrimaryColumn()
 	private id: number;
+
+	@Column({ name: "nombre_usuario", type: "varchar", length: 255 })
 	private nombreUsuario: string;
+
+	@Column({name: "contrasenia", type: "varchar", length: 255})
 	private contrasenia: string;
 	
 	constructor() { }

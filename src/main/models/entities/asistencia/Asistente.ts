@@ -1,16 +1,33 @@
+import { Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from "typeorm";
 import { Evento } from "../evento/Evento";
 import { Participante } from "../persona/Participante";
 import { Rol } from "../roles/Rol";
 import { AsistenteNotificacion } from "./AsistenteNotificacion";
 import { Invitacion } from "./Invitacion";
 
+
+
+@Entity({
+	name: "asistente",
+})
 export class Asistente {
 
+	@PrimaryColumn()
 	private id: number;
+
 	private evento: Evento;
-	private participante: Participante;
+
+	@ManyToOne(() => Participante)
+	@JoinColumn({ name: "participante_id" })
+	participante: Participante;
+
+	@ManyToOne(() => Rol)
+	@JoinColumn({ name: "rol_id" })
 	private rol: Rol;
+	
+	@OneToOne(() => Invitacion)
 	private invitacion: Invitacion;
+
 	private asistenciaNotificaciones: AsistenteNotificacion[];
 	
 	constructor() {}

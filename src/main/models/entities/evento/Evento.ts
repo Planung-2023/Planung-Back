@@ -3,8 +3,7 @@ import { Ubicacion } from "../otros/Ubicacion";
 import { Recurso } from "../recursos/Recurso";
 import { EstadoEvento } from "./EstadoEvento";
 
-export abstract class Evento {
-
+export abstract class Evento { 
 	private id: number;
 	private nombre: String;
 	private recursos: Recurso[];
@@ -14,6 +13,7 @@ export abstract class Evento {
 	private eventoAnterior: Evento;
 	private asistentes: Asistente[];
 	private esVisible: boolean;
+	private presentador?: Asistente;
 	
 	constructor() {}
 

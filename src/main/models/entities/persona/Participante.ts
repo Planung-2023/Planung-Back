@@ -1,12 +1,32 @@
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
 import { Usuario } from "./Usuario";
 
-export class Participante {
 
+@Entity({
+	name: "participante", 
+})
+
+export class Participante {
+	
+	@PrimaryColumn()
 	private id: number;
+
+	@OneToOne(() => Usuario)
+	@JoinColumn({name: "usuario_id"})
 	private usuario: Usuario;
+
+	@Column({ name: "nombre", type: "varchar", length: 255 })
 	private nombre: string;
+
+	@Column({ name: "apellido", type: "varchar", length: 255 })
 	private apellido: string;
+
+	@Column({ name: "mail", type: "varchar", length: 255 })
 	private mail: string;
+
+	/*@OneToMany(() => Asistente, (asistente) => asistente.participante)
+	asistentes: Asistente[]*/
+	
 
 	constructor() {}
 

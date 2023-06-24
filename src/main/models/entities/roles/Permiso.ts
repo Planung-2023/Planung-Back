@@ -1,10 +1,27 @@
+import { Entity, PrimaryColumn, Column, ManyToMany, JoinTable } from "typeorm";
 import { Rol } from "./Rol";
+
+
+ @Entity({
+	name:"permiso",
+ })
 
 export class Permiso {
 
+	@PrimaryColumn()
 	private id: number;
+
+	@Column({ name: "nombre", type: "varchar", length: 255 })
 	private nombre: string;
+
+	@Column({ name: "descripcion", type: "varchar", length: 255 })
 	private descripcion: string;
+
+	@ManyToMany(() => Rol)
+	@JoinTable({name: "rol_permiso",
+		joinColumn: {name: "permiso_id", referencedColumnName: "id"},
+		inverseJoinColumn: {name: "rol_id", referencedColumnName:"id"}
+	})
 	private roles: Rol[];
 
 	constructor() {}
