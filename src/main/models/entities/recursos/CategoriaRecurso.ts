@@ -1,11 +1,11 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Recurso } from "./Recurso";
 
 @Entity({
 	name: "recurso_categoria",
 })
 export class CategoriaRecurso {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	private id: number;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })

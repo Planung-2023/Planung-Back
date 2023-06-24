@@ -2,7 +2,6 @@ import { Asistente } from "../asistencia/Asistente";
 import { PosibleEstadoEvento } from "./PosibleEstadoEvento";
 
 export class EstadoEvento {
-
 	private id: number;
 	private fechaHora: Date;
 	private posibleEstadoEvento: PosibleEstadoEvento;

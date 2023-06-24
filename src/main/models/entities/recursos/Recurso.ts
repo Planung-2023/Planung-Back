@@ -12,6 +12,9 @@ export class Recurso {
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })
 	private nombre: string;
+
+
+
 	private evento: Evento;
 
 	@Column({ name: "descripcion", type: "varchar", length: 255 })
@@ -23,7 +26,7 @@ export class Recurso {
 	@ManyToOne(() => CategoriaRecurso, (categoriaRecurso) => categoriaRecurso.recursos)
 	categoria: CategoriaRecurso;
 
-	@OneToMany(() => EstadoRecurso, estadoRecurso => estadoRecurso.recurso)
+	@OneToMany(() => EstadoRecurso, (estadoRecurso) => estadoRecurso.recurso)
 	estadosRecurso: EstadoRecurso[];
 
 	@Column({ name: "proveedor", type: "varchar", length: 255 })
