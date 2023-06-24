@@ -1,14 +1,25 @@
+import { Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { Evento } from "../evento/Evento";
 import { Participante } from "../persona/Participante";
 import { Rol } from "../roles/Rol";
 import { AsistenteNotificacion } from "./AsistenteNotificacion";
 import { Invitacion } from "./Invitacion";
 
+
+
+@Entity({
+	name: "asistente",
+})
+
 export class Asistente {
 
+	@PrimaryColumn()
 	private id: number;
+
 	private evento: Evento;
-	private participante: Participante;
+
+	@ManyToOne(() => Participante)
+	participante: Participante;
 	private rol: Rol;
 	private invitacion: Invitacion;
 	private asistenciaNotificaciones: AsistenteNotificacion[];

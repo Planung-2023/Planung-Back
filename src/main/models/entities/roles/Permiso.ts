@@ -3,7 +3,7 @@ import { Rol } from "./Rol";
 
 
  @Entity({
-	name:"rol",
+	name:"permiso",
  })
 
 export class Permiso {
@@ -18,7 +18,10 @@ export class Permiso {
 	private descripcion: string;
 
 	@ManyToMany(() => Rol)
-	@JoinTable({name: "rol_permiso"})
+	@JoinTable({name: "rol_permiso",
+		joinColumn: {name: "permiso_id", referencedColumnName: "id"},
+		inverseJoinColumn: {name: "rol_id", referencedColumnName:"id"}
+	})
 	private roles: Rol[];
 
 	constructor() {}

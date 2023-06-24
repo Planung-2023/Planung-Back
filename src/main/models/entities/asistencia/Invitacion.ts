@@ -1,14 +1,29 @@
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
 import { Asistente } from "./Asistente";
 
-export class Invitacion {
+@Entity({
+	name: "invitacion",
+})
 
+export class Invitacion {
+	
+	@PrimaryColumn()
 	private id: number;
-	private asistente: Asistente;
+
+	@Column({ name: "fecha_hora_envio", type:"date"})
 	private fechaHoraEnvio: Date;
+	@Column({ name: "fecha_hora_visto", type: "date"})
 	private fechaHoraVisto: Date;
+	@Column({name: "fecha_hora_respuesta", type:"date"})
 	private fechaHoraRespuesta: Date;
+	@Column({name:"esta_visto", type: "boolean"})
 	private estaVisto: boolean;
+	@Column({name:"esta_aceptado", type:"boolean"})
 	private estaAceptado: boolean;
+	
+	@OneToOne(() => Asistente)
+	@JoinColumn({name:"asistente_id"})
+	private asistente: Asistente;
 		
 	constructor() {}
 
