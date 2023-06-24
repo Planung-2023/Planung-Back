@@ -1,7 +1,6 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryColumn, JoinColumn } from "typeorm";
 import { PosibleEstadoRecurso } from "./PosibleEstadoRecurso";
 import { Recurso } from "./Recurso";
-import { JoinColumn } from "typeorm/browser";
 
 @Entity({
 	name: "recurso_estado"
@@ -12,7 +11,7 @@ export class EstadoRecurso {
 	private id: number;
 
 	@ManyToOne(() => PosibleEstadoRecurso)
-	@JoinColumn({ name: 'recursoPosibleEstado_id', referencedColumnName: 'id' })
+	@JoinColumn()
 	private posibleEstadoRecurso: PosibleEstadoRecurso;
 
 	@ManyToOne(() => Recurso, (recurso) => recurso.estadosRecurso)

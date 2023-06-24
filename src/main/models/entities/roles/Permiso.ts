@@ -1,10 +1,24 @@
+import { Entity, PrimaryColumn, Column, ManyToMany, JoinTable } from "typeorm";
 import { Rol } from "./Rol";
+
+
+ @Entity({
+	name:"rol",
+ })
 
 export class Permiso {
 
+	@PrimaryColumn()
 	private id: number;
+
+	@Column({ name: "nombre", type: "varchar", length: 255 })
 	private nombre: string;
+
+	@Column({ name: "descripcion", type: "varchar", length: 255 })
 	private descripcion: string;
+
+	@ManyToMany(() => Rol)
+	@JoinTable({name: "rol_permiso"})
 	private roles: Rol[];
 
 	constructor() {}

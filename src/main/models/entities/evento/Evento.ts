@@ -3,6 +3,15 @@ import { Ubicacion } from "../otros/Ubicacion";
 import { Recurso } from "../recursos/Recurso";
 import { EstadoEvento } from "./EstadoEvento";
 
+
+export class EventoFormal {
+
+	private presentador?: Asistente;
+
+	constructor()  {}
+}
+
+
 export abstract class Evento {
 
 	private id: number;
