@@ -355,4 +355,8 @@ coverage/
 
 .idea/
 
+<<<<<<< HEAD
 token.txt
+=======
+token.txt
+>>>>>>> origin/main
