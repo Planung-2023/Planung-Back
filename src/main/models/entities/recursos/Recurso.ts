@@ -13,8 +13,6 @@ export class Recurso {
 	@Column({ name: "nombre", type: "varchar", length: 255 })
 	private nombre: string;
 
-
-
 	private evento: Evento;
 
 	@Column({ name: "descripcion", type: "varchar", length: 255 })

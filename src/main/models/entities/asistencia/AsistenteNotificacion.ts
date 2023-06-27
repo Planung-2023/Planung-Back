@@ -1,12 +1,26 @@
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { Asistente } from "./Asistente";
 import { Notificacion } from "./Notificacion";
 
+Entity({
+	name: "asistente_notificacion"
+})
 export class AsistenteNotificacion {
-
+	@PrimaryColumn()
 	private id: number;
+
+	@ManyToOne(() => Notificacion)
+	@JoinColumn({ name: "notificacion_id " })
 	private notificacion: Notificacion;
+
+	@ManyToOne(() => Asistente)
+	@JoinColumn({ name: "asistente_id " })
 	private asistente: Asistente;
+
+	@Column({ type: "boolean" })
 	private visto: boolean;
+
+	@Column({ type: "date" })
 	private fechaVisto: Date;
 
 	constructor() {}

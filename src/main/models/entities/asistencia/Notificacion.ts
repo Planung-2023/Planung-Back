@@ -1,7 +1,16 @@
-export class Notificacion {
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
+@Entity({
+	name: "notificacion",
+})
+export class Notificacion {
+	@PrimaryColumn()
 	private id: number;
+
+	@Column({ name: "fecha_hora", type: "date" })
 	private fechaHora: Date;
+
+	@Column({ type: "text" })
 	private mensaje: string;
 
 	constructor() {}
@@ -30,3 +39,7 @@ export class Notificacion {
 		this.mensaje = mensaje;
 	}
 }
+function PrimaryColum(target: Notificacion, propertyKey: "id"): void {
+	throw new Error("Function not implemented.");
+}
+

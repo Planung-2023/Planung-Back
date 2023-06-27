@@ -4,10 +4,7 @@ import { Asistente } from "./Asistente";
 @Entity({
 		name: "asistencia",
 	})
-		
-
 export class Asistencia {
-
 	
 	@PrimaryColumn()
 	private id: number;
@@ -16,7 +13,7 @@ export class Asistencia {
 	@JoinColumn({name:"asistente_id"})
 	private asistente: Asistente;
 
-	@Column({name: "fecha_hora", type:Date})
+	@Column({name: "fecha_hora", type: "date"})
 	private fechaHora: Date
 
 	constructor() {}
