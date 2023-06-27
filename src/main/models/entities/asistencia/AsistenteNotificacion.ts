@@ -15,7 +15,7 @@ export class AsistenteNotificacion {
 
 	@ManyToOne(() => Asistente)
 	@JoinColumn({ name: "asistente_id " })
-	private asistente: Asistente;
+	asistente: Asistente;
 
 	@Column({ type: "boolean" })
 	private visto: boolean;

@@ -1,19 +1,21 @@
-import { Column, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { Asistente } from "../asistencia/Asistente";
 import { Evento } from "./Evento";
 import { PosibleEstadoEvento } from "./PosibleEstadoEvento";
 
+@Entity({
+	name: "estado_evento"
+})
 export class EstadoEvento {
 	@PrimaryColumn()
 	private id: number;
 
 	@ManyToOne(() => Evento)
 	@JoinColumn({ name: "evento_id"})
-	private evento: Evento;
+	evento: Evento;
 
 	@Column({ name: "fecha_hora", type: "date" })
 	private fechaHora: Date;
-
 
 	@ManyToOne(() => PosibleEstadoEvento)
 	@JoinColumn({ name: "posible_estado_evento_id"})

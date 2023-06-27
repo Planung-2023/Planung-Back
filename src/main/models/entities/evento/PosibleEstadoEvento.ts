@@ -1,6 +1,14 @@
+import { Column, Entity, PrimaryColumn } from "typeorm";
+
+@Entity({
+	name: "posible_estado_evento"
+})
 export class PosibleEstadoEvento {
 
+	@PrimaryColumn()
 	private id: number;
+
+	@Column({ type: "varchar", length: 255 })
 	private nombre: string;
 	
 	constructor() {}
