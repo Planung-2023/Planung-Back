@@ -2,6 +2,7 @@ import { Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from "typeorm"
 import { Evento } from "../evento/Evento";
 import { Participante } from "../persona/Participante";
 import { Rol } from "../roles/Rol";
+import { Asistencia } from "./Asistencia";
 import { AsistenteNotificacion } from "./AsistenteNotificacion";
 import { Invitacion } from "./Invitacion";
 
@@ -27,6 +28,9 @@ export class Asistente {
 	
 	@OneToOne(() => Invitacion)
 	private invitacion: Invitacion;
+
+	
+	private asistencia: Asistencia; 
 
 	private asistenciaNotificaciones: AsistenteNotificacion[];
 	
