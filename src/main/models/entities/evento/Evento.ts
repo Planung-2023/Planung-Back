@@ -1,20 +1,44 @@
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 import { Asistente } from "../asistencia/Asistente";
 import { Ubicacion } from "../otros/Ubicacion";
 import { Recurso } from "../recursos/Recurso";
 import { EstadoEvento } from "./EstadoEvento";
 
-export abstract class Evento { 
+@Entity({
+	name: "evento"
+})
+export abstract class Evento {
+	@PrimaryColumn()
 	private id: number;
+
+	@Column({ name: "nombre", type: "varchar", length: 255 })
 	private nombre: String;
+
+	@OneToMany(() => Recurso, recurso => recurso.evento)
 	private recursos: Recurso[];
+
 	private ubicacion: Ubicacion;
+
+	@Column({ name: "fecha_hora", type: "date" })
 	private fechaHora: Date;
-	private estadoEvento: EstadoEvento;
+
+	@OneToMany(() => EstadoEvento, estadoEvento => estadoEvento.evento)
+	estadoEvento: EstadoEvento;
+
+	@OneToOne(() => Evento)
+	@JoinColumn({ name: "evento_anterior_id" })
 	private eventoAnterior: Evento;
+
+	@OneToMany(() => Asistente, asistente => asistente.evento)
 	private asistentes: Asistente[];
+
+	@Column({ name: "es_visible", type: "boolean" })
 	private esVisible: boolean;
+
+	@OneToOne(() => Asistente)
+	@JoinColumn({ name: "presentador_asistente_id"})
 	private presentador?: Asistente;
-	
+
 	constructor() {}
 
 	public getId(): number {
