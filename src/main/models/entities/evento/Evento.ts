@@ -16,7 +16,9 @@ export abstract class Evento {
 
 	@OneToMany(() => Recurso, recurso => recurso.evento)
 	private recursos: Recurso[];
-
+	
+	@OneToOne(() => Ubicacion)
+	@JoinColumn({name:"ubicacion_id"})
 	private ubicacion: Ubicacion;
 
 	@Column({ name: "fecha_hora", type: "date" })
