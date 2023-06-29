@@ -1,9 +1,19 @@
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
 import { Asistente } from "./Asistente";
 
+@Entity({
+		name: "asistencia",
+	})
 export class Asistencia {
-
+	
+	@PrimaryColumn()
 	private id: number;
+
+	@OneToOne(() => Asistente)
+	@JoinColumn({name:"asistente_id"})
 	private asistente: Asistente;
+
+	@Column({name: "fecha_hora", type: "date"})
 	private fechaHora: Date
 
 	constructor() {}

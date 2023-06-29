@@ -13,9 +13,9 @@ export class Recurso {
 	@Column({ name: "nombre", type: "varchar", length: 255 })
 	private nombre: string;
 
-
-
-	private evento: Evento;
+	@ManyToOne(() => Evento)
+	@JoinColumn({ name: "evento_id"})
+	evento: Evento;
 
 	@Column({ name: "descripcion", type: "varchar", length: 255 })
 	private descripcion: string;

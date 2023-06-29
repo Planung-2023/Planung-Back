@@ -2,6 +2,7 @@ import { Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from "typeorm"
 import { Evento } from "../evento/Evento";
 import { Participante } from "../persona/Participante";
 import { Rol } from "../roles/Rol";
+import { Asistencia } from "./Asistencia";
 import { AsistenteNotificacion } from "./AsistenteNotificacion";
 import { Invitacion } from "./Invitacion";
 
@@ -11,11 +12,12 @@ import { Invitacion } from "./Invitacion";
 	name: "asistente",
 })
 export class Asistente {
-
 	@PrimaryColumn()
 	private id: number;
 
-	private evento: Evento;
+	@ManyToOne(() => Evento)
+	@JoinColumn({ name: "evento_id" })
+	evento: Evento;
 
 	@ManyToOne(() => Participante)
 	@JoinColumn({ name: "participante_id" })
@@ -24,12 +26,20 @@ export class Asistente {
 	@ManyToOne(() => Rol)
 	@JoinColumn({ name: "rol_id" })
 	private rol: Rol;
-	
+
 	@OneToOne(() => Invitacion)
 	private invitacion: Invitacion;
 
+	@OneToOne(() => Asistencia)
+	@JoinColumn({ name: "asistencia_id"})
+	private asistencia: Asistencia;
+
+	// @OneToMany(
+	// 	() => AsistenteNotificacion,
+	// 	asistenteNotificacion => asistenteNotificacion.asistente
+	// )
 	private asistenciaNotificaciones: AsistenteNotificacion[];
-	
+
 	constructor() {}
 
 	public getId(): number {

@@ -1,13 +1,28 @@
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Asistente } from "../asistencia/Asistente";
 import { Recurso } from "./Recurso";
 
+Entity({
+	name: "asignacion_recurso"
+})
 export class AsignacionRecurso {
 
+	@PrimaryColumn()
 	private id: number;
+
+	@ManyToOne(() => Recurso)
 	private recurso: Recurso;
+
+	@ManyToOne(() => Asistente)
 	private asistente: Asistente;
+
+	@Column({ name: "fecha_hora", type: "date"})
 	private fechaHora: Date;
+
+	@Column({ name: "cantidad", type: "double"})
 	private cantidad: number;
+
+	@Column({ type: "varchar", length: 255})
 	private comentarios: string;
 
 	constructor() {}
