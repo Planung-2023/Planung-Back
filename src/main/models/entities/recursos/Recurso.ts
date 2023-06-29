@@ -30,7 +30,7 @@ export class Recurso {
 	@OneToMany(() => EstadoRecurso, (estadoRecurso) => estadoRecurso.recurso)
 	estadosRecurso: EstadoRecurso[];
 
-	@Column({ name: "proveedor", type: "varchar", length: 255 })
+	@Column({ name: "proveedor", type: "varchar", length: 255, nullable: true })
 	private proveedor?: string;
 
 	constructor() {}

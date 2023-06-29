@@ -20,8 +20,8 @@ export class AsistenteNotificacion {
 	@Column({ type: "boolean" })
 	private visto: boolean;
 
-	@Column({ type: "date" })
-	private fechaVisto: Date;
+	@Column({ type: "date", nullable: true })
+	private fechaVisto?: Date;
 
 	constructor() {}
 
@@ -57,7 +57,7 @@ export class AsistenteNotificacion {
 		this.visto = visto;
 	}
 
-	public getFechaVisto(): Date {
+	public getFechaVisto(): Date | undefined  {
 		return this.fechaVisto;
 	}
 

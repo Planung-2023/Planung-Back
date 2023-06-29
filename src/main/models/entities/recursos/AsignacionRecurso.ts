@@ -22,8 +22,8 @@ export class AsignacionRecurso {
 	@Column({ name: "cantidad", type: "double"})
 	private cantidad: number;
 
-	@Column({ type: "varchar", length: 255})
-	private comentarios: string;
+	@Column({ type: "varchar", length: 255, nullable: true})
+	private comentarios?: string;
 
 	constructor() {}
 
@@ -67,7 +67,7 @@ export class AsignacionRecurso {
 		this.cantidad = cantidad;
 	}
 
-	public getComentarios(): String {
+	public getComentarios(): String | undefined{
 		return this.comentarios;
 	}
 
