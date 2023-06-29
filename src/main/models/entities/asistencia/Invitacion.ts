@@ -12,12 +12,16 @@ export class Invitacion {
 
 	@Column({ name: "fecha_hora_envio", type:"date"})
 	private fechaHoraEnvio: Date;
+
 	@Column({ name: "fecha_hora_visto", type: "date"})
-	private fechaHoraVisto: Date;
+	private fechaHoraVisto?: Date;
+
 	@Column({name: "fecha_hora_respuesta", type:"date"})
 	private fechaHoraRespuesta: Date;
+
 	@Column({name:"esta_visto", type: "boolean"})
-	private estaVisto: boolean;
+	private estaVisto?: boolean;
+	
 	@Column({name:"esta_aceptado", type:"boolean"})
 	private estaAceptado: boolean;
 	
@@ -51,7 +55,7 @@ export class Invitacion {
 		this.fechaHoraEnvio = fechaHoraEnvio;
 	}
 
-	public getFechaHoraVisto(): Date {
+	public getFechaHoraVisto(): Date | undefined  {
 		return this.fechaHoraVisto;
 	}
 
@@ -67,7 +71,7 @@ export class Invitacion {
 		this.fechaHoraRespuesta = fechaHoraRespuesta;
 	}
 
-	public getEstaVisto(): boolean {
+	public getEstaVisto(): boolean | undefined {
 		return this.estaVisto;
 	}
 

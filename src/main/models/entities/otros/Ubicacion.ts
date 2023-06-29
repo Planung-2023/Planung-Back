@@ -24,10 +24,10 @@ export class Ubicacion {
 	private localidad: string;
 
 	@Column({ type: "float" })
-	private latitud: number;
+	private latitud?: number;
 	
 	@Column({ type: "float" })
-	private longitud: number;
+	private longitud?: number;
 
 	constructor() { }
 
@@ -63,7 +63,7 @@ export class Ubicacion {
 		this.localidad = localidad;
 	}
 
-	public getLatitud(): number {
+	public getLatitud(): number | undefined{
 		return this.latitud;
 	}
 
@@ -71,7 +71,7 @@ export class Ubicacion {
 		this.latitud = latitud;
 	}
 
-	public getLongitud(): number{
+	public getLongitud(): number | undefined{
 		return this.longitud
 	}
 

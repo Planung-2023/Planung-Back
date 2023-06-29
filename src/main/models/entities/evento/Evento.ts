@@ -7,7 +7,7 @@ import { EstadoEvento } from "./EstadoEvento";
 @Entity({
 	name: "evento"
 })
-export abstract class Evento {
+export  class Evento {
 	@PrimaryColumn()
 	private id: number;
 

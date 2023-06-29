@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Column, ManyToMany, JoinTable } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn } from "typeorm";
 import { Rol } from "./Rol";
 
 
@@ -15,7 +15,7 @@ export class Permiso {
 	private nombre: string;
 
 	@Column({ name: "descripcion", type: "varchar", length: 255 })
-	private descripcion: string;
+	private descripcion?: string;
 
 	@ManyToMany(() => Rol)
 	@JoinTable({name: "rol_permiso",
@@ -42,7 +42,7 @@ export class Permiso {
 		this.nombre = nombre;
 	}
 
-	public getDescripcion(): string {
+	public getDescripcion(): string | undefined {
 		return this.descripcion;
 	}
 

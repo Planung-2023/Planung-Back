@@ -8,7 +8,7 @@ export class AsignacionRecurso {
 	private asistente: Asistente;
 	private fechaHora: Date;
 	private cantidad: number;
-	private comentarios: string;
+	private comentarios?: string;
 
 	constructor() {}
 
@@ -52,7 +52,7 @@ export class AsignacionRecurso {
 		this.cantidad = cantidad;
 	}
 
-	public getComentarios(): String {
+	public getComentarios(): String | undefined{
 		return this.comentarios;
 	}
 
