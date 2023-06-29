@@ -3,7 +3,7 @@ import { Ubicacion } from "../otros/Ubicacion";
 import { Recurso } from "../recursos/Recurso";
 import { EstadoEvento } from "./EstadoEvento";
 
-export abstract class Evento { 
+export class Evento { 
 	private id: number;
 	private nombre: String;
 	private recursos: Recurso[];
