@@ -1,8 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Asistente } from "./Asistente";
 import { Notificacion } from "./Notificacion";
 
-Entity({
+@Entity({
 	name: "asistente_notificacion"
 })
 export class AsistenteNotificacion {
@@ -10,11 +10,11 @@ export class AsistenteNotificacion {
 	private id: number;
 
 	@ManyToOne(() => Notificacion)
-	@JoinColumn({ name: "notificacion_id " })
+	@JoinColumn({ name: "notificacion_id" })
 	private notificacion: Notificacion;
 
 	@ManyToOne(() => Asistente)
-	@JoinColumn({ name: "asistente_id " })
+	@JoinColumn({ name: "asistente_id" })
 	asistente: Asistente;
 
 	@Column({ type: "boolean" })

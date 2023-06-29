@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from "typeorm";
+import { Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 import { Evento } from "../evento/Evento";
 import { Participante } from "../persona/Participante";
 import { Rol } from "../roles/Rol";
@@ -34,11 +34,8 @@ export class Asistente {
 	@JoinColumn({ name: "asistencia_id"})
 	private asistencia: Asistencia;
 
-	// @OneToMany(
-	// 	() => AsistenteNotificacion,
-	// 	asistenteNotificacion => asistenteNotificacion.asistente
-	// )
-	private asistenciaNotificaciones: AsistenteNotificacion[];
+	@OneToMany(() => AsistenteNotificacion, asistenteNotificacion => asistenteNotificacion.asistente)
+	asistenteNotificaciones: AsistenteNotificacion[];
 
 	constructor() {}
 
@@ -83,12 +80,12 @@ export class Asistente {
 	}
 
 	public getAsistenciaNotificaciones(): AsistenteNotificacion[] {
-		return this.asistenciaNotificaciones;
+		return this.asistenteNotificaciones;
 	}
 
 	public setAsistenciaNotificaciones(
 		asistenciaNotificaciones: AsistenteNotificacion[]
 	): void {
-		this.asistenciaNotificaciones = asistenciaNotificaciones;
+		this.asistenteNotificaciones = asistenciaNotificaciones;
 	}
 }
