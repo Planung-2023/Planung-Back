@@ -5,37 +5,27 @@ import { Usuario } from "./Usuario";
 @Entity({
 	name: "participante", 
 })
-
 export class Participante {
-	
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@OneToOne(() => Usuario)
 	@JoinColumn({name: "usuario_id"})
-	private usuario: Usuario;
+	usuario: Usuario;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })
-	private nombre: string;
+	nombre: string;
 
 	@Column({ name: "apellido", type: "varchar", length: 255 })
-	private apellido: string;
+	apellido: string;
 
 	@Column({ name: "mail", type: "varchar", length: 255 })
-	private mail: string;
-
-	/*@OneToMany(() => Asistente, (asistente) => asistente.participante)
-	asistentes: Asistente[]*/
-	
+	mail: string;
 
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
-	}
-
-	public setId(id: number): void {
-		this.id = id;
 	}
 
 	public getUsuario(): Usuario {
