@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Usuario } from "./Usuario";
 
 
@@ -6,7 +6,7 @@ import { Usuario } from "./Usuario";
 	name: "participante", 
 })
 export class Participante {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@OneToOne(() => Usuario)
