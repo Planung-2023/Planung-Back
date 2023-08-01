@@ -6,21 +6,21 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 export class Usuario {
 
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@Column({ name: "nombre_usuario", type: "varchar", length: 255 })
-	private nombreUsuario: string;
+	nombreUsuario: string;
 
 	@Column({name: "contrasenia", type: "varchar", length: 255})
-	private contrasenia: string;
+	contrasenia: string;
 	
 	constructor() { }
 	
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Usuario } from "./Usuario";
 
 
@@ -6,7 +6,7 @@ import { Usuario } from "./Usuario";
 	name: "participante", 
 })
 export class Participante {
-	@PrimaryGeneratedColumn()
+	@PrimaryColumn()
 	id: string;
 
 	@OneToOne(() => Usuario)
@@ -22,7 +22,7 @@ export class Participante {
 	@Column({ name: "mail", type: "varchar", length: 255 })
 	mail: string;
 
-	constructor() {}
+	constructor() {}       
 
 	public getId(): string {
 		return this.id;
@@ -43,7 +43,7 @@ export class Participante {
 	public setNombre(nombre: string): void {
 		this.nombre;
 	}
-
+ 
 	public getApellido(): string {
 		return this.apellido;
 	}
