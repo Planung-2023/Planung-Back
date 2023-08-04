@@ -12,6 +12,7 @@ export class Server {
     private host: string = "localhost"
   ) {
     this.app = express();
+    this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.router = new Router(this.app);
