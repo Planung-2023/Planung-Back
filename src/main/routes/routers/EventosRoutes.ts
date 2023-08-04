@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { RecursosApiController } from "../../controllers/api/recursos/RecursosApiController";
 import { EventosApiController } from "../../controllers/api/eventos/EventosApiController";
 
 export class EventosRoutes {
@@ -6,8 +7,7 @@ export class EventosRoutes {
 
     static {
         this.router = Router();
-                                    //RecursosApiController
-        this.router.get("", EventosApiController.index);
-        
+        this.router.get("/", EventosApiController.index);
+        this.router.get("/:id/recursos", RecursosApiController.index);
     }
 }
