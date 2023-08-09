@@ -6,7 +6,9 @@ export class UsuariosApiController {
 
     public static async index(req: Request, res: Response, next: NextFunction) {
         try {
-            const usuarios = await Database.em.find(Usuario);
+            const usuarios = await Database.em.find(Usuario, {
+                select: ["id", "nombreUsuario"]
+            });
             res.json(usuarios);
         }
         catch (e) {

@@ -30,20 +30,20 @@ export class Evento {
 
 	@OneToOne(() => Evento)
 	@JoinColumn({ name: "evento_anterior_id" })
-	private eventoAnterior: Evento;
+	eventoAnterior: Evento;
 
 	@OneToMany(() => Asistente, asistente => asistente.evento)
-	private asistentes: Asistente[];
+	asistentes: Asistente[];
 
 	@Column({ name: "es_visible", type: "boolean" })
-	private esVisible: boolean;
+	esVisible: boolean;
 
 	@Column({ name: "tipo_evento", type: "varchar", length: 255})
-	private tipoEvento: string;
+	tipoEvento: string;
 
 	@OneToOne(() => Asistente)
 	@JoinColumn({ name: "presentador_asistente_id"})
-	private presentador?: Asistente;
+	presentador?: Asistente;
 
 	@ManyToOne(()=> Usuario)
 	@JoinColumn({ name: "usuario_id", referencedColumnName: "id"})
