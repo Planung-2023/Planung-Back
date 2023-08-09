@@ -421,59 +421,33 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
--- -----------------------------------------------------
--- Data for table `ahk_eventos`.`usuario`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `ahk_eventos`;
-INSERT INTO `ahk_eventos`.`usuario` (`id`, `nombre_usuario`, `contrasenia`) VALUES ('1', 'bruno', 'abc');
-INSERT INTO `ahk_eventos`.`usuario` (`id`, `nombre_usuario`, `contrasenia`) VALUES ('2', 'tomas', 'abc');
 
-COMMIT;
+INSERT INTO usuario (id, nombre_usuario, contrasenia) VALUES 
+(1, "Bruno", "Abc"),
+(2, "Tomas", "Def"),
+(3, "Sebastian", "Ghi");
 
 
--- -----------------------------------------------------
--- Data for table `ahk_eventos`.`ubicacion`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `ahk_eventos`;
-INSERT INTO `ahk_eventos`.`ubicacion` (`id`, `calle`, `altura`, `localidad`, `latitud`, `longitud`) VALUES ('1', 'Av. San Martin', 3100, 'C.A.B.A.', 24, 25);
-INSERT INTO `ahk_eventos`.`ubicacion` (`id`, `calle`, `altura`, `localidad`, `latitud`, `longitud`) VALUES ('2', 'Av. Nazca', 2500, 'C.A.B.A.', 30, 30);
 
-COMMIT;
+INSERT INTO ubicacion (id, calle, altura, localidad, latitud, longitud) VALUES 
+(1, 'Av. San Martin', 3100, 'C.A.B.A.', 24, 25),
+(2, 'Av. Nazca', 2500, 'C.A.B.A.', 30, 30);
 
 
--- -----------------------------------------------------
--- Data for table `ahk_eventos`.`evento`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `ahk_eventos`;
-INSERT INTO `ahk_eventos`.`evento` (`id`, `nombre`, `fecha_hora`, `es_visible`, `tipo_evento`, `ubicacion_id`, `evento_anterior_id`, `presentador_asistente_id`) VALUES ('1', 'Juntada dia del amigo', '2022-04-22', 0, 'Informal', '1', NULL, NULL);
-INSERT INTO `ahk_eventos`.`evento` (`id`, `nombre`, `fecha_hora`, `es_visible`, `tipo_evento`, `ubicacion_id`, `evento_anterior_id`, `presentador_asistente_id`) VALUES ('2', 'Presentacion inmueble', '2022-04-23', 1, 'Formal', '2', NULL, NULL);
 
-COMMIT;
+INSERT INTO evento (id, nombre, fecha_hora, es_visible, tipo_evento, ubicacion_id, evento_anterior_id, presentador_asistente_id) VALUES 
+(1, 'Juntada dia del amigo', '2022-04-22', 0, 'Informal', '1', NULL, NULL),
+(2, 'Presentacion inmueble', '2022-04-23', 1, 'Formal', '2', NULL, NULL);
 
 
--- -----------------------------------------------------
--- Data for table `ahk_eventos`.`recurso_categoria`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `ahk_eventos`;
-INSERT INTO `ahk_eventos`.`recurso_categoria` (`id`, `nombre`, `icono`) VALUES (1, 'Comida', 'jpg');
-INSERT INTO `ahk_eventos`.`recurso_categoria` (`id`, `nombre`, `icono`) VALUES (2, 'Bebida', 'jpg');
-INSERT INTO `ahk_eventos`.`recurso_categoria` (`id`, `nombre`, `icono`) VALUES (3, 'Otro', 'jpg');
-
-COMMIT;
+INSERT INTO recurso_categoria (id, nombre, icono) VALUES 
+(1, 'Comida', 'jpg'),
+(2, 'Bebida', 'jpg'),
+(3, 'Otro', 'jpg');
 
 
--- -----------------------------------------------------
--- Data for table `ahk_eventos`.`recurso`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `ahk_eventos`;
-INSERT INTO `ahk_eventos`.`recurso` (`id`, `nombre`, `descripcion`, `cantidad`, `proveedor`, `evento_id`, `recurso_categoria_id`) VALUES ('1', 'Paty', 'porfavor no traigan marca coto', 2, NULL, '1', 1);
-INSERT INTO `ahk_eventos`.`recurso` (`id`, `nombre`, `descripcion`, `cantidad`, `proveedor`, `evento_id`, `recurso_categoria_id`) VALUES ('2', 'Coca Cola', '', 1, NULL, '1', 2);
-INSERT INTO `ahk_eventos`.`recurso` (`id`, `nombre`, `descripcion`, `cantidad`, `proveedor`, `evento_id`, `recurso_categoria_id`) VALUES ('3', 'Cargador Notebook HP', 'Que ande, gracias', 1, NULL, '2', 3);
-
-COMMIT;
+INSERT INTO recurso (id, nombre, descripcion, cantidad, proveedor, evento_id, recurso_categoria_id) VALUES 
+(1, 'Paty', 'porfavor no traigan marca coto', 2, NULL, '1', 1),
+(2, 'Coca Cola', '', 1, NULL, '1', 2),
+(3, 'Cargador Notebook HP', 'Que ande, gracias', 1, NULL, '2', 3);
 
