@@ -96,7 +96,6 @@ export class EventosApiController {
     }
     
     private static asignarParametros(evento: Evento, params: any) {
-        //usuario.setId(params.id);
         evento.setNombre(params.nombre);
         evento.setRecursos(params.recursos);
         evento.setUbicacion(params.ubicacion);

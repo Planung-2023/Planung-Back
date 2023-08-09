@@ -94,7 +94,6 @@ export class UsuariosApiController {
     
     }
     private static asignarParametros(usuario: Usuario, params: any) {
-        //usuario.setId(params.id);
         usuario.setNombreUsuario(params.nombre);
         usuario.setContrasenia(params.contrasenia);
     }
