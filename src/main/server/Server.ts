@@ -1,5 +1,6 @@
-import { Router } from "../routes/Router";
+import cors from "cors";
 import express, { Express } from 'express';
+import { Router } from "../routes/Router";
 const dotenv = require("dotenv");
 dotenv.config();
 
