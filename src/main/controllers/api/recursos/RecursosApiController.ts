@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { Database } from "../../../server/Database";
 import { Recurso } from "../../../models/entities/recursos/Recurso";
+import { Database } from "../../../server/Database";
 
 export class RecursosApiController {
 
@@ -95,7 +95,6 @@ export class RecursosApiController {
         }
     }
     private static asignarParametros(recurso: Recurso, params: any) {
-        //usuario.setId(params.id);
         recurso.setNombre(params.nombre);
         recurso.setEvento(params.evento);
         recurso.setDescripcion(params.descripcion);
