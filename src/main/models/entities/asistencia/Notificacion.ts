@@ -5,21 +5,21 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 })
 export class Notificacion {
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@Column({ name: "fecha_hora", type: "date" })
-	private fechaHora: Date;
+	fechaHora: Date;
 
 	@Column({ type: "text" })
-	private mensaje: string;
+	mensaje: string;
 
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 

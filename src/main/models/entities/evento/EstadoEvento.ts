@@ -4,34 +4,34 @@ import { Evento } from "./Evento";
 import { PosibleEstadoEvento } from "./PosibleEstadoEvento";
 
 @Entity({
-	name: "estado_evento"
+	name: "estado_evento",
 })
 export class EstadoEvento {
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@ManyToOne(() => Evento)
-	@JoinColumn({ name: "evento_id"})
+	@JoinColumn({ name: "evento_id" })
 	evento: Evento;
 
 	@Column({ name: "fecha_hora", type: "date" })
-	private fechaHora: Date;
+	fechaHora: Date;
 
 	@ManyToOne(() => PosibleEstadoEvento)
-	@JoinColumn({ name: "posible_estado_evento_id"})
-	private posibleEstadoEvento: PosibleEstadoEvento;
+	@JoinColumn({ name: "posible_estado_evento_id" })
+	posibleEstadoEvento: PosibleEstadoEvento;
 
 	@ManyToOne(() => Asistente)
-	@JoinColumn({ name: "asistente_cambio_estado_id"})
-	private asistenteCambioEstado: Asistente;
+	@JoinColumn({ name: "asistente_cambio_estado_id" })
+	asistenteCambioEstado: Asistente;
 
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 

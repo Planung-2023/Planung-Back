@@ -8,38 +8,41 @@ import { EstadoRecurso } from "./EstadoRecurso";
 })
 export class Recurso {
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })
-	private nombre: string;
+	nombre: string;
 
 	@ManyToOne(() => Evento)
-	@JoinColumn({ name: "evento_id"})
+	@JoinColumn({ name: "evento_id" })
 	evento: Evento;
 
 	@Column({ name: "descripcion", type: "varchar", length: 255 })
-	private descripcion: string;
+	descripcion: string;
 
 	@Column({ name: "cantidad", type: "int" })
-	private cantidad: number;
+	cantidad: number;
 
-	@ManyToOne(() => CategoriaRecurso, (categoriaRecurso) => categoriaRecurso.recursos)
-	@JoinColumn({ name: "recurso_categoria_id"})
+	@ManyToOne(
+		() => CategoriaRecurso,
+		categoriaRecurso => categoriaRecurso.recursos
+	)
+	@JoinColumn({ name: "recurso_categoria_id" })
 	categoria: CategoriaRecurso;
 
-	@OneToMany(() => EstadoRecurso, (estadoRecurso) => estadoRecurso.recurso)
+	@OneToMany(() => EstadoRecurso, estadoRecurso => estadoRecurso.recurso)
 	estadosRecurso: EstadoRecurso[];
 
 	@Column({ name: "proveedor", type: "varchar", length: 255, nullable: true })
-	private proveedor?: string;
+	proveedor?: string;
 
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 

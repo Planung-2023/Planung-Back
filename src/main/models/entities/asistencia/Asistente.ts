@@ -13,7 +13,7 @@ import { Invitacion } from "./Invitacion";
 })
 export class Asistente {
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@ManyToOne(() => Evento)
 	@JoinColumn({ name: "evento_id" })
@@ -25,25 +25,28 @@ export class Asistente {
 
 	@ManyToOne(() => Rol)
 	@JoinColumn({ name: "rol_id" })
-	private rol: Rol;
+	rol: Rol;
 
 	@OneToOne(() => Invitacion)
-	private invitacion: Invitacion;
+	invitacion: Invitacion;
 
 	@OneToOne(() => Asistencia)
-	@JoinColumn({ name: "asistencia_id"})
-	private asistencia: Asistencia;
+	@JoinColumn({ name: "asistencia_id" })
+	asistencia: Asistencia;
 
-	@OneToMany(() => AsistenteNotificacion, asistenteNotificacion => asistenteNotificacion.asistente)
+	@OneToMany(
+		() => AsistenteNotificacion,
+		asistenteNotificacion => asistenteNotificacion.asistente
+	)
 	asistenteNotificaciones: AsistenteNotificacion[];
 
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 

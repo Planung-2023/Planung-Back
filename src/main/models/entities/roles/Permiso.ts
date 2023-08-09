@@ -3,62 +3,66 @@ import { Rol } from "./Rol";
 
 
  @Entity({
-	name:"permiso",
+		name: "permiso",
  })
+ export class Permiso {
+		@PrimaryColumn()
+		id: string;
 
-export class Permiso {
+		@Column({ name: "nombre", type: "varchar", length: 255 })
+		nombre: string;
 
-	@PrimaryColumn()
-	private id: number;
+		@Column({
+			name: "descripcion",
+			type: "varchar",
+			length: 255,
+			nullable: true,
+		})
+		descripcion?: string;
 
-	@Column({ name: "nombre", type: "varchar", length: 255 })
-	private nombre: string;
+		@ManyToMany(() => Rol)
+		@JoinTable({
+			name: "rol_permiso",
+			joinColumn: { name: "permiso_id", referencedColumnName: "id" },
+			inverseJoinColumn: { name: "rol_id", referencedColumnName: "id" },
+		})
+		roles: Rol[];
 
-	@Column({ name: "descripcion", type: "varchar", length: 255, nullable: true })
-	private descripcion?: string;
+		constructor() {}
 
-	@ManyToMany(() => Rol)
-	@JoinTable({name: "rol_permiso",
-		joinColumn: {name: "permiso_id", referencedColumnName: "id"},
-		inverseJoinColumn: {name: "rol_id", referencedColumnName:"id"}
-	})
-	private roles: Rol[];
+		public getId(): string {
+			return this.id;
+		}
 
-	constructor() {}
+		public setId(id: string): void {
+			this.id = id;
+		}
 
-	public getId(): number {
-		return this.id;
-	}
+		public getNombre(): string {
+			return this.nombre;
+		}
 
-	public setId(id: number): void {
-		this.id = id;
-	}
+		public setNombre(nombre: string): void {
+			this.nombre = nombre;
+		}
 
-	public getNombre(): string {
-		return this.nombre;
-	}
+		public getDescripcion(): string | undefined {
+			return this.descripcion;
+		}
 
-	public setNombre(nombre: string): void {
-		this.nombre = nombre;
-	}
+		public setDescripcion(descripcion: string): void {
+			this.descripcion = descripcion;
+		}
 
-	public getDescripcion(): string | undefined {
-		return this.descripcion;
-	}
+		public getRoles(): Rol[] {
+			return this.roles;
+		}
 
-	public setDescripcion(descripcion: string): void {
-		this.descripcion = descripcion;
-	}
+		public setRoles(roles: Rol[]): void {
+			this.roles = roles;
+		}
 
-	public getRoles(): Rol[] {
-		return this.roles;
-	}
-
-	public setRoles(roles: Rol[]): void {
-		this.roles = roles;
-	}
-
-	public agregarRol(rol: Rol) {
-		this.roles.push(rol);
-	}
-}
+		public agregarRol(rol: Rol) {
+			this.roles.push(rol);
+		}
+ }

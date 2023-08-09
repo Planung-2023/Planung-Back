@@ -3,23 +3,22 @@ import { PosibleEstadoRecurso } from "./PosibleEstadoRecurso";
 import { Recurso } from "./Recurso";
 
 @Entity({
-	name: "recurso_estado"
+	name: "recurso_estado",
 })
 export class EstadoRecurso {
-
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@ManyToOne(() => PosibleEstadoRecurso)
 	@JoinColumn({ name: "posible_estado_recurso_id" })
-	private posibleEstadoRecurso: PosibleEstadoRecurso;
+	posibleEstadoRecurso: PosibleEstadoRecurso;
 
-	@ManyToOne(() => Recurso, (recurso) => recurso.estadosRecurso)
+	@ManyToOne(() => Recurso, recurso => recurso.estadosRecurso)
 	@JoinColumn({ name: "recurso_id" })
 	recurso: Recurso;
 
 	@Column({ name: "fecha_hora", type: "date" })
-	private fechaHora: Date;
+	fechaHora: Date;
 
 	constructor() {}
 

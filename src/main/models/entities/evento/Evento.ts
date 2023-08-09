@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 import { Asistente } from "../asistencia/Asistente";
 import { Ubicacion } from "../otros/Ubicacion";
+import { Usuario } from "../persona/Usuario";
 import { Recurso } from "../recursos/Recurso";
 import { EstadoEvento } from "./EstadoEvento";
 
@@ -9,20 +10,20 @@ import { EstadoEvento } from "./EstadoEvento";
 })
 export class Evento {
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })
-	private nombre: String;
+	nombre: String;
 
 	@OneToMany(() => Recurso, recurso => recurso.evento)
-	private recursos: Recurso[];
+	recursos: Recurso[];
 
 	@OneToOne(() => Ubicacion)
 	@JoinColumn({ name: "ubicacion_id" })
-	private ubicacion: Ubicacion;
+	ubicacion: Ubicacion;
 
 	@Column({ name: "fecha_hora", type: "date" })
-	private fechaHora: Date;
+	fechaHora: Date;
 
 	@OneToMany(() => EstadoEvento, estadoEvento => estadoEvento.evento)
 	estadoEvento: EstadoEvento;
@@ -44,13 +45,17 @@ export class Evento {
 	@JoinColumn({ name: "presentador_asistente_id"})
 	private presentador?: Asistente;
 
+	@ManyToOne(()=> Usuario)
+	@JoinColumn({ name: "usuario_id", referencedColumnName: "id"})
+	creador: Usuario;
+
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 
@@ -117,4 +122,14 @@ export class Evento {
 	public setEsVisible(esVisible: boolean): void {
 		this.esVisible = esVisible;
 	}
+	
+	public getCreador(): Usuario {
+		return this.creador; 
+	}
+	
+	public setCreador (creador : Usuario) {
+		this.creador = creador;
+	}
+	
+	
 }

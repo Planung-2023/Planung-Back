@@ -5,23 +5,22 @@ import { Permiso } from "./Permiso";
 	name: "rol",
 })
 export class Rol {
-
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })
-	private nombre: string;
+	nombre: string;
 
 	@ManyToMany(() => Permiso)
-	private permisos: Permiso[];
+	permisos: Permiso[];
 
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 

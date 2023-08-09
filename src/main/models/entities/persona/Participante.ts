@@ -22,7 +22,7 @@ export class Participante {
 	@Column({ name: "mail", type: "varchar", length: 255 })
 	mail: string;
 
-	constructor() {}
+	constructor() {}       
 
 	public getId(): string {
 		return this.id;
@@ -43,7 +43,7 @@ export class Participante {
 	public setNombre(nombre: string): void {
 		this.nombre;
 	}
-
+ 
 	public getApellido(): string {
 		return this.apellido;
 	}
