@@ -12,13 +12,17 @@ export class EventosApiController {
                 Aca por ejemplo excluimos la contraseña
                 En el where indico las propiedades de Typescript, el evento.creador.id, que sea igual al parametro
                 Luego hago un leftJoin de las dos tablas, indicando primero la relacion y luego el nombre de la entidad de referencia
+                Por ultimo, como necesitamos hacer referencia a la misma entidad en el EventoAnterior, debemos agregarlo en el addSelect, para
+                diferenciar entre el Evento actual y el Evento Anterior
             */
             const eventos = await eventoRepository
 				.createQueryBuilder("evento")
                 .select(["evento", "ubicacion", "usuario.id", "usuario.nombreUsuario"])
+                .addSelect("eventoAnterior")
                 .where("evento.creador.id = :idUsuario", { idUsuario })
                 .leftJoin("evento.ubicacion", "ubicacion")
                 .leftJoin("evento.creador", "usuario")
+                .leftJoin("evento.eventoAnterior", "eventoAnterior")
 				.getMany();;
             res.json(eventos);
         }
