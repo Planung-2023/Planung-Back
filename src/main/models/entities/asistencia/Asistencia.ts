@@ -1,18 +1,18 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Asistente } from "./Asistente";
 
 @Entity({
 	name: "asistencia",
 })
 export class Asistencia {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@OneToOne(() => Asistente)
 	@JoinColumn({ name: "asistente_id" })
 	asistente: Asistente;
 
-	@Column({ name: "fecha_hora", type: "date" })
+	@Column({ name: "fecha_hora", type: "datetime" })
 	fechaHora: Date;
 
 	constructor() {}

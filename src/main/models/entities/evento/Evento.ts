@@ -9,7 +9,7 @@ import { EstadoEvento } from "./EstadoEvento";
 	name: "evento"
 })
 export class Evento {
-	@PrimaryColumn()
+	@PrimaryColumn("uuid")
 	id: string;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })
@@ -22,7 +22,7 @@ export class Evento {
 	@JoinColumn({ name: "ubicacion_id" })
 	ubicacion: Ubicacion;
 
-	@Column({ name: "fecha_hora", type: "date" })
+	@Column({ name: "fecha_hora", type: "datetime" })
 	fechaHora: Date;
 
 	@OneToMany(() => EstadoEvento, estadoEvento => estadoEvento.evento)
