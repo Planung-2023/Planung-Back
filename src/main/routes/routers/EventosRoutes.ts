@@ -23,6 +23,7 @@ export class EventosRoutes {
         this.router.delete("/:id/recursos", RecursosApiController.remove);
 
         // Asistentes
-        this.router.post("/:id/asistentes", AsistentesApiController.store)
+        this.router.post("/:id/asistentes", AsistentesApiController.store);
+        this.router.put("/:id/asistentes", AsistentesApiController.update)
     }
 }
