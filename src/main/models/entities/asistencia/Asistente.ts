@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Evento } from "../evento/Evento";
 import { Participante } from "../persona/Participante";
 import { Rol } from "../roles/Rol";
@@ -39,6 +39,11 @@ export class Asistente {
 		asistenteNotificacion => asistenteNotificacion.asistente
 	)
 	asistenteNotificaciones: AsistenteNotificacion[];
+
+	@Column("boolean", {
+		default: true
+	})
+	activo: boolean;
 
 	constructor() {}
 
