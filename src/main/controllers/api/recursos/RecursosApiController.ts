@@ -87,22 +87,49 @@ export class RecursosApiController {
 
     public static async update(req: Request, res: Response, next: NextFunction) {
         try {
-            const recurso = await Database.em.findOneBy(Recurso, {
-                id: req.params.id
+            const { id } = req.params;
+            const { recursos } = req.body;
+            
+            const evento = await Database.em.findOneBy(Evento, {
+                id
             });
-
-            if(recurso === null) {
-                res.status(404);
-                res.send();
-                return;
+            if(evento === null) {
+                res.status(404).json({
+                    msg: `Evento con id ${id} no existe`
+                }).send();
             }
 
-            RecursosApiController.asignarParametros(recurso!!, req.body);
+            const recursosExistentes = await Database.em.findBy(Recurso, { evento: { id } });   
+            const recursosNoEnviados = recursosExistentes.filter((recursoExistente: Recurso) => {
+                return recursoExistente.id !== null && !recursos.some((recurso: Recurso) => recurso.id === recursoExistente.id)
+            })
+            await Database.em.remove(recursosNoEnviados);
+            
+            const recursosNuevos = recursos.filter((recurso: Recurso) => !recurso.id);
+            for (const recursoData of recursosNuevos) {
+                const recurso = new Recurso();
+                recursoData.evento = id;
 
-            await Database.em.save(recurso);
+                const existeCategoria = await Database.em.findOneBy(CategoriaRecurso,
+					{ id: recursoData.categoria }
+				);
 
-            res.status(200);
-            res.send();
+				if (existeCategoria != null) {
+					RecursosApiController.asignarParametros(
+						recurso!!,
+						recursoData
+					);
+					await Database.em.save(recurso);
+				}
+            }
+
+            const nuevosRecursos = await Database.em.findBy(Recurso, {
+                evento: { id }
+            })
+
+            res.status(200).json({
+                nuevosRecursos
+            }).send();
         }
         catch (e) {
             next(e);

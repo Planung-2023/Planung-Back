@@ -18,9 +18,13 @@ export class EventosRoutes {
 
         // Recursos
         this.router.get("/:id/recursos", RecursosApiController.index);
-        //TODO: Revisar  estos metodos (en los metodos se usan params pero en la URL no estan)
+        
         this.router.get("/:id/recursos", RecursosApiController.show);
-        this.router.put("/:id/recursos", RecursosApiController.update);
+        
+        this.router.put("/:id/recursos", [
+            check("recursos", "Recursos debe ser un array").notEmpty().isArray(),
+            validarCampos
+        ], RecursosApiController.update);
 
         this.router.post("/:id/recursos", [
             check("recursos", "Recursos debe ser un array").notEmpty().isArray(),
