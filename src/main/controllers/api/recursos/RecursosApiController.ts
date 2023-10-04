@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
+import { Evento } from "../../../models/entities/evento/Evento";
+import { AsignacionRecurso } from "../../../models/entities/recursos/AsignacionRecurso";
+import { CategoriaRecurso } from "../../../models/entities/recursos/CategoriaRecurso";
 import { Recurso } from "../../../models/entities/recursos/Recurso";
 import { Database } from "../../../server/Database";
-import { Evento } from "../../../models/entities/evento/Evento";
-import { CategoriaRecurso } from "../../../models/entities/recursos/CategoriaRecurso";
 
 export class RecursosApiController {
 
@@ -125,6 +126,41 @@ export class RecursosApiController {
             next(e);
         }
     }
+
+    public static async getAsignaciones(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+
+            const recurso = await Database.em.findOneBy(Recurso, {
+                id
+            });
+
+            if (!recurso) res.status(404).send();
+
+            const asignacionRecursoRepository = Database.em.getRepository("asignacion_recurso");
+
+            const asignaciones2 = await asignacionRecursoRepository
+                .createQueryBuilder("asignacion_recurso")
+                .select(["asignacion_recurso"])
+                .where("asignacion_recurso.recursoId = :id", { id })
+                .leftJoin("asignacion_recurso.asistente", "asistente")
+                .getMany();
+
+            const asignaciones = await Database.em.findBy(AsignacionRecurso, {
+                recurso: { id },
+            })
+
+            res.json({
+                // recurso,
+                asignaciones,
+                asignaciones2
+            });
+
+        } catch (e) {
+            next(e)
+        }
+    }
+
     private static asignarParametros(recurso: Recurso, params: any) {
         console.log("params: ", params)
         recurso.setNombre(params.nombre);
