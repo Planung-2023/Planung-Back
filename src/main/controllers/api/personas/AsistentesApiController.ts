@@ -5,11 +5,8 @@ import { Participante } from "../../../models/entities/persona/Participante";
 import { Rol } from "../../../models/entities/roles/Rol";
 import { Database } from "../../../server/Database";
 export class AsistentesApiController {
-    // private static asistenteRepository: Repository<Asistente>
 
-    constructor() {
-        // AsistentesApiController.asistenteRepository = Database.em.getRepository(Asistente)
-    }
+    constructor() {}
 
 	public static async store(req: Request, res: Response, next: NextFunction) {
 		try {
@@ -61,49 +58,48 @@ export class AsistentesApiController {
 		next: NextFunction
 	) {
 		try {
-            const asistentesRepository = Database.em.getRepository(Asistente)
 			const { id } = req.params;
 			const { asistentes } = req.body;
 
-			const existeEvento = Database.em.findOneBy(Evento, { id });
+			const existeEvento = await Database.em.findOneBy(Evento, { id });
 
 			if (!existeEvento) {
-				res.status(404);
+				res.status(404).json({
+					msg: `Evento con id ${id} no existe`
+				}).send();
 			}
 
-            const asistentesDB = await asistentesRepository
-                .createQueryBuilder("asistente")
-                .select(["asistente.id", "participante.id", "rol.id"])
-                .where("asistente.activo = true")
-                .leftJoin("asistente.participante", "participante")
-                .leftJoin("asistente.rol", "rol")
-                .getMany();
-
-			for (const asistenteData of asistentes) {
-				const existeAsistente = Database.em.findOneBy(Asistente, {
-					id: asistenteData.id,
-				});
-				const existeParticipante = await Database.em.findOneBy(
-					Participante,
-					{ id: asistenteData.participante }
-				);
-				const existeRol = await Database.em.findOneBy(Rol, {
-					id: asistenteData.rol,
-				});
-
-				if (
-					existeAsistente != null &&
-					existeParticipante != null &&
-					existeRol != null
-				) {
+			const asistentesExistentes = await Database.em.findBy(Asistente, { evento: { id } });
+			const asistentesNoEnviados = asistentesExistentes.filter(
+				(asistenteExistente: Asistente) => {
+					return (asistenteExistente.id !== null && !asistentes.some((recurso: Asistente) =>recurso.id === asistenteExistente.id));
 				}
-			}
+			);
+			await Database.em.remove(asistentesNoEnviados);
 
-			res.status(200);
+			// for (const asistenteData of asistentes) {
+			// 	const existeAsistente = Database.em.findOneBy(Asistente, {
+			// 		id: asistenteData.id,
+			// 	});
+			// 	const existeParticipante = await Database.em.findOneBy(
+			// 		Participante,
+			// 		{ id: asistenteData.participante }
+			// 	);
+			// 	const existeRol = await Database.em.findOneBy(Rol, {
+			// 		id: asistenteData.rol,
+			// 	});
+
+			// 	if (
+			// 		existeAsistente != null &&
+			// 		existeParticipante != null &&
+			// 		existeRol != null
+			// 	) {
+			// 	}
+			// }
+
 			res.json({
-				asistentes: asistentesDB,
-			});
-			res.send();
+				asistentesNoEnviados
+			}).send();
 		} catch (e) {
 			next(e);
 		}
