@@ -22,6 +22,7 @@ export class RecursosApiController {
             next(e);
         }
     }
+    
     public static async show(req: Request, res: Response, next: NextFunction) {
         try {
             const recurso = await Database.em.findOneBy(Recurso, {
@@ -39,11 +40,13 @@ export class RecursosApiController {
             next(e);
         }
     }
+    
     public static async store(req: Request, res: Response, next: NextFunction) {
         try {
 
             const { recursos } = req.body;
             const { id } = req.params;
+
             console.log("id: ", id)
             const existeEvento = await Database.em.exists(Evento, {
                 where: {
@@ -52,7 +55,9 @@ export class RecursosApiController {
             })
 
             if(!existeEvento) {
-                res.status(404).send();
+                res.status(404).json({
+                    msg: `Evento con id ${id} no encontrado`
+                }).send();
             }
             const recursosInsertados: Recurso[]=[];
 
@@ -61,11 +66,8 @@ export class RecursosApiController {
                 const recurso = new Recurso()
                 recursoData.evento = id;
                 const existeCategoria = await Database.em.findOneBy(CategoriaRecurso, { id: recursoData.categoria });
-                //const existeEstadoRecurso = await Database.em.findOneBy(Recurso, { id: recursoData.estadoRecurso });
 
-                if(existeCategoria != null)
-                {
-                    console.log("entro");
+                if(existeCategoria != null) {
                     RecursosApiController.asignarParametros(recurso!!, recursoData);
                     await Database.em.save(recurso);
                     recursosInsertados.push(recurso);
@@ -76,13 +78,13 @@ export class RecursosApiController {
                 recursos: recursosInsertados
             });
 
-            //res.status(200);
             res.send();
         }
         catch (e) {
             next(e);
         }
     }
+
     public static async update(req: Request, res: Response, next: NextFunction) {
         try {
             const recurso = await Database.em.findOneBy(Recurso, {
@@ -106,6 +108,7 @@ export class RecursosApiController {
             next(e);
         }
     }
+
     public static async remove(req: Request, res: Response, next: NextFunction) {
         try {
             const recurso = await Database.em.findOneBy(Recurso, {
@@ -150,13 +153,11 @@ export class RecursosApiController {
     }
 
     private static asignarParametros(recurso: Recurso, params: any) {
-        console.log("params: ", params)
         recurso.setNombre(params.nombre);
         recurso.setEvento(params.evento);
         recurso.setDescripcion(params.descripcion);
         recurso.setCantidad(params.cantidad);
         recurso.setCategoria(params.categoria);
-        //recurso.setProveedor(params.proveedor);
-        //nombre, descripcion, evento, cantidad, categoria, estado recurso, proveedor
+        recurso.setProveedor(params.proveedor ? params.proveedor : null);
     }
 }
