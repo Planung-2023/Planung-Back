@@ -137,25 +137,13 @@ export class RecursosApiController {
 
             if (!recurso) res.status(404).send();
 
-            const asignacionRecursoRepository = Database.em.getRepository("asignacion_recurso");
-
-            const asignaciones2 = await asignacionRecursoRepository
-                .createQueryBuilder("asignacion_recurso")
-                .select(["asignacion_recurso"])
-                .where("asignacion_recurso.recursoId = :id", { id })
-                .leftJoin("asignacion_recurso.asistente", "asistente")
-                .getMany();
-
             const asignaciones = await Database.em.findBy(AsignacionRecurso, {
                 recurso: { id },
             })
-
+            
             res.json({
-                // recurso,
                 asignaciones,
-                asignaciones2
             });
-
         } catch (e) {
             next(e)
         }
