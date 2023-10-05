@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Evento } from "../evento/Evento";
 import { Participante } from "../persona/Participante";
 import { Rol } from "../roles/Rol";
@@ -12,8 +12,8 @@ import { Invitacion } from "./Invitacion";
 	name: "asistente",
 })
 export class Asistente {
-	@PrimaryColumn()
-	private id: number;
+	@PrimaryGeneratedColumn()
+	id: string;
 
 	@ManyToOne(() => Evento)
 	@JoinColumn({ name: "evento_id" })
@@ -25,25 +25,33 @@ export class Asistente {
 
 	@ManyToOne(() => Rol)
 	@JoinColumn({ name: "rol_id" })
-	private rol: Rol;
+	rol: Rol;
 
 	@OneToOne(() => Invitacion)
-	private invitacion: Invitacion;
+	invitacion: Invitacion;
 
 	@OneToOne(() => Asistencia)
-	@JoinColumn({ name: "asistencia_id"})
-	private asistencia: Asistencia;
+	@JoinColumn({ name: "asistencia_id" })
+	asistencia: Asistencia;
 
-	@OneToMany(() => AsistenteNotificacion, asistenteNotificacion => asistenteNotificacion.asistente)
+	@OneToMany(
+		() => AsistenteNotificacion,
+		asistenteNotificacion => asistenteNotificacion.asistente
+	)
 	asistenteNotificaciones: AsistenteNotificacion[];
+
+	@Column("boolean", {
+		default: true
+	})
+	activo: boolean;
 
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 

@@ -6,32 +6,31 @@ Entity({
 	name: "asignacion_recurso"
 })
 export class AsignacionRecurso {
-
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@ManyToOne(() => Recurso)
-	private recurso: Recurso;
+	recurso: Recurso;
 
 	@ManyToOne(() => Asistente)
-	private asistente: Asistente;
+	asistente: Asistente;
 
-	@Column({ name: "fecha_hora", type: "date"})
-	private fechaHora: Date;
+	@Column({ name: "fecha_hora", type: "date" })
+	fechaHora: Date;
 
-	@Column({ name: "cantidad", type: "double"})
-	private cantidad: number;
+	@Column({ name: "cantidad", type: "double" })
+	cantidad: number;
 
-	@Column({ type: "varchar", length: 255, nullable: true})
-	private comentarios?: string;
+	@Column({ type: "varchar", length: 255, nullable: true })
+	comentarios?: string;
 
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 
@@ -67,7 +66,7 @@ export class AsignacionRecurso {
 		this.cantidad = cantidad;
 	}
 
-	public getComentarios(): String | undefined{
+	public getComentarios(): String | undefined {
 		return this.comentarios;
 	}
 

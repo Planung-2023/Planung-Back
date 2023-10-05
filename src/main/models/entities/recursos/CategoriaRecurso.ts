@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Recurso } from "./Recurso";
 
 @Entity({
@@ -6,24 +6,24 @@ import { Recurso } from "./Recurso";
 })
 export class CategoriaRecurso {
 	@PrimaryGeneratedColumn()
-	private id: number;
+	id: string;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })
-	private nombre: string;
+	nombre: string;
 
 	@Column({ name: "icono", type: "varchar", length: 255 })
-	private icono: string;
+	icono: string;
 
 	@OneToMany(() => Recurso, recurso => recurso.categoria)
 	recursos: Recurso[];
 
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 

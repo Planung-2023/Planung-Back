@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 import { Asistente } from "../asistencia/Asistente";
 import { Ubicacion } from "../otros/Ubicacion";
+import { Usuario } from "../persona/Usuario";
 import { Recurso } from "../recursos/Recurso";
 import { EstadoEvento } from "./EstadoEvento";
 import { Usuario } from "../persona/Usuario";
@@ -9,41 +10,45 @@ import { Usuario } from "../persona/Usuario";
 	name: "evento"
 })
 export class Evento {
-	@PrimaryColumn()
+	@PrimaryColumn("uuid")
 	id: string;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })
-	private nombre: String;
+	nombre: String;
 
 	@OneToMany(() => Recurso, recurso => recurso.evento)
-	private recursos: Recurso[];
+	recursos: Recurso[];
 
 	@OneToOne(() => Ubicacion)
 	@JoinColumn({ name: "ubicacion_id" })
-	private ubicacion: Ubicacion;
+	ubicacion: Ubicacion;
 
-	@Column({ name: "fecha_hora", type: "date" })
-	private fechaHora: Date;
+	@Column({ name: "fecha_hora", type: "datetime" })
+	fechaHora: Date;
 
 	@OneToMany(() => EstadoEvento, estadoEvento => estadoEvento.evento)
 	estadoEvento: EstadoEvento;
 
 	@OneToOne(() => Evento)
 	@JoinColumn({ name: "evento_anterior_id" })
-	private eventoAnterior: Evento;
+	eventoAnterior: Evento;
 
 	@OneToMany(() => Asistente, asistente => asistente.evento)
-	private asistentes: Asistente[];
+	asistentes: Asistente[];
 
 	@Column({ name: "es_visible", type: "boolean" })
-	private esVisible: boolean;
+	esVisible: boolean;
 
 	@Column({ name: "tipo_evento", type: "varchar", length: 255})
-	private tipoEvento: string;
+	tipoEvento: string;
 
 	@OneToOne(() => Asistente)
 	@JoinColumn({ name: "presentador_asistente_id"})
-	private presentador?: Asistente;
+	presentador?: Asistente;
+
+	@ManyToOne(()=> Usuario)
+	@JoinColumn({ name: "usuario_id", referencedColumnName: "id"})
+	creador: Usuario;
 
 	@ManyToOne(()=> Usuario)
 	@JoinColumn({ name: "usuario_id", referencedColumnName: "id"})

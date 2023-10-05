@@ -1,38 +1,34 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
-@Entity(
-	{
-		name: "ubicacion",
-		
-	}
-)
+@Entity({
+	name: "ubicacion",
+})
 export class Ubicacion {
-
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@Column({ name: "calle", type: "varchar" })
-	private calle: string;
+	calle: string;
 
 	@Column({ name: "altura", type: "int" })
-	private altura: number;
+	altura: number;
 
 	@Column({ type: "varchar" })
-	private localidad: string;
+	localidad: string;
 
 	@Column({ type: "float", nullable: true })
-	private latitud?: number;
-	
+	latitud?: number;
+
 	@Column({ type: "float", nullable: true })
-	private longitud?: number;
+	longitud?: number;
 
-	constructor() { }
+	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 
@@ -60,7 +56,7 @@ export class Ubicacion {
 		this.localidad = localidad;
 	}
 
-	public getLatitud(): number | undefined{
+	public getLatitud(): number | undefined {
 		return this.latitud;
 	}
 
@@ -68,12 +64,12 @@ export class Ubicacion {
 		this.latitud = latitud;
 	}
 
-	public getLongitud(): number | undefined{
-		return this.longitud
+	public getLongitud(): number | undefined {
+		return this.longitud;
 	}
 
 	public setLongitud(longitud: number): void {
-		this.longitud = longitud; 
+		this.longitud = longitud;
 	}
 }
 

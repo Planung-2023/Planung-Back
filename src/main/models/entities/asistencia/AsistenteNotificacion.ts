@@ -3,33 +3,33 @@ import { Asistente } from "./Asistente";
 import { Notificacion } from "./Notificacion";
 
 @Entity({
-	name: "asistente_notificacion"
+	name: "asistente_notificacion",
 })
 export class AsistenteNotificacion {
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@ManyToOne(() => Notificacion)
 	@JoinColumn({ name: "notificacion_id" })
-	private notificacion: Notificacion;
+	notificacion: Notificacion;
 
 	@ManyToOne(() => Asistente)
 	@JoinColumn({ name: "asistente_id" })
 	asistente: Asistente;
 
 	@Column({ type: "boolean" })
-	private visto: boolean;
+	visto: boolean;
 
 	@Column({ type: "date", nullable: true })
-	private fechaVisto?: Date;
+	fechaVisto?: Date;
 
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 
@@ -57,7 +57,7 @@ export class AsistenteNotificacion {
 		this.visto = visto;
 	}
 
-	public getFechaVisto(): Date | undefined  {
+	public getFechaVisto(): Date | undefined {
 		return this.fechaVisto;
 	}
 

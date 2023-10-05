@@ -1,5 +1,6 @@
-import { Router } from "../routes/Router";
+import cors from "cors";
 import express, { Express } from 'express';
+import { Router } from "../routes/Router";
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -12,6 +13,7 @@ export class Server {
     private host: string = "localhost"
   ) {
     this.app = express();
+    this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.router = new Router(this.app);

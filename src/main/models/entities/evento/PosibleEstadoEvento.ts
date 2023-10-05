@@ -1,23 +1,22 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity({
-	name: "posible_estado_evento"
+	name: "posible_estado_evento",
 })
 export class PosibleEstadoEvento {
-
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
 	@Column({ type: "varchar", length: 255 })
-	private nombre: string;
-	
+	nombre: string;
+
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 

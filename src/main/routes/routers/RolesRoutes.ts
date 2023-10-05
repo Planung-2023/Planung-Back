@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { RolApiController } from "../../controllers/api/roles/rolApiController";
+import { RolApiController } from "../../controllers/api/roles/RolApiController";
 
 export class RolesRoutes{
 

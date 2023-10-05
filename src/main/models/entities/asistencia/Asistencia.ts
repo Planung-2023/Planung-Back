@@ -1,28 +1,27 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Asistente } from "./Asistente";
 
 @Entity({
-		name: "asistencia",
-	})
+	name: "asistencia",
+})
 export class Asistencia {
-	
-	@PrimaryColumn()
-	private id: number;
+	@PrimaryGeneratedColumn()
+	id: string;
 
 	@OneToOne(() => Asistente)
-	@JoinColumn({name:"asistente_id"})
-	private asistente: Asistente;
+	@JoinColumn({ name: "asistente_id" })
+	asistente: Asistente;
 
-	@Column({name: "fecha_hora", type: "date"})
-	private fechaHora: Date
+	@Column({ name: "fecha_hora", type: "datetime" })
+	fechaHora: Date;
 
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 

@@ -6,7 +6,9 @@ export class UsuariosApiController {
 
     public static async index(req: Request, res: Response, next: NextFunction) {
         try {
-            const usuarios = await Database.em.find(Usuario);
+            const usuarios = await Database.em.find(Usuario, {
+                select: ["id", "nombreUsuario"]
+            });
             res.json(usuarios);
         }
         catch (e) {
@@ -94,7 +96,6 @@ export class UsuariosApiController {
     
     }
     private static asignarParametros(usuario: Usuario, params: any) {
-        //usuario.setId(params.id);
         usuario.setNombreUsuario(params.nombre);
         usuario.setContrasenia(params.contrasenia);
     }

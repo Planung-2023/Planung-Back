@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
+import { Permiso } from "../../../models/entities/roles/Permiso";
 import { Database } from "../../../server/Database";
-import { Rol } from "../../../models/entities/roles/Rol";
 
 export class PermisoApiController{
 
     public static async index(req: Request, res: Response, next: NextFunction) {
         try {
-            const permisos = await Database.em.find(Rol);
+            const permisos = await Database.em.find(Permiso);
             res.json(permisos);
         }
         catch (e) {

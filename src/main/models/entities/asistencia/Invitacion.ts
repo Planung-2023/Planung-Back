@@ -4,38 +4,36 @@ import { Asistente } from "./Asistente";
 @Entity({
 	name: "invitacion",
 })
-
 export class Invitacion {
-	
 	@PrimaryColumn()
-	private id: number;
+	id: string;
 
-	@Column({ name: "fecha_hora_envio", type:"date"})
-	private fechaHoraEnvio: Date;
+	@Column({ name: "fecha_hora_envio", type: "date" })
+	fechaHoraEnvio: Date;
 
-	@Column({ name: "fecha_hora_visto", type: "date", nullable: true})
-	private fechaHoraVisto?: Date;
+	@Column({ name: "fecha_hora_visto", type: "date", nullable: true })
+	fechaHoraVisto?: Date;
 
-	@Column({name: "fecha_hora_respuesta", type:"date"})
-	private fechaHoraRespuesta: Date;
+	@Column({ name: "fecha_hora_respuesta", type: "date" })
+	fechaHoraRespuesta: Date;
 
-	@Column({name:"esta_visto", type: "boolean", nullable: true})
-	private estaVisto?: boolean;
-	
-	@Column({name:"esta_aceptado", type:"boolean"})
-	private estaAceptado: boolean;
-	
+	@Column({ name: "esta_visto", type: "boolean", nullable: true })
+	estaVisto?: boolean;
+
+	@Column({ name: "esta_aceptado", type: "boolean" })
+	estaAceptado: boolean;
+
 	@OneToOne(() => Asistente)
-	@JoinColumn({name:"asistente_id"})
-	private asistente: Asistente;
-		
+	@JoinColumn({ name: "asistente_id" })
+	asistente: Asistente;
+
 	constructor() {}
 
-	public getId(): number {
+	public getId(): string {
 		return this.id;
 	}
 
-	public setId(id: number): void {
+	public setId(id: string): void {
 		this.id = id;
 	}
 
@@ -55,7 +53,7 @@ export class Invitacion {
 		this.fechaHoraEnvio = fechaHoraEnvio;
 	}
 
-	public getFechaHoraVisto(): Date | undefined  {
+	public getFechaHoraVisto(): Date | undefined {
 		return this.fechaHoraVisto;
 	}
 
