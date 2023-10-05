@@ -125,6 +125,27 @@ export class RecursosApiController {
             next(e);
         }
     }
+    public static async getCategorias(req: Request, res: Response, next: NextFunction){
+        try {
+            const recurso = await Database.em.findOneBy(Recurso, {
+                id: req.params.id
+            });
+
+            if(recurso === null) {
+                res.status(404);
+                res.send();
+                return;
+            }
+            res.json(recurso);
+        }
+        catch (e) {
+            next(e);
+        }    
+        
+
+    }
+
+
     private static asignarParametros(recurso: Recurso, params: any) {
         console.log("params: ", params)
         recurso.setNombre(params.nombre);

@@ -8,6 +8,7 @@ export class PermisosRoutes{
         this.router=Router();
 
         this.router.get("/",PermisoApiController.index);
+        
     }
 
 }

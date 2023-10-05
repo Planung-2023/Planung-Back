@@ -4,7 +4,7 @@ import { Ubicacion } from "../otros/Ubicacion";
 import { Usuario } from "../persona/Usuario";
 import { Recurso } from "../recursos/Recurso";
 import { EstadoEvento } from "./EstadoEvento";
-import { Usuario } from "../persona/Usuario";
+
 
 @Entity({
 	name: "evento"
@@ -50,9 +50,9 @@ export class Evento {
 	@JoinColumn({ name: "usuario_id", referencedColumnName: "id"})
 	creador: Usuario;
 
-	@ManyToOne(()=> Usuario)
+	/*@ManyToOne(()=> Usuario)
 	@JoinColumn({ name: "usuario_id", referencedColumnName: "id"})
-	creador: Usuario;
+	creador: Usuario;*/
 
 	constructor() {}
 
