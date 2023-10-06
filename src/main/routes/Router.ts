@@ -7,6 +7,7 @@ import { RolesRoutes } from "./routers/RolesRoutes";
 import { UbicacionRoutes } from "./routers/UbicacionRoutes";
 import { UsuariosRoutes } from "./routers/UsuariosRoutes";
 import { WelcomeRoutes } from "./routers/WelcomeRoutes";
+import { CategoriaRecursosRoutes } from "./routers/CategoriaRecursosRoutes";
 
 export class Router {
 
