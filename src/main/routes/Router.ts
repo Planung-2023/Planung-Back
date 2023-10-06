@@ -22,6 +22,7 @@ export class Router {
         this.app.use("/roles", RolesRoutes.router);
         this.app.use("/permisos", PermisosRoutes.router);
         this.app.use("/ubicaciones", UbicacionRoutes.router);
+        this.app.use("/categoriarecursos", CategoriaRecursosRoutes.router);
         this.app.use("/recursos", RecursosRoutes.router);
     }
 }
