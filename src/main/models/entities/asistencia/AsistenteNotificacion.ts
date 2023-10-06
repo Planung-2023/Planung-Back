@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Asistente } from "./Asistente";
 import { Notificacion } from "./Notificacion";
 
@@ -6,7 +6,7 @@ import { Notificacion } from "./Notificacion";
 	name: "asistente_notificacion",
 })
 export class AsistenteNotificacion {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@ManyToOne(() => Notificacion)

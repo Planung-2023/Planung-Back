@@ -1,11 +1,11 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({
 	name: "usuario",
 })
 export class Usuario {
 
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@Column({ name: "nombre_usuario", type: "varchar", length: 255 })

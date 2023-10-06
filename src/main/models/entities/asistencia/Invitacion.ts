@@ -1,11 +1,11 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Asistente } from "./Asistente";
 
 @Entity({
 	name: "invitacion",
 })
 export class Invitacion {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@Column({ name: "fecha_hora_envio", type: "date" })

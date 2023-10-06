@@ -1,16 +1,16 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Usuario } from "./Usuario";
 
-
 @Entity({
-	name: "participante", 
+	name: "participante",
 })
 export class Participante {
-	@PrimaryColumn()
+	
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@OneToOne(() => Usuario)
-	@JoinColumn({name: "usuario_id"})
+	@JoinColumn({ name: "usuario_id" })
 	usuario: Usuario;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })
@@ -22,7 +22,7 @@ export class Participante {
 	@Column({ name: "mail", type: "varchar", length: 255 })
 	mail: string;
 
-	constructor() {}       
+	constructor() {}
 
 	public getId(): string {
 		return this.id;
@@ -43,7 +43,7 @@ export class Participante {
 	public setNombre(nombre: string): void {
 		this.nombre;
 	}
- 
+
 	public getApellido(): string {
 		return this.apellido;
 	}

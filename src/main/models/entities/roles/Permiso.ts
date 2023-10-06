@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Rol } from "./Rol";
 
 
@@ -6,7 +6,7 @@ import { Rol } from "./Rol";
 		name: "permiso",
  })
  export class Permiso {
-		@PrimaryColumn()
+		@PrimaryGeneratedColumn()
 		id: string;
 
 		@Column({ name: "nombre", type: "varchar", length: 255 })

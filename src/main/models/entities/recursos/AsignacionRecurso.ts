@@ -1,23 +1,27 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Asistente } from "../asistencia/Asistente";
 import { Recurso } from "./Recurso";
 
 @Entity({
-	name: "asignacion_recurso"
+	name: "asignacion_recurso",
 })
 export class AsignacionRecurso {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@ManyToOne(() => Recurso)
 	recurso: Recurso;
 
 	@ManyToOne(() => Asistente, {
-		eager: true
+		eager: true,
 	})
 	asistente: Asistente;
 
-	@Column({ name: "fecha_hora", type: "date", default: () => "CURRENT_TIMESTAMP" })
+	@Column({
+		name: "fecha_hora",
+		type: "date",
+		default: () => "CURRENT_TIMESTAMP",
+	})
 	fechaHora: Date;
 
 	@Column({ name: "cantidad", type: "double" })

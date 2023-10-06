@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { PosibleEstadoRecurso } from "./PosibleEstadoRecurso";
 import { Recurso } from "./Recurso";
 
@@ -6,7 +6,7 @@ import { Recurso } from "./Recurso";
 	name: "recurso_estado",
 })
 export class EstadoRecurso {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@ManyToOne(() => PosibleEstadoRecurso)
