@@ -131,4 +131,10 @@ export class EventosApiController {
 		evento.setAsistentes(params.asistentes); // No va. AsistentesController. /eventos/1/asistentes/ POST
 		evento.setEsVisible(params.esVisible);
 	}
+    
+    public static async findOneById(id: string) {
+        const evento = await Database.em.findOneBy(Evento, { id });
+
+        return evento;
+    }
 }

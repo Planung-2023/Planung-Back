@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { Evento } from "../../../models/entities/evento/Evento";
 import { AsignacionRecurso } from "../../../models/entities/recursos/AsignacionRecurso";
 import { CategoriaRecurso } from "../../../models/entities/recursos/CategoriaRecurso";
 import { Recurso } from "../../../models/entities/recursos/Recurso";
 import { Database } from "../../../server/Database";
+import { EventosApiController } from "../eventos/EventosApiController";
 
 export class RecursosApiController {
 
@@ -47,38 +47,17 @@ export class RecursosApiController {
             const { recursos } = req.body;
             const { id } = req.params;
 
-            console.log("id: ", id)
-            const existeEvento = await Database.em.exists(Evento, {
-                where: {
-                    id: id
-                }
-            })
+            const evento = await EventosApiController.findOneById(id);
 
-            if(!existeEvento) {
+            if( !evento ) {
                 res.status(404).json({
                     msg: `Evento con id ${id} no encontrado`
                 }).send();
             }
-            const recursosInsertados: Recurso[]=[];
 
+            const recursosInsertados = await RecursosApiController.crearRecursos(recursos, id)
 
-            for (const recursoData of recursos){
-                const recurso = new Recurso()
-                recursoData.evento = id;
-                const existeCategoria = await Database.em.findOneBy(CategoriaRecurso, { id: recursoData.categoria });
-
-                if(existeCategoria != null) {
-                    RecursosApiController.asignarParametros(recurso!!, recursoData);
-                    await Database.em.save(recurso);
-                    recursosInsertados.push(recurso);
-                }
-            }
-
-            res.status(201).json({
-                recursos: recursosInsertados
-            });
-
-            res.send();
+            res.status(201).json({ recursos: recursosInsertados }).send();
         }
         catch (e) {
             next(e);
@@ -90,27 +69,27 @@ export class RecursosApiController {
             const { id } = req.params;
             const { recursos } = req.body;
             
-            const evento = await Database.em.findOneBy(Evento, {
-                id
-            });
-            if(evento === null) {
-                res.status(404).json({
-                    msg: `Evento con id ${id} no existe`
-                }).send();
-            }  
-
+            const evento = await EventosApiController.findOneById(id);
+			if (!evento) {
+				res.status(404).json({
+					msg: `Evento con id ${id} no encontrado`,
+				}).send();
+            }
+            
+            const recursosNuevos = recursos.filter((recurso: Recurso) => !recurso.id);
+            await RecursosApiController.crearRecursos(recursosNuevos, id);
+            
             const recursosExistentes = await Database.em.findBy(Recurso, { evento: { id } });
-			const recursosNoEnviados = recursosExistentes.filter(
-				(recursoExistente: Recurso) => {
+			const recursosNoEnviados = recursosExistentes.filter((recursoExistente: Recurso) => {
 					return (
 						recursoExistente.id !== null &&
 						!recursos.some(
-							(recurso: Recurso) =>
-								recurso.id === recursoExistente.id
+							(recurso: Recurso) => recurso.id === recursoExistente.id
 						)
 					);
 				}
-			);
+            );
+            
 			await Database.em.remove(recursosNoEnviados);
 
             const recursosAModificar = recursosExistentes.filter(
@@ -125,19 +104,8 @@ export class RecursosApiController {
 				}
             );
             
-            for (const recursoExistente of recursosAModificar) {
-				const recursoData = recursos.find((recurso: Recurso) => recurso.id === recursoExistente.id);
-				if (recursoData) {
-					RecursosApiController.asignarParametros(
-						recursoExistente,
-						recursoData
-					);
-					await Database.em.save(recursoExistente);
-				}
-            }
+            await RecursosApiController.actualizarRecursos(recursosAModificar, recursos);
             
-            const recursosNuevos = recursos.filter((recurso: Recurso) => !recurso.id);
-			await RecursosApiController.crearRecursos(recursosNuevos, id);
 
             const recursosInsertados = await Database.em.findBy(Recurso, {
                 evento: { id }
@@ -150,26 +118,6 @@ export class RecursosApiController {
         catch (e) {
             next(e);
         }
-    }
-
-    private static async crearRecursos(recursos: any[], id: string) {
-        for (const recursoData of recursos) {
-            const recurso = new Recurso();
-            recursoData.evento = id;
-
-            const existeCategoria = await Database.em.findOneBy(CategoriaRecurso,
-                { id: recursoData.categoria }
-            )
-
-            if (existeCategoria != null) {
-                RecursosApiController.asignarParametros(recurso!!, recursoData);
-
-                await Database.em.save(recurso);
-            }
-        }
-    }
-
-    private static async actualizarRecursos(recursos: any[]) {
     }
 
     public static async remove(req: Request, res: Response, next: NextFunction) {
@@ -222,5 +170,40 @@ export class RecursosApiController {
         recurso.setCantidad(params.cantidad);
         recurso.setCategoria(params.categoria);
         recurso.setProveedor(params.proveedor ? params.proveedor : null);
+    }
+
+    private static async crearRecursos(recursos: any[], idEvento: string) {
+        const recursosInsertados: Recurso[] = [];
+        for (const recursoData of recursos) {
+            const recurso = new Recurso();
+            recursoData.evento = idEvento;
+
+            const existeCategoria = await Database.em.findOneBy(CategoriaRecurso,
+                { id: recursoData.categoria }
+            )
+
+            if (existeCategoria != null) {
+                RecursosApiController.asignarParametros(recurso!!, recursoData);
+                await Database.em.save(recurso);
+
+                recursosInsertados.push(recurso);
+            }
+        }
+
+        return recursosInsertados;
+    }
+
+    private static async actualizarRecursos(recursosAModificar: any[], recursos: any[]) {
+        for (const recursoExistente of recursosAModificar) {
+            const recursoData = recursos.find((recurso: Recurso) => recurso.id === recursoExistente.id);
+            
+			if (recursoData) {
+				RecursosApiController.asignarParametros(
+					recursoExistente,
+					recursoData
+				);
+				await Database.em.save(recursoExistente);
+			}
+		}
     }
 }

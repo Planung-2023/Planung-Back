@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Asistente } from "../asistencia/Asistente";
 import { Ubicacion } from "../otros/Ubicacion";
 import { Usuario } from "../persona/Usuario";
@@ -9,7 +9,7 @@ import { EstadoEvento } from "./EstadoEvento";
 	name: "evento"
 })
 export class Evento {
-	@PrimaryColumn("uuid")
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })
