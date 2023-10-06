@@ -35,6 +35,9 @@ export class Recurso {
 
 	@Column({ name: "proveedor", type: "varchar", length: 255, nullable: true })
 	proveedor?: string;
+	
+	@Column({ name: "colorTarjeta", type: "varchar", length: 7, default: "#FFFFFF" })
+	colorTarjeta: string;
 
 	constructor() {}
 
