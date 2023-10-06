@@ -140,6 +140,28 @@ export class RecursosApiController {
             next(e);
         }
     }
+	public static async getCategorias(req: Request, res: Response, next: NextFunction){
+        try {
+            const recurso = await Database.em.findOneBy(Recurso, {
+                id: req.params.id
+            });
+
+            if(!recurso) {
+                res.status(404);
+                res.send();
+                return;
+            }
+            const categorias = await Database.em.findOneBy(CategoriaRecurso, {
+                recursos: {},
+            });
+            res.json(categorias);
+        }
+        catch (e) {
+            next(e);
+        }    
+        
+
+    }
 
     public static async getAsignaciones(req: Request, res: Response, next: NextFunction) {
         try {
