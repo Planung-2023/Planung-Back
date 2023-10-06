@@ -12,12 +12,12 @@ export class EventosApiController {
 	    const authorizationHeader = req.headers.authorization;
             const token = authorizationHeader?.split(' ')[1];
             console.log(token);
-           const respuesta = await post (process.env.AUTH_URL!,).auth(token!,{type:'bearer'})
-           respuesta.status
-           if(respuesta.status >= 400){
+        //    const respuesta = await post (process.env.AUTH_URL!,).auth(token!,{type:'bearer'})
+        //    respuesta.status
+        //    if(respuesta.status >= 400){
             //no existe el usuario
-           }
-           console.log(respuesta)	
+        //    }
+        //    console.log(respuesta)	
             const idUsuario = req.query.usuario_id;
             const eventoRepository = Database.em.getRepository("evento")
             

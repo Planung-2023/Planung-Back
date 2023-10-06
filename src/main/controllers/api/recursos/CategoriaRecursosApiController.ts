@@ -1,18 +1,24 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
+import { CategoriaRecurso } from "../../../models/entities/recursos/CategoriaRecurso";
 import { Database } from "../../../server/Database";
-import { Recurso } from "../../../models/entities/recursos/Recurso";
 
 export class CategoriaRecursosApiController{
     public static async index(req:Request, res:Response,next:NextFunction){
         try {
             const idEvento = req.params.id;
 
-            const recursos = await Database.em.find(Recurso);
-            res.json(recursos);
+            const categoriasRecurso = await Database.em.find(CategoriaRecurso);
+
+            res.json(categoriasRecurso);
         }
         catch (e) {
             next(e);
         }
     }
 
+    public static async findOneById(id: string) {
+        const categoriaRecurso = await Database.em.findOneBy(CategoriaRecurso, { id });
+
+        return categoriaRecurso;
+    }
 }

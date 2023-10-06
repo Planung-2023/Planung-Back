@@ -2,7 +2,7 @@ import { Router } from "express";
 import { CategoriaRecursosApiController } from "../../controllers/api/recursos/CategoriaRecursosApiController";
 
 
-export class PermisosRoutes{
+export class CategoriaRecursosRoutes {
     public static router:Router;
 
     static{

@@ -1,11 +1,12 @@
 import { Express } from "express";
-import { WelcomeRoutes } from "./routers/WelcomeRoutes";
-import { ParticipantesRoutes } from "./routers/ParticipantesRoutes";
-import { UsuariosRoutes } from "./routers/UsuariosRoutes";
+import { CategoriaRecursosRoutes } from "./routers/CategoriaRecursosRoutes";
 import { EventosRoutes } from "./routers/EventosRoutes";
-import { RolesRoutes } from "./routers/RolesRoutes";
+import { ParticipantesRoutes } from "./routers/ParticipantesRoutes";
 import { PermisosRoutes } from "./routers/PermisosRoutes";
+import { RolesRoutes } from "./routers/RolesRoutes";
 import { UbicacionRoutes } from "./routers/UbicacionRoutes";
+import { UsuariosRoutes } from "./routers/UsuariosRoutes";
+import { WelcomeRoutes } from "./routers/WelcomeRoutes";
 
 export class Router {
 
@@ -21,6 +22,6 @@ export class Router {
         this.app.use("/roles", RolesRoutes.router);
         this.app.use("/permisos", PermisosRoutes.router);
         this.app.use("/ubicaciones", UbicacionRoutes.router);
-
+        this.app.use("/categoriarecursos", CategoriaRecursosRoutes.router)
     }
 }
