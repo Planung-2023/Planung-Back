@@ -1,4 +1,5 @@
 import { Express } from "express";
+import { CategoriaRecursosRoutes } from "./routers/CategoriaRecursosRoutes";
 import { EventosRoutes } from "./routers/EventosRoutes";
 import { ParticipantesRoutes } from "./routers/ParticipantesRoutes";
 import { PermisosRoutes } from "./routers/PermisosRoutes";
@@ -7,7 +8,6 @@ import { RolesRoutes } from "./routers/RolesRoutes";
 import { UbicacionRoutes } from "./routers/UbicacionRoutes";
 import { UsuariosRoutes } from "./routers/UsuariosRoutes";
 import { WelcomeRoutes } from "./routers/WelcomeRoutes";
-import { CategoriaRecursosRoutes } from "./routers/CategoriaRecursosRoutes";
 
 export class Router {
 
