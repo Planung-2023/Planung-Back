@@ -4,6 +4,7 @@ import { Evento } from "../../../models/entities/evento/Evento";
 import { Participante } from "../../../models/entities/persona/Participante";
 import { Rol } from "../../../models/entities/roles/Rol";
 import { Database } from "../../../server/Database";
+import { EventosApiController } from "../eventos/EventosApiController";
 export class AsistentesApiController {
 
     constructor() {}
@@ -16,89 +17,64 @@ export class AsistentesApiController {
 			const existeEvento = await Database.em.findOneBy(Evento, { id });
 
 			if (!existeEvento) {
-				return res.status(404);
+				res.status(404).json( { msg: `Evento con id ${id} no encontrado` });
 			}
 
-			const asistentesInsertados: Asistente[] = [];
-
-			for (const asistenteData of asistentes) {
-				const asistente = new Asistente();
-
-				const existeParticipante = await Database.em.findOneBy(
-					Participante,
-					{ id: asistenteData.participante }
-				);
-				const existeRol = await Database.em.findOneBy(Rol, {
-					id: asistenteData.rol,
-				});
-
-				if (existeParticipante != null && existeRol != null) {
-					asistenteData.evento = +id;
-					AsistentesApiController.asignarParametros(
-						asistente,
-						asistenteData
-					);
-					await Database.em.save(asistente);
-					asistentesInsertados.push(asistente);
-				}
-			}
+			const asistentesInsertados = await AsistentesApiController.crearAsistentes(asistentes, id);
 
 			res.status(201).json({
 				asistentes: asistentesInsertados,
-			});
-			res.send();
+			}).send();
 		} catch (e) {
+			res.status(500).json({ msg: "Server error" });
 			next(e);
 		}
 	}
 
-	public static async update(
-		req: Request,
-		res: Response,
-		next: NextFunction
-	) {
+	public static async update(req: Request, res: Response, next: NextFunction) {
 		try {
 			const { id } = req.params;
 			const { asistentes } = req.body;
 
-			const existeEvento = await Database.em.findOneBy(Evento, { id });
+			const evento = await EventosApiController.findOneById(id);
 
-			if (!existeEvento) {
+			if (!evento) {
 				res.status(404).json({
 					msg: `Evento con id ${id} no existe`
 				}).send();
 			}
 
+			const asistentesNuevos = asistentes.filter((asistente: Asistente) => !asistente.id);
+			await AsistentesApiController.crearAsistentes(asistentesNuevos, id);
+
 			const asistentesExistentes = await Database.em.findBy(Asistente, { evento: { id } });
 			const asistentesNoEnviados = asistentesExistentes.filter(
 				(asistenteExistente: Asistente) => {
-					return (asistenteExistente.id !== null && !asistentes.some((recurso: Asistente) =>recurso.id === asistenteExistente.id));
+					return (
+						asistenteExistente.id !== null &&
+						!asistentes.some((recurso: Asistente) => recurso.id === asistenteExistente.id)
+					);
 				}
 			);
 			await Database.em.remove(asistentesNoEnviados);
 
-			// for (const asistenteData of asistentes) {
-			// 	const existeAsistente = Database.em.findOneBy(Asistente, {
-			// 		id: asistenteData.id,
-			// 	});
-			// 	const existeParticipante = await Database.em.findOneBy(
-			// 		Participante,
-			// 		{ id: asistenteData.participante }
-			// 	);
-			// 	const existeRol = await Database.em.findOneBy(Rol, {
-			// 		id: asistenteData.rol,
-			// 	});
+			const asistentesAModificar = asistentesExistentes.filter(
+				(asistenteExistente: Asistente) => {
+					return (
+						asistenteExistente.id !== null &&
+						asistentes.some((asistente: Asistente) =>asistente.id === asistenteExistente.id)
+					);
+				}
+            );
 
-			// 	if (
-			// 		existeAsistente != null &&
-			// 		existeParticipante != null &&
-			// 		existeRol != null
-			// 	) {
-			// 	}
-			// }
+			await AsistentesApiController.actualizarAsistentes(asistentesAModificar, asistentes);
+
+			const asistentesInsertados = await Database.em.findBy(Asistente, {
+				evento: { id }
+			});
 
 			res.json({
-				asistentesNoEnviados
+				asistentes: asistentesInsertados
 			}).send();
 		} catch (e) {
 			next(e);
@@ -109,5 +85,43 @@ export class AsistentesApiController {
 		asistente.setEvento(params.evento);
 		asistente.setParticipante(params.participante);
 		asistente.setRol(params.rol);
+	}
+
+	private static async crearAsistentes(asistentes: any[], idEvento: string) {
+        const asistentesInsertados: Asistente[] = [];
+        for (const asistenteData of asistentes) {
+            const asistente = new Asistente();
+            asistenteData.evento = idEvento;
+
+			const existeParticipante = await Database.em.findOneBy(Participante, {
+				id: asistenteData.participante
+			});
+
+			const existeRol = await Database.em.findOneBy(Rol, {
+				id: asistenteData.rol,
+			});
+
+            if (existeParticipante != null && existeRol != null) {
+                AsistentesApiController.asignarParametros(asistente!!, asistenteData);
+                await Database.em.save(asistente);
+
+                asistentesInsertados.push(asistente);
+            }
+        }
+        return asistentesInsertados;
+    }
+
+	private static async actualizarAsistentes(asistentesAModificar: any[], asistentes: any[]) {
+		for (const asistenteExistente of asistentesAModificar) {
+			const asistenteData = asistentes.find((asistente: Asistente) => asistente.id === asistenteExistente.id);
+
+			if (asistenteData) {
+				AsistentesApiController.asignarParametros(
+					asistenteExistente,
+					asistenteData
+				);
+				await Database.em.save(asistenteExistente);
+			}
+		}
 	}
 }

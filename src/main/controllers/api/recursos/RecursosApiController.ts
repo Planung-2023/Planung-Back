@@ -83,9 +83,7 @@ export class RecursosApiController {
 			const recursosNoEnviados = recursosExistentes.filter((recursoExistente: Recurso) => {
 					return (
 						recursoExistente.id !== null &&
-						!recursos.some(
-							(recurso: Recurso) => recurso.id === recursoExistente.id
-						)
+						!recursos.some((recurso: Recurso) => recurso.id === recursoExistente.id)
 					);
 				}
             );
@@ -96,17 +94,13 @@ export class RecursosApiController {
 				(recursoExistente: Recurso) => {
 					return (
 						recursoExistente.id !== null &&
-						recursos.some(
-							(recurso: Recurso) =>
-								recurso.id === recursoExistente.id
-						)
+						recursos.some((recurso: Recurso) =>recurso.id === recursoExistente.id)
 					);
 				}
             );
             
             await RecursosApiController.actualizarRecursos(recursosAModificar, recursos);
             
-
             const recursosInsertados = await Database.em.findBy(Recurso, {
                 evento: { id }
             })
