@@ -22,6 +22,12 @@ export class Evento {
 	@JoinColumn({ name: "ubicacion_id" })
 	ubicacion: Ubicacion;
 
+	/*TODO: cambiar fecha hora por estas 3, hora fin puede ser null
+		fecha: "",
+		hora_inicio: ""
+		# hora_fin: NULL
+	*/
+
 	@Column({ name: "fecha_hora", type: "datetime" })
 	fechaHora: Date;
 
@@ -48,6 +54,9 @@ export class Evento {
 	@ManyToOne(()=> Usuario)
 	@JoinColumn({ name: "usuario_id", referencedColumnName: "id"})
 	creador: Usuario;
+
+	// TODO: agregar descripcion evento
+	// TODO: agregar tipo de invitacion (directo, aprobacion)
 
 	constructor() {}
 
