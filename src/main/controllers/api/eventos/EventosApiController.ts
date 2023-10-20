@@ -8,26 +8,8 @@ export class EventosApiController {
 
     public static async index(req: Request, res: Response, next: NextFunction) {
         try {   
-
-	    const authorizationHeader = req.headers.authorization;
-            const token = authorizationHeader?.split(' ')[1];
-            console.log(token);
-        //    const respuesta = await post (process.env.AUTH_URL!,).auth(token!,{type:'bearer'})
-        //    respuesta.status
-        //    if(respuesta.status >= 400){
-            //no existe el usuario
-        //    }
-        //    console.log(respuesta)	
             const idUsuario = req.query.usuario_id;
             const eventoRepository = Database.em.getRepository("evento")
-            
-            /* El select en el query builder va a seleccionar los campos que queramos (si no ponemos el . despues de la entidad, trae todo)
-                Aca por ejemplo excluimos la contraseña
-                En el where indico las propiedades de Typescript, el evento.creador.id, que sea igual al parametro
-                Luego hago un leftJoin de las dos tablas, indicando primero la relacion y luego el nombre de la entidad de referencia
-                Por ultimo, como necesitamos hacer referencia a la misma entidad en el EventoAnterior, debemos agregarlo en el addSelect, para
-                diferenciar entre el Evento actual y el Evento Anterior
-            */
             const eventos = await eventoRepository
 				.createQueryBuilder("evento")
                 .select(["evento", "ubicacion", "usuario.id", "usuario.nombreUsuario"])
@@ -122,13 +104,34 @@ export class EventosApiController {
     }
     
     private static asignarParametros(evento: Evento, params: any) {
+        const formatHour = EventosApiController.formatHour(params.horaInicio);
+
 		evento.setNombre(params.nombre);
 		evento.setRecursos(params.recursos); // No va. RecursosController.  /eventos/1/recursos/ POST body
 		evento.setUbicacion(params.ubicacion); // No va. UbicacionController
-		evento.setFechaHora(params.fechaHora);
+		evento.setFecha(params.fecha);
 		evento.setEstadoEvento(params.estadoEvento);
 		evento.setEventoAnterior(params.eventoAnterior);
-		evento.setAsistentes(params.asistentes); // No va. AsistentesController. /eventos/1/asistentes/ POST
+		evento.setAsistentes(params.asistentes);
 		evento.setEsVisible(params.esVisible);
+        console.log({ formatHour })
+        evento.setHoraInicio(formatHour);
+        evento.setHoraFin(params.horaFin ? params.horaFin : null);
+        evento.setDescripcion(params.descripcion);
 	}
+    
+    public static async findOneById(id: string) {
+        const evento = await Database.em.findOneBy(Evento, { id });
+
+        return evento;
+    }
+
+    public static formatHour(dateString: string) {
+        const date = new Date(dateString);
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const miliseconds = date.getMilliseconds();
+
+        return `${hours}:${minutes}:${miliseconds}`;
+    }
 }
