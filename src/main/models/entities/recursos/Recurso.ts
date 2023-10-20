@@ -20,8 +20,11 @@ export class Recurso {
 	@Column({ name: "descripcion", type: "varchar", length: 255 })
 	descripcion: string;
 
-	@Column({ name: "cantidad", type: "int" })
-	cantidad: number;
+	@Column({ name: "cantidad_necesaria", type: "int" })
+	cantidadNecesaria: number;
+
+	@Column({ name: "cantidad_actual", type: "int" })
+	cantidadActual: number;
 
 	@ManyToOne(
 		() => CategoriaRecurso,
@@ -73,12 +76,18 @@ export class Recurso {
 		this.descripcion = descripcion;
 	}
 
-	public getCantidad(): number {
-		return this.cantidad;
+	public getCantidadNecesaria(): number {
+		return this.cantidadNecesaria;
+	}
+	public setCantidadNecesaria(cantidad: number) {
+		this.cantidadNecesaria = cantidad;
 	}
 
-	public setCantidad(cantidad: number) {
-		this.cantidad = cantidad;
+	public getCantidadActual(): number {
+		return this.cantidadActual;
+	}
+	public setCantidadActual(cantidad: number) {
+		this.cantidadActual = cantidad;
 	}
 
 	public getCategoria(): CategoriaRecurso {
