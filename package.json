@@ -6,7 +6,9 @@
 	"scripts": {
 		"start": "ts-node src/index.ts",
 		"test": "jest",
-		"dev": "nodemon src/index.ts"
+		"dev": "nodemon src/index.ts",
+		"build": "tsc",
+		"prod": "node dist/index.js"
 	},
 	"repository": {
 		"type": "git",

@@ -141,14 +141,15 @@ export class RecursosApiController {
             });
 
             if(!recurso) {
-                res.status(404);
-                res.send();
+                res.status(404).json({ msg: "Recurso no encontrado" }).send();
                 return;
             }
-            const categorias = await Database.em.findOneBy(CategoriaRecurso, {
+            const categoria = await Database.em.findOneBy(CategoriaRecurso, {
                 recursos: {},
             });
-            res.json(categorias);
+            res.json({
+                categoria
+            }).send();
         }
         catch (e) {
             next(e);

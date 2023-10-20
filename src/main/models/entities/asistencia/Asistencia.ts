@@ -12,7 +12,7 @@ export class Asistencia {
 	@JoinColumn({ name: "asistente_id" })
 	asistente: Asistente;
 
-	@Column({ name: "fecha_hora", type: "datetime" })
+	@Column({ name: "fecha_hora", type: "datetime", default: () => "CURRENT_TIMESTAMP" })
 	fechaHora: Date;
 
 	constructor() {}

@@ -4,6 +4,9 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 	name: "ubicacion",
 })
 export class Ubicacion {
+
+	//TODO: solo latitud y longitud
+
 	@PrimaryGeneratedColumn()
 	id: string;
 
