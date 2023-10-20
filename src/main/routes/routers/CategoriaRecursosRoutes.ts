@@ -4,8 +4,7 @@ import { CategoriaRecursosApiController } from "../../controllers/api/recursos/C
 
 export class CategoriaRecursosRoutes {
     public static router:Router;
-
-    static{
+     static{
         this.router=Router();
 
         this.router.get("/",CategoriaRecursosApiController.index);
