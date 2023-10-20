@@ -104,7 +104,7 @@ export class EventosApiController {
     }
     
     private static asignarParametros(evento: Evento, params: any) {
-        const formatHour = EventosApiController.formatHour(params.horaInicio);
+        //const formatHour = EventosApiController.formatHour(params.horaInicio);
 
 		evento.setNombre(params.nombre);
 		evento.setRecursos(params.recursos); // No va. RecursosController.  /eventos/1/recursos/ POST body
@@ -114,9 +114,12 @@ export class EventosApiController {
 		evento.setEventoAnterior(params.eventoAnterior);
 		evento.setAsistentes(params.asistentes);
 		evento.setEsVisible(params.esVisible);
-        console.log({ formatHour })
-        evento.setHoraInicio(formatHour);
+        
+        evento.setHoraInicio(new Date(`1970-01-01T${params.horaInicio}Z`));
         evento.setHoraFin(params.horaFin ? params.horaFin : null);
+        evento.setTipoEvento(params.tipoEvento)
+        evento.setTipoInvitacion(params.tipoInvitacion)
+
         evento.setDescripcion(params.descripcion);
 	}
     
