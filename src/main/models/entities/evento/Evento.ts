@@ -1,20 +1,22 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Asistente } from "../asistencia/Asistente";
 import { Ubicacion } from "../otros/Ubicacion";
 import { Usuario } from "../persona/Usuario";
 import { Recurso } from "../recursos/Recurso";
 import { EstadoEvento } from "./EstadoEvento";
+import { TipoInvitacion } from "../asistencia/TipoInvitacion";
+import { cp } from "fs";
 
 
 @Entity({
 	name: "evento"
 })
 export class Evento {
-	@PrimaryColumn("uuid")
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })
-	nombre: String;
+	nombre: string;
 
 	@OneToMany(() => Recurso, recurso => recurso.evento)
 	recursos: Recurso[];
@@ -23,8 +25,17 @@ export class Evento {
 	@JoinColumn({ name: "ubicacion_id" })
 	ubicacion: Ubicacion;
 
-	@Column({ name: "fecha_hora", type: "datetime" })
-	fechaHora: Date;
+	/*@Column({ name: "fecha_hora", type: "datetime" })
+	fechaHora: Date;*/
+
+	@Column({name: "fecha", type:"date"})
+	fecha:Date;
+
+	@Column({name: "hora_inicio", type:"time"})
+	horaInicio: string;
+
+	@Column({name: "hora_fin", type:"time", nullable:true})
+	horaFin: string;
 
 	@OneToMany(() => EstadoEvento, estadoEvento => estadoEvento.evento)
 	estadoEvento: EstadoEvento;
@@ -36,7 +47,7 @@ export class Evento {
 	@OneToMany(() => Asistente, asistente => asistente.evento)
 	asistentes: Asistente[];
 
-	@Column({ name: "es_visible", type: "boolean" })
+	@Column({ name: "es_visible", type: "boolean", default: false })
 	esVisible: boolean;
 
 	@Column({ name: "tipo_evento", type: "varchar", length: 255})
@@ -50,9 +61,12 @@ export class Evento {
 	@JoinColumn({ name: "usuario_id", referencedColumnName: "id"})
 	creador: Usuario;
 
-	/*@ManyToOne(()=> Usuario)
-	@JoinColumn({ name: "usuario_id", referencedColumnName: "id"})
-	creador: Usuario;*/
+	@OneToOne(()=> TipoInvitacion)
+	@JoinColumn({name:"tipo_invitacion_id", referencedColumnName:"id"})
+	tipo: TipoInvitacion;
+
+	@Column({name:"descripcion", type:"varchar", length:255})
+	descripcion: string;
 
 	constructor() {}
 
@@ -64,11 +78,11 @@ export class Evento {
 		this.id = id;
 	}
 
-	public getNombre(): String {
+	public getNombre(): string {
 		return this.nombre;
 	}
 
-	public setNombre(nombre: String): void {
+	public setNombre(nombre: string): void {
 		this.nombre = nombre;
 	}
 
@@ -88,12 +102,29 @@ export class Evento {
 		this.ubicacion = ubicacion;
 	}
 
-	public getFechaHora(): Date {
-		return this.fechaHora;
+	public getFecha(): Date {
+		return this.fecha;
+	}
+	public setFecha(fecha: Date): void {
+		this.fecha = fecha;
 	}
 
-	public setFechaHora(fechaHora: Date): void {
-		this.fechaHora = fechaHora;
+	public getHoraInicio(): string{
+		return this.horaInicio;
+	}
+	public setHoraInicio(hora: string): void {
+		this.horaInicio = hora;
+	}
+
+	public getHoraFin(): string{
+		return this.horaFin;
+	}
+	public setHoraFin(hora: string): void {
+		this.horaInicio = hora;
+	}
+
+	public getTipoInvitacion():TipoInvitacion{
+		return this.tipo;
 	}
 
 	public getEstadoEvento(): EstadoEvento {
@@ -136,5 +167,7 @@ export class Evento {
 		this.creador = creador;
 	}
 	
-	
+	public setDescripcion(descripcion: string) {
+		this.descripcion = descripcion;
+	}
 }
