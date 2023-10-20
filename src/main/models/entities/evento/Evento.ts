@@ -29,13 +29,13 @@ export class Evento {
 	fechaHora: Date;*/
 
 	@Column({name: "fecha", type:"date"})
-	fecha:Date;
+	fecha: Date;
 
 	@Column({name: "hora_inicio", type:"time"})
-	horaInicio: string;
+	horaInicio: Date;
 
 	@Column({name: "hora_fin", type:"time", nullable:true})
-	horaFin: string;
+	horaFin: Date;
 
 	@OneToMany(() => EstadoEvento, estadoEvento => estadoEvento.evento)
 	estadoEvento: EstadoEvento;
@@ -63,7 +63,7 @@ export class Evento {
 
 	@OneToOne(()=> TipoInvitacion)
 	@JoinColumn({name:"tipo_invitacion_id", referencedColumnName:"id"})
-	tipo: TipoInvitacion;
+	tipoInvitacion: TipoInvitacion;
 
 	@Column({name:"descripcion", type:"varchar", length:255})
 	descripcion: string;
@@ -109,22 +109,22 @@ export class Evento {
 		this.fecha = fecha;
 	}
 
-	public getHoraInicio(): string{
+	public getHoraInicio(): Date{
 		return this.horaInicio;
 	}
-	public setHoraInicio(hora: string): void {
+	public setHoraInicio(hora: Date): void {
 		this.horaInicio = hora;
 	}
 
-	public getHoraFin(): string{
+	public getHoraFin(): Date{
 		return this.horaFin;
 	}
-	public setHoraFin(hora: string): void {
-		this.horaInicio = hora;
+	public setHoraFin(hora: Date): void {
+		this.horaFin = hora;
 	}
 
 	public getTipoInvitacion():TipoInvitacion{
-		return this.tipo;
+		return this.tipoInvitacion;
 	}
 
 	public getEstadoEvento(): EstadoEvento {
@@ -169,5 +169,11 @@ export class Evento {
 	
 	public setDescripcion(descripcion: string) {
 		this.descripcion = descripcion;
+	}
+	public setTipoEvento(tipoEvento: string){
+		this.tipoEvento=tipoEvento;
+	}
+	public setTipoInvitacion(tipoInvitacion: TipoInvitacion){
+		this.tipoInvitacion=tipoInvitacion;
 	}
 }
