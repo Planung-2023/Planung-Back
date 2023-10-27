@@ -17,9 +17,9 @@ INSERT INTO ubicacion (id, calle, altura, localidad, latitud, longitud) VALUES
 (1, 'Av. San Martin', 3100, 'C.A.B.A.', 24, 25),
 (2, 'Av. Nazca', 2500, 'C.A.B.A.', 30, 30);
 
-INSERT INTO evento (id, nombre, fecha_hora, es_visible, tipo_evento, ubicacion_id, evento_anterior_id, presentador_asistente_id) VALUES 
-(1, 'Juntada dia del amigo', '2022-04-22', 0, 'Informal', 1, NULL, NULL),
-(2, 'Presentacion inmueble', '2022-04-23', 1, 'Formal', 2, NULL, NULL);
+INSERT INTO evento (id, nombre, fecha, hora_inicio, hora_fin, es_visible, descripcion, tipo_evento, ubicacion_id, evento_anterior_id, presentador_asistente_id) VALUES 
+(1, 'Juntada dia del amigo', '2022-04-22', '00:00:00', '00:00:00', 0,"descripcion 1", 'Informal', 1, NULL, NULL),
+(2, 'Presentacion inmueble', '2022-04-23','00:00:00', '00:00:00', 1,"descripcion 2", 'Formal', 2, NULL, NULL);
 
 INSERT INTO recurso_categoria (id, nombre, icono) VALUES 
 (1, 'Comida', 'jpg'),

@@ -22,17 +22,6 @@ export class EventosApiController {
                 .leftJoin("evento.creador", "usuario")
                 .leftJoin("evento.eventoAnterior", "eventoAnterior")
 				.getMany();;
-            const eventoRepository = Database.em.getRepository("evento")
-            const eventos = await eventoRepository
-				.createQueryBuilder("evento")
-                .select(["evento", "ubicacion", "usuario.id", "usuario.nombreUsuario"])
-                .addSelect("eventoAnterior")
-                .where("evento.creador.id = :idUsuario", { idUsuario })
-                .leftJoin("evento.ubicacion", "ubicacion")
-                .leftJoin("evento.creador", "usuario")
-                .leftJoin("evento.eventoAnterior", "eventoAnterior")
-				.getMany();;
-            res.json(eventos);
         }
         catch (e) {
             next(e);
@@ -59,12 +48,9 @@ export class EventosApiController {
     public static async store(req: Request, res: Response, next: NextFunction) {
         try {
             const evento = new Evento();
-            const evento = new Evento();
 
             EventosApiController.asignarParametros(evento!!, req.body);
-            EventosApiController.asignarParametros(evento!!, req.body);
 
-            await Database.em.save(evento);
             await Database.em.save(evento);
 
             res.status(200);

@@ -34,6 +34,8 @@ export class EventosRoutes {
         
         this.router.delete("/:id/recursos", RecursosApiController.remove);
 
+        
+
         // Asistentes
         this.router.post("/:id/asistentes", [
             check("asistentes", "Asistentes debe ser un array").notEmpty().isArray(),

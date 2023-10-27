@@ -19,8 +19,8 @@ export class AsignacionRecurso {
 
 	@Column({
 		name: "fecha_hora",
-		type: "date",
-		default: () => "CURRENT_TIMESTAMP",
+		type: "date"
+		//default: () => "CURRENT_TIMESTAMP",
 	})
 	fechaHora: Date;
 
