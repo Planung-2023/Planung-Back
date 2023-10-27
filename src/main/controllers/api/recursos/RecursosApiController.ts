@@ -136,20 +136,20 @@ export class RecursosApiController {
     }
 	public static async getCategorias(req: Request, res: Response, next: NextFunction){
         try {
-            const recurso = await Database.em.findOneBy(Recurso, {
-                id: req.params.id
+            const recurso = await Database.em.findOne(Recurso, {
+                where: {
+                    id: req.params.id
+                },
+                relations: {
+                    categoria: true,
+                }
             });
 
             if(!recurso) {
                 res.status(404).json({ msg: "Recurso no encontrado" }).send();
                 return;
             }
-            const categoria = await Database.em.findOneBy(CategoriaRecurso, {
-                recursos: {},
-            });
-            res.json({
-                categoria
-            }).send();
+            res.json(recurso.categoria).send();
         }
         catch (e) {
             next(e);
@@ -162,9 +162,7 @@ export class RecursosApiController {
         try {
     
             const categorias = await Database.em.find(CategoriaRecurso);
-            res.json({
-                categorias
-            }).send();
+            res.json(categorias).send();
         }
         catch (e) {
             next(e);
