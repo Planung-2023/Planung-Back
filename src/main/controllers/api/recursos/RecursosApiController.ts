@@ -185,9 +185,7 @@ export class RecursosApiController {
                 recurso: { id },
             })
             
-            res.json({
-                asignaciones,
-            });
+            res.json(asignaciones);
         } catch (e) {
             next(e)
         }
