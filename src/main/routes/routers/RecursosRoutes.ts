@@ -10,6 +10,8 @@ export class RecursosRoutes {
 
         this.router.get("/:id/asignaciones", RecursosApiController.getAsignaciones);
         this.router.get("/:id/categorias", RecursosApiController.getCategorias);
+        this.router.get("/categorias", RecursosApiController.getTodasLasCategorias);
+
     }
 
 }
