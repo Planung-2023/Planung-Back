@@ -19,11 +19,11 @@ export class Asistente {
 	@JoinColumn({ name: "evento_id" })
 	evento: Evento;
 
-	@ManyToOne(() => Participante)
+	@ManyToOne(() => Participante, { eager: true })
 	@JoinColumn({ name: "participante_id" })
 	participante: Participante;
 
-	@ManyToOne(() => Rol)
+	@ManyToOne(() => Rol, { eager: true })
 	@JoinColumn({ name: "rol_id" })
 	rol: Rol;
 

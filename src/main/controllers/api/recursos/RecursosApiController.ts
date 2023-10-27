@@ -199,7 +199,8 @@ export class RecursosApiController {
         recurso.setNombre(params.nombre);
         recurso.setEvento(params.evento);
         recurso.setDescripcion(params.descripcion);
-        recurso.setCantidad(params.cantidad);
+        recurso.setCantidadNecesaria(params.cantidad);
+        recurso.setCantidadActual(params.cantidad);
         recurso.setCategoria(params.categoria);
         recurso.setProveedor(params.proveedor ? params.proveedor : null);
     }
