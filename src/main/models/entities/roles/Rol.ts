@@ -1,11 +1,11 @@
-import { Column, Entity, ManyToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Permiso } from "./Permiso";
 
 @Entity({
 	name: "rol",
 })
 export class Rol {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })

@@ -3,6 +3,7 @@ import { CategoriaRecursosRoutes } from "./routers/CategoriaRecursosRoutes";
 import { EventosRoutes } from "./routers/EventosRoutes";
 import { ParticipantesRoutes } from "./routers/ParticipantesRoutes";
 import { PermisosRoutes } from "./routers/PermisosRoutes";
+import { RecursosRoutes } from "./routers/RecursosRoutes";
 import { RolesRoutes } from "./routers/RolesRoutes";
 import { UbicacionRoutes } from "./routers/UbicacionRoutes";
 import { UsuariosRoutes } from "./routers/UsuariosRoutes";
@@ -22,6 +23,7 @@ export class Router {
         this.app.use("/roles", RolesRoutes.router);
         this.app.use("/permisos", PermisosRoutes.router);
         this.app.use("/ubicaciones", UbicacionRoutes.router);
-        this.app.use("/categoriarecursos", CategoriaRecursosRoutes.router)
+        this.app.use("/categoriarecursos", CategoriaRecursosRoutes.router);
+        this.app.use("/recursos", RecursosRoutes.router);
     }
 }

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Evento } from "../evento/Evento";
 import { CategoriaRecurso } from "./CategoriaRecurso";
 import { EstadoRecurso } from "./EstadoRecurso";
@@ -7,7 +7,7 @@ import { EstadoRecurso } from "./EstadoRecurso";
 	name: "recurso",
 })
 export class Recurso {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@Column({ name: "nombre", type: "varchar", length: 255 })
@@ -20,8 +20,11 @@ export class Recurso {
 	@Column({ name: "descripcion", type: "varchar", length: 255 })
 	descripcion: string;
 
-	@Column({ name: "cantidad", type: "int" })
-	cantidad: number;
+	@Column({ name: "cantidad_necesaria", type: "int" })
+	cantidadNecesaria: number;
+
+	@Column({ name: "cantidad_actual", type: "int" })
+	cantidadActual: number;
 
 	@ManyToOne(
 		() => CategoriaRecurso,
@@ -35,6 +38,9 @@ export class Recurso {
 
 	@Column({ name: "proveedor", type: "varchar", length: 255, nullable: true })
 	proveedor?: string;
+	
+	@Column({ name: "colorTarjeta", type: "varchar", length: 7, default: "#FFFFFF" })
+	colorTarjeta: string;
 
 	constructor() {}
 
@@ -70,12 +76,18 @@ export class Recurso {
 		this.descripcion = descripcion;
 	}
 
-	public getCantidad(): number {
-		return this.cantidad;
+	public getCantidadNecesaria(): number {
+		return this.cantidadNecesaria;
+	}
+	public setCantidadNecesaria(cantidad: number) {
+		this.cantidadNecesaria = cantidad;
 	}
 
-	public setCantidad(cantidad: number) {
-		this.cantidad = cantidad;
+	public getCantidadActual(): number {
+		return this.cantidadActual;
+	}
+	public setCantidadActual(cantidad: number) {
+		this.cantidadActual = cantidad;
 	}
 
 	public getCategoria(): CategoriaRecurso {

@@ -6,9 +6,22 @@ export class EventosApiController {
     // TODO: Crear o injectar en el constructor el repositorio de eventos asi no se repite el codigo de
     // getRepository cada vez que lo tengamos que usar, y todo el Controller tiene el repository
 
+    // TODO: Crear o injectar en el constructor el repositorio de eventos asi no se repite el codigo de
+    // getRepository cada vez que lo tengamos que usar, y todo el Controller tiene el repository
+
     public static async index(req: Request, res: Response, next: NextFunction) {
         try {   
             const idUsuario = req.query.usuario_id;
+            const eventoRepository = Database.em.getRepository("evento")
+            const eventos = await eventoRepository
+				.createQueryBuilder("evento")
+                .select(["evento", "ubicacion", "usuario.id", "usuario.nombreUsuario"])
+                .addSelect("eventoAnterior")
+                .where("evento.creador.id = :idUsuario", { idUsuario })
+                .leftJoin("evento.ubicacion", "ubicacion")
+                .leftJoin("evento.creador", "usuario")
+                .leftJoin("evento.eventoAnterior", "eventoAnterior")
+				.getMany();;
             const eventoRepository = Database.em.getRepository("evento")
             const eventos = await eventoRepository
 				.createQueryBuilder("evento")
@@ -46,9 +59,12 @@ export class EventosApiController {
     public static async store(req: Request, res: Response, next: NextFunction) {
         try {
             const evento = new Evento();
+            const evento = new Evento();
 
             EventosApiController.asignarParametros(evento!!, req.body);
+            EventosApiController.asignarParametros(evento!!, req.body);
 
+            await Database.em.save(evento);
             await Database.em.save(evento);
 
             res.status(200);

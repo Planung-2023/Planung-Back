@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Asistente } from "../asistencia/Asistente";
 import { Evento } from "./Evento";
 import { PosibleEstadoEvento } from "./PosibleEstadoEvento";
@@ -7,7 +7,7 @@ import { PosibleEstadoEvento } from "./PosibleEstadoEvento";
 	name: "estado_evento",
 })
 export class EstadoEvento {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	id: string;
 
 	@ManyToOne(() => Evento)
