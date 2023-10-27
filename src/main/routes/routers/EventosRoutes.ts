@@ -35,6 +35,8 @@ export class EventosRoutes {
         this.router.delete("/:id/recursos", RecursosApiController.remove);
 
         // Asistentes
+        this.router.get("/:id/asistentes", AsistentesApiController.index)
+
         this.router.post("/:id/asistentes", [
             check("asistentes", "Asistentes debe ser un array").notEmpty().isArray(),
             validarCampos
