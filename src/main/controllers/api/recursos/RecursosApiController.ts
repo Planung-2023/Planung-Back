@@ -114,6 +114,28 @@ export class RecursosApiController {
         }
     }
 
+    public static async updateOne(req: Request, res: Response, next: NextFunction) {
+        try {
+            let { idRecurso } = req.params;
+            const { recurso } = req.body;
+
+            const recursoDb = await RecursosApiController.findOneById(idRecurso);
+
+            if (!recursoDb) return res.json({ msg: `Recurso con id ${idRecurso} no encontrado` }).send();
+
+            const recursoRepository = Database.em.getRepository(Recurso)
+            const updateRecurso = await recursoRepository.preload(recurso);
+
+            await recursoRepository.save(updateRecurso!)
+            
+            return res.json({
+                recurso: updateRecurso,
+            }).send()
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     public static async remove(req: Request, res: Response, next: NextFunction) {
         try {
             const recurso = await Database.em.findOneBy(Recurso, {
@@ -223,5 +245,11 @@ export class RecursosApiController {
 				await Database.em.save(recursoExistente);
 			}
 		}
+    }
+
+    public static async findOneById(id: string) {
+        const recurso = await Database.em.findOneBy(Recurso, { id });
+
+        return recurso;
     }
 }

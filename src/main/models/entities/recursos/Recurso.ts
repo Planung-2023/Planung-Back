@@ -13,7 +13,7 @@ export class Recurso {
 	@Column({ name: "nombre", type: "varchar", length: 255 })
 	nombre: string;
 
-	@ManyToOne(() => Evento)
+	@ManyToOne(() => Evento, { eager: true })
 	@JoinColumn({ name: "evento_id" })
 	evento: Evento;
 
@@ -39,7 +39,7 @@ export class Recurso {
 	@Column({ name: "proveedor", type: "varchar", length: 255, nullable: true })
 	proveedor?: string;
 	
-	@Column({ name: "colorTarjeta", type: "varchar", length: 7, default: "#FFFFFF" })
+	@Column({ name: "color_tarjeta", type: "varchar", length: 7, default: "#FFFFFF" })
 	colorTarjeta: string;
 
 	constructor() {}
