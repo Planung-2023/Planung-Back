@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { Evento } from "../../../models/entities/evento/Evento";
+import { Ubicacion } from "../../../models/entities/otros/Ubicacion";
 import { Database } from "../../../server/Database";
+import { RecursosApiController } from "../recursos/RecursosApiController";
+import { UbicacionApiController } from "../ubicacion/UbicacionApiController";
 
 export class EventosApiController {
     public static async index(req: Request, res: Response, next: NextFunction) {
@@ -41,12 +44,18 @@ export class EventosApiController {
     public static async store(req: Request, res: Response, next: NextFunction) {
         try {
             const { evento } = req.body;
+            const { ubicacion } = evento;
+
+            const ubicacionDb = new Ubicacion();
+            UbicacionApiController.asignarParametros(ubicacionDb, ubicacion);
+            await Database.em.save(ubicacionDb);
 
             const eventoDb = new Evento();
-
+            eventoDb.setUbicacion(ubicacionDb);
             EventosApiController.asignarParametros(eventoDb!!, evento);
 
             await Database.em.save(eventoDb);
+            RecursosApiController.crearRecursos(evento.recursos, eventoDb.id);
 
             res.status(201).send({
                 evento: eventoDb,
@@ -104,8 +113,6 @@ export class EventosApiController {
         evento.setEstadoEvento(params.estadoEvento ? params.estadoEvento : null);
         evento.setEventoAnterior(params.eventoAnterior ? params.eventoAnterior : null);
         evento.setEsVisible(params.esVisible);
-
-        // evento.setHoraInicio(new Date(`1970-01-01T${params.horaInicio}Z`));
         evento.setHoraInicio(params.horaInicio);
         evento.setHoraFin(params.horaFin ? params.horaFin : null);
         evento.setTipoEvento(params.tipoEvento ? params.tipoEvento : null);

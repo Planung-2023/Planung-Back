@@ -64,11 +64,12 @@ export class Evento {
     @JoinColumn({ name: "usuario_id", referencedColumnName: "id" })
     creador: Usuario;
 
+    //TODO: string --> Directa / Por aprobacion
     @OneToOne(() => TipoInvitacion)
     @JoinColumn({ name: "tipo_invitacion_id", referencedColumnName: "id" })
     tipoInvitacion: TipoInvitacion;
 
-    @Column({ name: "descripcion", type: "varchar", length: 255 })
+    @Column({ name: "descripcion", type: "varchar", length: 255, nullable: true })
     descripcion: string;
 
     constructor() {}

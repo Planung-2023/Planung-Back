@@ -6,60 +6,59 @@ import { Database } from "../../../server/Database";
 import { EventosApiController } from "../eventos/EventosApiController";
 
 export class RecursosApiController {
-
     public static async index(req: Request, res: Response, next: NextFunction) {
         try {
             const idEvento = req.params.id;
 
-            const recursos = await Database.em.find(Recurso, { where: {
-                evento: {
-                    id: idEvento
-                }
-            }});
+            const recursos = await Database.em.find(Recurso, {
+                where: {
+                    evento: {
+                        id: idEvento,
+                    },
+                },
+            });
             res.json(recursos);
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
-    
+
     public static async show(req: Request, res: Response, next: NextFunction) {
         try {
             const recurso = await Database.em.findOneBy(Recurso, {
-                id: req.params.id
+                id: req.params.id,
             });
 
-            if(recurso === null) {
+            if (recurso === null) {
                 res.status(404);
                 res.send();
                 return;
             }
             res.json(recurso);
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
-    
+
     public static async store(req: Request, res: Response, next: NextFunction) {
         try {
-
             const { recursos } = req.body;
             const { id } = req.params;
 
             const evento = await EventosApiController.findOneById(id);
 
-            if( !evento ) {
-                res.status(404).json({
-                    msg: `Evento con id ${id} no encontrado`
-                }).send();
+            if (!evento) {
+                res.status(404)
+                    .json({
+                        msg: `Evento con id ${id} no encontrado`,
+                    })
+                    .send();
             }
 
-            const recursosInsertados = await RecursosApiController.crearRecursos(recursos, id)
+            const recursosInsertados = await RecursosApiController.crearRecursos(recursos, id);
 
             res.status(201).json({ recursos: recursosInsertados }).send();
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
@@ -68,48 +67,48 @@ export class RecursosApiController {
         try {
             const { id } = req.params;
             const { recursos } = req.body;
-            
+
             const evento = await EventosApiController.findOneById(id);
-			if (!evento) {
-				res.status(404).json({
-					msg: `Evento con id ${id} no encontrado`,
-				}).send();
+            if (!evento) {
+                res.status(404)
+                    .json({
+                        msg: `Evento con id ${id} no encontrado`,
+                    })
+                    .send();
             }
-            
+
             const recursosNuevos = recursos.filter((recurso: Recurso) => !recurso.id);
             await RecursosApiController.crearRecursos(recursosNuevos, id);
-            
+
             const recursosExistentes = await Database.em.findBy(Recurso, { evento: { id } });
-			const recursosNoEnviados = recursosExistentes.filter((recursoExistente: Recurso) => {
-					return (
-						recursoExistente.id !== null &&
-						!recursos.some((recurso: Recurso) => recurso.id === recursoExistente.id)
-					);
-				}
-            );
-            
-			await Database.em.remove(recursosNoEnviados);
+            const recursosNoEnviados = recursosExistentes.filter((recursoExistente: Recurso) => {
+                return (
+                    recursoExistente.id !== null &&
+                    !recursos.some((recurso: Recurso) => recurso.id === recursoExistente.id)
+                );
+            });
 
-            const recursosAModificar = recursosExistentes.filter(
-				(recursoExistente: Recurso) => {
-					return (
-						recursoExistente.id !== null &&
-						recursos.some((recurso: Recurso) =>recurso.id === recursoExistente.id)
-					);
-				}
-            );
-            
+            await Database.em.remove(recursosNoEnviados);
+
+            const recursosAModificar = recursosExistentes.filter((recursoExistente: Recurso) => {
+                return (
+                    recursoExistente.id !== null &&
+                    recursos.some((recurso: Recurso) => recurso.id === recursoExistente.id)
+                );
+            });
+
             await RecursosApiController.actualizarRecursos(recursosAModificar, recursos);
-            
-            const recursosInsertados = await Database.em.findBy(Recurso, {
-                evento: { id }
-            })
 
-            res.status(200).json({
-                recursos: recursosInsertados,
-            }).send();
-        }
-        catch (e) {
+            const recursosInsertados = await Database.em.findBy(Recurso, {
+                evento: { id },
+            });
+
+            res.status(200)
+                .json({
+                    recursos: recursosInsertados,
+                })
+                .send();
+        } catch (e) {
             next(e);
         }
     }
@@ -121,16 +120,19 @@ export class RecursosApiController {
 
             const recursoDb = await RecursosApiController.findOneById(idRecurso);
 
-            if (!recursoDb) return res.json({ msg: `Recurso con id ${idRecurso} no encontrado` }).send();
+            if (!recursoDb)
+                return res.json({ msg: `Recurso con id ${idRecurso} no encontrado` }).send();
 
-            const recursoRepository = Database.em.getRepository(Recurso)
+            const recursoRepository = Database.em.getRepository(Recurso);
             const updateRecurso = await recursoRepository.preload(recurso);
 
-            await recursoRepository.save(updateRecurso!)
-            
-            return res.json({
-                recurso: updateRecurso,
-            }).send()
+            await recursoRepository.save(updateRecurso!);
+
+            return res
+                .json({
+                    recurso: updateRecurso,
+                })
+                .send();
         } catch (error) {
             console.log(error);
         }
@@ -139,10 +141,10 @@ export class RecursosApiController {
     public static async remove(req: Request, res: Response, next: NextFunction) {
         try {
             const recurso = await Database.em.findOneBy(Recurso, {
-                id: req.params.id
+                id: req.params.id,
             });
 
-            if(recurso === null) {
+            if (recurso === null) {
                 res.status(404);
                 res.send();
                 return;
@@ -151,46 +153,38 @@ export class RecursosApiController {
             await Database.em.remove(recurso);
             res.status(200);
             res.send();
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
-	public static async getCategorias(req: Request, res: Response, next: NextFunction){
+    public static async getCategorias(req: Request, res: Response, next: NextFunction) {
         try {
             const recurso = await Database.em.findOne(Recurso, {
                 where: {
-                    id: req.params.id
+                    id: req.params.id,
                 },
                 relations: {
                     categoria: true,
-                }
+                },
             });
 
-            if(!recurso) {
+            if (!recurso) {
                 res.status(404).json({ msg: "Recurso no encontrado" }).send();
                 return;
             }
             res.json(recurso.categoria).send();
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
-        }    
-        
-
+        }
     }
 
-    public static async getTodasLasCategorias(req: Request, res: Response, next: NextFunction){
+    public static async getTodasLasCategorias(req: Request, res: Response, next: NextFunction) {
         try {
-    
             const categorias = await Database.em.find(CategoriaRecurso);
             res.json(categorias).send();
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
-        }    
-        
-
+        }
     }
 
     public static async getAsignaciones(req: Request, res: Response, next: NextFunction) {
@@ -198,18 +192,18 @@ export class RecursosApiController {
             const { id } = req.params;
 
             const recurso = await Database.em.findOneBy(Recurso, {
-                id
+                id,
             });
 
             if (!recurso) res.status(404).send();
 
             const asignaciones = await Database.em.findBy(AsignacionRecurso, {
                 recurso: { id },
-            })
-            
+            });
+
             res.json(asignaciones);
         } catch (e) {
-            next(e)
+            next(e);
         }
     }
 
@@ -223,15 +217,15 @@ export class RecursosApiController {
         recurso.setProveedor(params.proveedor ? params.proveedor : null);
     }
 
-    private static async crearRecursos(recursos: any[], idEvento: string) {
+    public static async crearRecursos(recursos: any[], idEvento: string) {
         const recursosInsertados: Recurso[] = [];
         for (const recursoData of recursos) {
             const recurso = new Recurso();
             recursoData.evento = idEvento;
 
-            const existeCategoria = await Database.em.findOneBy(CategoriaRecurso,
-                { id: recursoData.categoria }
-            )
+            const existeCategoria = await Database.em.findOneBy(CategoriaRecurso, {
+                id: recursoData.categoria,
+            });
 
             if (existeCategoria != null) {
                 RecursosApiController.asignarParametros(recurso!!, recursoData);
@@ -243,20 +237,18 @@ export class RecursosApiController {
 
         return recursosInsertados;
     }
-    
 
     private static async actualizarRecursos(recursosAModificar: any[], recursos: any[]) {
         for (const recursoExistente of recursosAModificar) {
-            const recursoData = recursos.find((recurso: Recurso) => recurso.id === recursoExistente.id);
-            
-			if (recursoData) {
-				RecursosApiController.asignarParametros(
-					recursoExistente,
-					recursoData
-				);
-				await Database.em.save(recursoExistente);
-			}
-		}
+            const recursoData = recursos.find(
+                (recurso: Recurso) => recurso.id === recursoExistente.id,
+            );
+
+            if (recursoData) {
+                RecursosApiController.asignarParametros(recursoExistente, recursoData);
+                await Database.em.save(recursoExistente);
+            }
+        }
     }
 
     public static async findOneById(id: string) {
