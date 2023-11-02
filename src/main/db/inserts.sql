@@ -21,10 +21,10 @@ INSERT INTO ubicacion (id, calle, altura, localidad, latitud, longitud) VALUES
 (3, 'Av. La Cámpora', 3900, 'Pablo Nogués', 30, 30),
 (4, 'Av. 9 de Julio', 50, 'C.A.B.A.', -3, 10);
 
-INSERT INTO evento (id, nombre, fecha, hora_inicio, hora_fin, es_visible, descripcion, tipo_evento, ubicacion_id, evento_anterior_id, presentador_asistente_id) VALUES 
-(1, 'Juntada dia del amigo', '2022-04-22', '00:00:00', '00:00:00', 0,"descripcion 1", 'Informal', 1, NULL, NULL),
-(2, 'Presentacion inmueble', '2022-04-23','00:00:00', '00:00:00', 1,"descripcion 2", 'Formal', 2, NULL, NULL),
-(3, 'Juntada de Spidermans', '2023-10-29','15:00:00', '18:00:00', 1,"ROMPER RECORD GUINESS", 'Formal', 4, NULL, NULL);
+INSERT INTO evento (id, nombre, fecha, hora_inicio, hora_fin, es_visible, descripcion, tipo_evento, ubicacion_id, evento_anterior_id, presentador_asistente_id, usuario_id) VALUES 
+(1, 'Juntada dia del amigo', '2022-04-22', '00:00:00', '00:00:00', 0,"descripcion 1", 'Informal', 1, NULL, NULL, 1),
+(2, 'Presentacion inmueble', '2022-04-23','00:00:00', '00:00:00', 1,"descripcion 2", 'Formal', 2, NULL, NULL, 1),
+(3, 'Juntada de Spidermans', '2023-10-29','15:00:00', '18:00:00', 1,"ROMPER RECORD GUINESS", 'Formal', 4, NULL, NULL, 1);
 
 INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('Bebida', 1, 'Bebida');
 INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('Mobiliario', 2, 'Mobiliario');
