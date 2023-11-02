@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { WelcomeController } from "../../controllers/WelcomeController";
 import { ParticipantesApiController } from "../../controllers/api/personas/ParticipantesApiController";
 
 export class ParticipantesRoutes {
