@@ -7,42 +7,40 @@ export class EventosApiController {
     // getRepository cada vez que lo tengamos que usar, y todo el Controller tiene el repository
 
     public static async index(req: Request, res: Response, next: NextFunction) {
-        try {   
+        try {
             const idUsuario = req.query.usuario_id;
-            const eventoRepository = Database.em.getRepository("evento")
+            const eventoRepository = Database.em.getRepository("evento");
             const eventos = await eventoRepository
-				.createQueryBuilder("evento")
+                .createQueryBuilder("evento")
                 .select(["evento", "ubicacion", "usuario.id", "usuario.nombreUsuario"])
                 .addSelect("eventoAnterior")
                 .where("evento.creador.id = :idUsuario", { idUsuario })
                 .leftJoin("evento.ubicacion", "ubicacion")
                 .leftJoin("evento.creador", "usuario")
                 .leftJoin("evento.eventoAnterior", "eventoAnterior")
-				.getMany();;
+                .getMany();
             res.json(eventos);
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
     public static async show(req: Request, res: Response, next: NextFunction) {
         try {
-            const eventos= await Database.em.findOneBy(Evento, {
-                id: req.params.id
+            const eventos = await Database.em.findOneBy(Evento, {
+                id: req.params.id,
             });
 
-            if(eventos === null) {
+            if (eventos === null) {
                 res.status(404);
                 res.send();
                 return;
             }
             res.json(eventos);
-        }
-        catch (e) {   
+        } catch (e) {
             next(e);
         }
-
     }
+
     public static async store(req: Request, res: Response, next: NextFunction) {
         try {
             const evento = new Evento();
@@ -53,18 +51,18 @@ export class EventosApiController {
 
             res.status(200);
             res.send();
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
+
     public static async update(req: Request, res: Response, next: NextFunction) {
         try {
             const eventos = await Database.em.findOneBy(Evento, {
-                id: req.params.id
+                id: req.params.id,
             });
 
-            if(eventos === null) {
+            if (eventos === null) {
                 res.status(404);
                 res.send();
                 return;
@@ -76,18 +74,17 @@ export class EventosApiController {
 
             res.status(200);
             res.send();
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
     public static async remove(req: Request, res: Response, next: NextFunction) {
         try {
             const eventos = await Database.em.findOneBy(Evento, {
-                id: req.params.id
+                id: req.params.id,
             });
 
-            if(eventos === null) {
+            if (eventos === null) {
                 res.status(404);
                 res.send();
                 return;
@@ -96,24 +93,22 @@ export class EventosApiController {
             await Database.em.remove(eventos);
             res.status(200);
             res.send();
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
-    
     }
-    
+
     private static asignarParametros(evento: Evento, params: any) {
-		evento.setNombre(params.nombre);
-		evento.setRecursos(params.recursos); // No va. RecursosController.  /eventos/1/recursos/ POST body
-		evento.setUbicacion(params.ubicacion); // No va. UbicacionController
-		evento.setFechaHora(params.fechaHora);
-		evento.setEstadoEvento(params.estadoEvento);
-		evento.setEventoAnterior(params.eventoAnterior);
-		evento.setAsistentes(params.asistentes); // No va. AsistentesController. /eventos/1/asistentes/ POST
-		evento.setEsVisible(params.esVisible);
-	}
-    
+        evento.setNombre(params.nombre);
+        evento.setRecursos(params.recursos); // No va. RecursosController.  /eventos/1/recursos/ POST body
+        evento.setUbicacion(params.ubicacion); // No va. UbicacionController
+        evento.setFechaHora(params.fechaHora);
+        evento.setEstadoEvento(params.estadoEvento);
+        evento.setEventoAnterior(params.eventoAnterior);
+        evento.setAsistentes(params.asistentes); // No va. AsistentesController. /eventos/1/asistentes/ POST
+        evento.setEsVisible(params.esVisible);
+    }
+
     public static async findOneById(id: string) {
         const evento = await Database.em.findOneBy(Evento, { id });
 
