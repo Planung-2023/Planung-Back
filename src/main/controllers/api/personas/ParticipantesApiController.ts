@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
-import { Participante } from '../../../models/entities/persona/Participante';
-import { Database } from '../../../server/Database';
+import { NextFunction, Request, Response } from "express";
+import { Participante } from "../../../models/entities/persona/Participante";
+import { Database } from "../../../server/Database";
 
 export class ParticipantesApiController {
     public static async index(req: Request, res: Response, next: NextFunction) {
@@ -86,18 +86,20 @@ export class ParticipantesApiController {
             next(e);
         }
     }
-
     public static async getParticipante(req: Request, res: Response, next: NextFunction) {
         try {
             const id = await Database.em.findOneBy(Participante, {
                 id: req.params.id,
             });
+
             if (id === null) {
                 res.status(404);
                 res.send();
                 return;
             }
-            res.json(id);
+            res.json({
+                participante: id,
+            });
         } catch (e) {
             next(e);
         }
