@@ -43,14 +43,13 @@ export class EventosApiController {
 
     public static async store(req: Request, res: Response, next: NextFunction) {
         try {
-            const evento = new Evento();
+            // const evento = new Evento();
 
-            EventosApiController.asignarParametros(evento!!, req.body);
+            // EventosApiController.asignarParametros(evento!!, req.body);
 
-            await Database.em.save(evento);
+            // await Database.em.save(evento);
 
-            res.status(200);
-            res.send();
+            res.status(200).send({});
         } catch (e) {
             next(e);
         }

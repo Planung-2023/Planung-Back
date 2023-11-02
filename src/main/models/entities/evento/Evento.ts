@@ -80,7 +80,7 @@ export class Evento {
         return this.nombre;
     }
 
-    public setNombre(nombre: String): void {
+    public setNombre(nombre: string): void {
         this.nombre = nombre;
     }
 
