@@ -21,11 +21,13 @@ INSERT INTO evento (id, nombre, fecha, hora_inicio, hora_fin, es_visible, descri
 (1, 'Juntada dia del amigo', '2022-04-22', '00:00:00', '00:00:00', 0,"descripcion 1", 'Informal', 1, NULL, NULL),
 (2, 'Presentacion inmueble', '2022-04-23','00:00:00', '00:00:00', 1,"descripcion 2", 'Formal', 2, NULL, NULL);
 
-INSERT INTO recurso_categoria (id, nombre, icono) VALUES 
-(1, 'Comida', 'jpg'),
-(2, 'Bebida', 'jpg'),
-(3, 'Tecnologia', 'jpg'),
-(4, 'Otro', 'jpg');
+INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('jpg', 1, 'Bebida');
+INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('jpg', 2, 'Mobiliario');
+INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('jpg', 3, 'Comida');
+INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('jpg', 4, 'Juego');
+INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('jpg', 5, 'Tecnologia');
+INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('jpg', 6, 'Otro');
+
 
 INSERT INTO recurso (id, nombre, descripcion, cantidad, proveedor, evento_id, recurso_categoria_id) VALUES 
 (1, 'Paty', 'porfavor no traigan marca coto', 2, NULL, 1, 1),
