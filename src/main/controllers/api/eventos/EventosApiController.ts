@@ -40,13 +40,17 @@ export class EventosApiController {
 
     public static async store(req: Request, res: Response, next: NextFunction) {
         try {
-            // const evento = new Evento();
+            const { evento } = req.body;
 
-            // EventosApiController.asignarParametros(evento!!, req.body);
+            const eventoDb = new Evento();
 
-            // await Database.em.save(evento);
+            EventosApiController.asignarParametros(eventoDb!!, evento);
 
-            res.status(200).send({});
+            await Database.em.save(eventoDb);
+
+            res.status(201).send({
+                evento: eventoDb,
+            });
         } catch (e) {
             next(e);
         }
@@ -95,22 +99,17 @@ export class EventosApiController {
     }
 
     private static asignarParametros(evento: Evento, params: any) {
-        //const formatHour = EventosApiController.formatHour(params.horaInicio);
-
         evento.setNombre(params.nombre);
-        evento.setRecursos(params.recursos); // No va. RecursosController.  /eventos/1/recursos/ POST body
-        evento.setUbicacion(params.ubicacion); // No va. UbicacionController
         evento.setFecha(params.fecha);
-        evento.setEstadoEvento(params.estadoEvento);
-        evento.setEventoAnterior(params.eventoAnterior);
-        evento.setAsistentes(params.asistentes);
+        evento.setEstadoEvento(params.estadoEvento ? params.estadoEvento : null);
+        evento.setEventoAnterior(params.eventoAnterior ? params.eventoAnterior : null);
         evento.setEsVisible(params.esVisible);
 
-        evento.setHoraInicio(new Date(`1970-01-01T${params.horaInicio}Z`));
+        // evento.setHoraInicio(new Date(`1970-01-01T${params.horaInicio}Z`));
+        evento.setHoraInicio(params.horaInicio);
         evento.setHoraFin(params.horaFin ? params.horaFin : null);
-        evento.setTipoEvento(params.tipoEvento);
-        evento.setTipoInvitacion(params.tipoInvitacion);
-
+        evento.setTipoEvento(params.tipoEvento ? params.tipoEvento : null);
+        evento.setTipoInvitacion(params.tipoInvitacion ? params.tipoInvitacion : null);
         evento.setDescripcion(params.descripcion);
     }
 

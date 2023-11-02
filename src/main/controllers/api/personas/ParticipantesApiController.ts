@@ -104,23 +104,6 @@ export class ParticipantesApiController {
             next(e);
         }
     }
-    public static async getParticipante(req: Request, res:Response, next: NextFunction){
-        try{
-            const id= await Database.em.findOneBy(Participante, {
-                id: req.params.id
-            });
-            if(id=== null){
-                res.status(404);
-                res.send();
-                return;
-            }
-            res.json(id);
-        }
-        catch(e){
-            next(e);
-        }
-
-    }
 
     private static asignarParametros(participante: Participante, params: any) {
         participante.setApellido(params.apellido);

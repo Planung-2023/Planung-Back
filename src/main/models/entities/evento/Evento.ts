@@ -40,10 +40,10 @@ export class Evento {
     @Column({ name: "hora_fin", type: "time", nullable: true })
     horaFin: Date;
 
-    @OneToMany(() => EstadoEvento, (estadoEvento) => estadoEvento.evento)
+    @OneToMany(() => EstadoEvento, (estadoEvento) => estadoEvento.evento, { nullable: true })
     estadoEvento: EstadoEvento;
 
-    @OneToOne(() => Evento)
+    @OneToOne(() => Evento, { nullable: true })
     @JoinColumn({ name: "evento_anterior_id" })
     eventoAnterior: Evento;
 
@@ -53,7 +53,7 @@ export class Evento {
     @Column({ name: "es_visible", type: "boolean", default: false })
     esVisible: boolean;
 
-    @Column({ name: "tipo_evento", type: "varchar", length: 255 })
+    @Column({ name: "tipo_evento", type: "varchar", length: 255, nullable: true })
     tipoEvento: string;
 
     @OneToOne(() => Asistente)
