@@ -17,9 +17,9 @@ INSERT INTO ubicacion (id, calle, altura, localidad, latitud, longitud) VALUES
 (1, 'Av. San Martin', 3100, 'C.A.B.A.', 24, 25),
 (2, 'Av. Nazca', 2500, 'C.A.B.A.', 30, 30);
 
-INSERT INTO evento (id, nombre, fecha_hora, es_visible, tipo_evento, ubicacion_id, evento_anterior_id, presentador_asistente_id) VALUES 
-(1, 'Juntada dia del amigo', '2022-04-22', 0, 'Informal', 1, NULL, NULL),
-(2, 'Presentacion inmueble', '2022-04-23', 1, 'Formal', 2, NULL, NULL);
+INSERT INTO evento (id, nombre, fecha, hora_inicio, hora_fin, es_visible, descripcion, tipo_evento, ubicacion_id, evento_anterior_id, presentador_asistente_id) VALUES 
+(1, 'Juntada dia del amigo', '2022-04-22', '00:00:00', '00:00:00', 0,"descripcion 1", 'Informal', 1, NULL, NULL),
+(2, 'Presentacion inmueble', '2022-04-23','00:00:00', '00:00:00', 1,"descripcion 2", 'Formal', 2, NULL, NULL);
 
 INSERT INTO recurso_categoria (id, nombre, icono) VALUES 
 (1, 'Comida', 'jpg'),
@@ -48,3 +48,19 @@ INSERT INTO asistencia(id, asistente_id) VALUES
 (4, 4),
 (5, 5),
 (6, 6);
+
+INSERT INTO `ahk_eventos`.`asignacion_recurso` (`id`, `fecha_hora`, `cantidad`, `comentarios`, `recursoId`, `asistenteId`) VALUES
+('1', '1', '1', '1', '1', '1');
+
+
+INSERT INTO `ahk_eventos`.`asistente_notificacion` (`id`, `visto`, `fechaVisto`, `notificacion_id`, `asistente_id`) VALUES 
+('1', '1', '1', '1', '1');
+
+INSERT INTO `ahk_eventos`.`estado_evento` (`id`, `fecha_hora`, `evento_id`, `posible_estado_evento_id`, `asistente_cambio_estado_id`) VALUES 
+('1', '1', '1', '1', '1');
+
+INSERT INTO `ahk_eventos`.`invitacion` (`id`, `fecha_hora_envio`, `fecha_hora_visto`, `fecha_hora_respuesta`, `esta_visto`, `esta_aceptado`, `asistente_id`) VALUES 
+('1', '1', '1', '1', '1', '1', '1');
+
+INSERT INTO `ahk_eventos`.`notificacion` (`id`, `fecha_hora`, `mensaje`) VALUES 
+('1', 'a', '1');

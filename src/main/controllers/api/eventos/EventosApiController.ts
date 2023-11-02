@@ -3,9 +3,6 @@ import { Evento } from "../../../models/entities/evento/Evento";
 import { Database } from "../../../server/Database";
 
 export class EventosApiController {
-    // TODO: Crear o injectar en el constructor el repositorio de eventos asi no se repite el codigo de
-    // getRepository cada vez que lo tengamos que usar, y todo el Controller tiene el repository
-
     public static async index(req: Request, res: Response, next: NextFunction) {
         try {
             const idUsuario = req.query.usuario_id;
@@ -98,19 +95,37 @@ export class EventosApiController {
     }
 
     private static asignarParametros(evento: Evento, params: any) {
+        //const formatHour = EventosApiController.formatHour(params.horaInicio);
+
         evento.setNombre(params.nombre);
         evento.setRecursos(params.recursos); // No va. RecursosController.  /eventos/1/recursos/ POST body
         evento.setUbicacion(params.ubicacion); // No va. UbicacionController
-        evento.setFechaHora(params.fechaHora);
+        evento.setFecha(params.fecha);
         evento.setEstadoEvento(params.estadoEvento);
         evento.setEventoAnterior(params.eventoAnterior);
-        evento.setAsistentes(params.asistentes); // No va. AsistentesController. /eventos/1/asistentes/ POST
+        evento.setAsistentes(params.asistentes);
         evento.setEsVisible(params.esVisible);
+
+        evento.setHoraInicio(new Date(`1970-01-01T${params.horaInicio}Z`));
+        evento.setHoraFin(params.horaFin ? params.horaFin : null);
+        evento.setTipoEvento(params.tipoEvento);
+        evento.setTipoInvitacion(params.tipoInvitacion);
+
+        evento.setDescripcion(params.descripcion);
     }
 
     public static async findOneById(id: string) {
         const evento = await Database.em.findOneBy(Evento, { id });
 
         return evento;
+    }
+
+    public static formatHour(dateString: string) {
+        const date = new Date(dateString);
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const miliseconds = date.getMilliseconds();
+
+        return `${hours}:${minutes}:${miliseconds}`;
     }
 }

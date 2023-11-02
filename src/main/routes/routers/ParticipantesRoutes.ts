@@ -8,7 +8,11 @@ export class ParticipantesRoutes {
         this.router = Router();
 
         this.router.get("", ParticipantesApiController.index);
+<<<<<<< HEAD
         this.router.get("/:id", ParticipantesApiController.getParticipante);
+=======
+        this.router.get("/:id", ParticipantesApiController.getParticipante)
+>>>>>>> tkatz
         this.router.get("/:id", ParticipantesApiController.show);
         this.router.put("/:id", ParticipantesApiController.update);
         this.router.post("", ParticipantesApiController.store);

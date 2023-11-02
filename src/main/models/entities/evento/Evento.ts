@@ -8,6 +8,7 @@ import {
     PrimaryGeneratedColumn,
 } from "typeorm";
 import { Asistente } from "../asistencia/Asistente";
+import { TipoInvitacion } from "../asistencia/TipoInvitacion";
 import { Ubicacion } from "../otros/Ubicacion";
 import { Usuario } from "../persona/Usuario";
 import { Recurso } from "../recursos/Recurso";
@@ -30,14 +31,14 @@ export class Evento {
     @JoinColumn({ name: "ubicacion_id" })
     ubicacion: Ubicacion;
 
-    /*TODO: cambiar fecha hora por estas 3, hora fin puede ser null
-		fecha: "",
-		hora_inicio: ""
-		# hora_fin: NULL
-	*/
+    @Column({ name: "fecha", type: "date" })
+    fecha: Date;
 
-    @Column({ name: "fecha_hora", type: "datetime" })
-    fechaHora: Date;
+    @Column({ name: "hora_inicio", type: "time" })
+    horaInicio: Date;
+
+    @Column({ name: "hora_fin", type: "time", nullable: true })
+    horaFin: Date;
 
     @OneToMany(() => EstadoEvento, (estadoEvento) => estadoEvento.evento)
     estadoEvento: EstadoEvento;
@@ -49,7 +50,7 @@ export class Evento {
     @OneToMany(() => Asistente, (asistente) => asistente.evento)
     asistentes: Asistente[];
 
-    @Column({ name: "es_visible", type: "boolean" })
+    @Column({ name: "es_visible", type: "boolean", default: false })
     esVisible: boolean;
 
     @Column({ name: "tipo_evento", type: "varchar", length: 255 })
@@ -63,8 +64,12 @@ export class Evento {
     @JoinColumn({ name: "usuario_id", referencedColumnName: "id" })
     creador: Usuario;
 
-    // TODO: agregar descripcion evento
-    // TODO: agregar tipo de invitacion (directo, aprobacion)
+    @OneToOne(() => TipoInvitacion)
+    @JoinColumn({ name: "tipo_invitacion_id", referencedColumnName: "id" })
+    tipoInvitacion: TipoInvitacion;
+
+    @Column({ name: "descripcion", type: "varchar", length: 255 })
+    descripcion: string;
 
     constructor() {}
 
@@ -76,7 +81,7 @@ export class Evento {
         this.id = id;
     }
 
-    public getNombre(): String {
+    public getNombre(): string {
         return this.nombre;
     }
 
@@ -100,12 +105,29 @@ export class Evento {
         this.ubicacion = ubicacion;
     }
 
-    public getFechaHora(): Date {
-        return this.fechaHora;
+    public getFecha(): Date {
+        return this.fecha;
+    }
+    public setFecha(fecha: Date): void {
+        this.fecha = fecha;
     }
 
-    public setFechaHora(fechaHora: Date): void {
-        this.fechaHora = fechaHora;
+    public getHoraInicio(): Date {
+        return this.horaInicio;
+    }
+    public setHoraInicio(hora: Date): void {
+        this.horaInicio = hora;
+    }
+
+    public getHoraFin(): Date {
+        return this.horaFin;
+    }
+    public setHoraFin(hora: Date): void {
+        this.horaFin = hora;
+    }
+
+    public getTipoInvitacion(): TipoInvitacion {
+        return this.tipoInvitacion;
     }
 
     public getEstadoEvento(): EstadoEvento {
@@ -146,5 +168,15 @@ export class Evento {
 
     public setCreador(creador: Usuario) {
         this.creador = creador;
+    }
+
+    public setDescripcion(descripcion: string) {
+        this.descripcion = descripcion;
+    }
+    public setTipoEvento(tipoEvento: string) {
+        this.tipoEvento = tipoEvento;
+    }
+    public setTipoInvitacion(tipoInvitacion: TipoInvitacion) {
+        this.tipoInvitacion = tipoInvitacion;
     }
 }
