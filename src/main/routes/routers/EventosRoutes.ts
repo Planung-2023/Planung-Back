@@ -11,9 +11,9 @@ export class EventosRoutes {
 
     static {
         this.router = Router();
-        this.router.get("/", authValidation, EventosApiController.index);
-        this.router.get("/:id", EventosApiController.show);
-        this.router.put("/:id", EventosApiController.update);
+        this.router.get("/", EventosApiController.index);
+        this.router.get("/", EventosApiController.show);
+        this.router.put("/", EventosApiController.update);
         this.router.post("/", EventosApiController.store);
         this.router.delete("/:id", EventosApiController.remove);
 
@@ -34,7 +34,11 @@ export class EventosRoutes {
         
         this.router.delete("/:id/recursos", RecursosApiController.remove);
 
+        
+
         // Asistentes
+        this.router.get("/:id/asistentes", AsistentesApiController.index)
+
         this.router.post("/:id/asistentes", [
             check("asistentes", "Asistentes debe ser un array").notEmpty().isArray(),
             validarCampos

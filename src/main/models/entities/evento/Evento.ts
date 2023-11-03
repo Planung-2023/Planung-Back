@@ -1,144 +1,183 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn,
+} from "typeorm";
 import { Asistente } from "../asistencia/Asistente";
+import { TipoInvitacion } from "../asistencia/TipoInvitacion";
 import { Ubicacion } from "../otros/Ubicacion";
 import { Usuario } from "../persona/Usuario";
 import { Recurso } from "../recursos/Recurso";
 import { EstadoEvento } from "./EstadoEvento";
 
 @Entity({
-	name: "evento"
+    name: "evento",
 })
 export class Evento {
-	@PrimaryGeneratedColumn()
-	id: string;
+    @PrimaryGeneratedColumn()
+    id: string;
 
-	@Column({ name: "nombre", type: "varchar", length: 255 })
-	nombre: String;
+    @Column({ name: "nombre", type: "varchar", length: 255 })
+    nombre: string;
 
-	@OneToMany(() => Recurso, recurso => recurso.evento)
-	recursos: Recurso[];
+    @OneToMany(() => Recurso, (recurso) => recurso.evento)
+    recursos: Recurso[];
 
-	@OneToOne(() => Ubicacion)
-	@JoinColumn({ name: "ubicacion_id" })
-	ubicacion: Ubicacion;
+    @OneToOne(() => Ubicacion)
+    @JoinColumn({ name: "ubicacion_id" })
+    ubicacion: Ubicacion;
 
-	/*TODO: cambiar fecha hora por estas 3, hora fin puede ser null
-		fecha: "",
-		hora_inicio: ""
-		# hora_fin: NULL
-	*/
+    @Column({ name: "fecha", type: "date" })
+    fecha: Date;
 
-	@Column({ name: "fecha_hora", type: "datetime" })
-	fechaHora: Date;
+    @Column({ name: "hora_inicio", type: "time" })
+    horaInicio: Date;
 
-	@OneToMany(() => EstadoEvento, estadoEvento => estadoEvento.evento)
-	estadoEvento: EstadoEvento;
+    @Column({ name: "hora_fin", type: "time", nullable: true })
+    horaFin: Date;
 
-	@OneToOne(() => Evento)
-	@JoinColumn({ name: "evento_anterior_id" })
-	eventoAnterior: Evento;
+    @OneToMany(() => EstadoEvento, (estadoEvento) => estadoEvento.evento, { nullable: true })
+    estadoEvento: EstadoEvento;
 
-	@OneToMany(() => Asistente, asistente => asistente.evento)
-	asistentes: Asistente[];
+    @OneToOne(() => Evento, { nullable: true })
+    @JoinColumn({ name: "evento_anterior_id" })
+    eventoAnterior: Evento;
 
-	@Column({ name: "es_visible", type: "boolean" })
-	esVisible: boolean;
+    @OneToMany(() => Asistente, (asistente) => asistente.evento)
+    asistentes: Asistente[];
 
-	@Column({ name: "tipo_evento", type: "varchar", length: 255})
-	tipoEvento: string;
+    @Column({ name: "es_visible", type: "boolean", default: false })
+    esVisible: boolean;
 
-	@OneToOne(() => Asistente)
-	@JoinColumn({ name: "presentador_asistente_id"})
-	presentador?: Asistente;
+    @Column({ name: "tipo_evento", type: "varchar", length: 255, nullable: true })
+    tipoEvento: string;
 
-	@ManyToOne(()=> Usuario)
-	@JoinColumn({ name: "usuario_id", referencedColumnName: "id"})
-	creador: Usuario;
+    @OneToOne(() => Asistente)
+    @JoinColumn({ name: "presentador_asistente_id" })
+    presentador?: Asistente;
 
-	// TODO: agregar descripcion evento
-	// TODO: agregar tipo de invitacion (directo, aprobacion)
+    @ManyToOne(() => Usuario)
+    @JoinColumn({ name: "usuario_id", referencedColumnName: "id" })
+    creador: Usuario;
 
-	constructor() {}
+    //TODO: string --> Directa / Por aprobacion
+    @OneToOne(() => TipoInvitacion)
+    @JoinColumn({ name: "tipo_invitacion_id", referencedColumnName: "id" })
+    tipoInvitacion: TipoInvitacion;
 
-	public getId(): string {
-		return this.id;
-	}
+    @Column({ name: "descripcion", type: "varchar", length: 255, nullable: true })
+    descripcion: string;
 
-	public setId(id: string): void {
-		this.id = id;
-	}
+    constructor() {}
 
-	public getNombre(): String {
-		return this.nombre;
-	}
+    public getId(): string {
+        return this.id;
+    }
 
-	public setNombre(nombre: String): void {
-		this.nombre = nombre;
-	}
+    public setId(id: string): void {
+        this.id = id;
+    }
 
-	public getRecursos(): Recurso[] {
-		return this.recursos;
-	}
+    public getNombre(): string {
+        return this.nombre;
+    }
 
-	public setRecursos(recursos: Recurso[]): void {
-		this.recursos = recursos;
-	}
+    public setNombre(nombre: string): void {
+        this.nombre = nombre;
+    }
 
-	public getUbicacion(): Ubicacion {
-		return this.ubicacion;
-	}
+    public getRecursos(): Recurso[] {
+        return this.recursos;
+    }
 
-	public setUbicacion(ubicacion: Ubicacion): void {
-		this.ubicacion = ubicacion;
-	}
+    public setRecursos(recursos: Recurso[]): void {
+        this.recursos = recursos;
+    }
 
-	public getFechaHora(): Date {
-		return this.fechaHora;
-	}
+    public getUbicacion(): Ubicacion {
+        return this.ubicacion;
+    }
 
-	public setFechaHora(fechaHora: Date): void {
-		this.fechaHora = fechaHora;
-	}
+    public setUbicacion(ubicacion: Ubicacion): void {
+        this.ubicacion = ubicacion;
+    }
 
-	public getEstadoEvento(): EstadoEvento {
-		return this.estadoEvento;
-	}
+    public getFecha(): Date {
+        return this.fecha;
+    }
+    public setFecha(fecha: Date): void {
+        this.fecha = fecha;
+    }
 
-	public setEstadoEvento(estadoEvento: EstadoEvento): void {
-		this.estadoEvento = estadoEvento;
-	}
+    public getHoraInicio(): Date {
+        return this.horaInicio;
+    }
+    public setHoraInicio(hora: Date): void {
+        this.horaInicio = hora;
+    }
 
-	public getEventoAnterior(): Evento {
-		return this.eventoAnterior;
-	}
+    public getHoraFin(): Date {
+        return this.horaFin;
+    }
+    public setHoraFin(hora: Date): void {
+        this.horaFin = hora;
+    }
 
-	public setEventoAnterior(eventoAnterior: Evento): void {
-		this.eventoAnterior = eventoAnterior;
-	}
+    public getTipoInvitacion(): TipoInvitacion {
+        return this.tipoInvitacion;
+    }
 
-	public getAsistentes(): Asistente[] {
-		return this.asistentes;
-	}
+    public getEstadoEvento(): EstadoEvento {
+        return this.estadoEvento;
+    }
 
-	public setAsistentes(asistentes: Asistente[]): void {
-		this.asistentes = asistentes;
-	}
+    public setEstadoEvento(estadoEvento: EstadoEvento): void {
+        this.estadoEvento = estadoEvento;
+    }
 
-	public getEsVisible(): boolean {
-		return this.esVisible;
-	}
+    public getEventoAnterior(): Evento {
+        return this.eventoAnterior;
+    }
 
-	public setEsVisible(esVisible: boolean): void {
-		this.esVisible = esVisible;
-	}
-	
-	public getCreador(): Usuario {
-		return this.creador; 
-	}
-	
-	public setCreador (creador : Usuario) {
-		this.creador = creador;
-	}
-	
-	
+    public setEventoAnterior(eventoAnterior: Evento): void {
+        this.eventoAnterior = eventoAnterior;
+    }
+
+    public getAsistentes(): Asistente[] {
+        return this.asistentes;
+    }
+
+    public setAsistentes(asistentes: Asistente[]): void {
+        this.asistentes = asistentes;
+    }
+
+    public getEsVisible(): boolean {
+        return this.esVisible;
+    }
+
+    public setEsVisible(esVisible: boolean): void {
+        this.esVisible = esVisible;
+    }
+
+    public getCreador(): Usuario {
+        return this.creador;
+    }
+
+    public setCreador(creador: Usuario) {
+        this.creador = creador;
+    }
+
+    public setDescripcion(descripcion: string) {
+        this.descripcion = descripcion;
+    }
+    public setTipoEvento(tipoEvento: string) {
+        this.tipoEvento = tipoEvento;
+    }
+    public setTipoInvitacion(tipoInvitacion: TipoInvitacion) {
+        this.tipoInvitacion = tipoInvitacion;
+    }
 }

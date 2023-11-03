@@ -15,23 +15,29 @@ export class UsuariosApiController {
             next(e);
         }
     }
+
     public static async show(req: Request, res: Response, next: NextFunction) {
         try {
-            const usuarios= await Database.em.findOneBy(Usuario, {
-                id: req.params.id
+
+            const { id } = req.params;
+
+            const usuarioDb = await Database.em.findOneBy(Usuario, {
+                id
             });
 
-            if(usuarios === null) {
-                res.status(404);
-                res.send();
+            if(usuarioDb === null) {
+                res.status(404).json({ msg: `User con id ${id} no encontrado` }).send();
                 return;
             }
-            res.json(usuarios);
+            
+            const { contrasenia, ...usuario } = usuarioDb;
+
+            res.json(usuario).send();
+            return;
         }
         catch (e) {   
             next(e);
         }
-
     }
 
     public static async store(req: Request, res: Response, next: NextFunction) {

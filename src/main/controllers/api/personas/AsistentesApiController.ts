@@ -9,6 +9,26 @@ export class AsistentesApiController {
 
     constructor() {}
 
+	public static async index(req: Request, res: Response, next: NextFunction) {
+        try {   
+			const { id } = req.params;
+			const evento = await EventosApiController.findOneById(id);
+			console.log({evento})
+			if (!evento) {
+				return res.status(404).json({msg: `Evento con id ${id} no encontrado`});
+			}
+		
+			const asistentes = await Database.em.findBy(Asistente, { evento: { id } });
+			
+			return res.json({
+				asistentes
+			});
+        }
+        catch (e) {
+            next(e);
+        }
+    }
+
 	public static async store(req: Request, res: Response, next: NextFunction) {
 		try {
 			const { asistentes } = req.body;

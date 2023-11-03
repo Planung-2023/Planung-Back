@@ -1,15 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { Database } from "../../../server/Database";
 import { Participante } from "../../../models/entities/persona/Participante";
+import { Database } from "../../../server/Database";
 
 export class ParticipantesApiController {
-
     public static async index(req: Request, res: Response, next: NextFunction) {
         try {
             const participantes = await Database.em.find(Participante);
             res.json(participantes);
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
@@ -17,17 +15,16 @@ export class ParticipantesApiController {
     public static async show(req: Request, res: Response, next: NextFunction) {
         try {
             const participante = await Database.em.findOneBy(Participante, {
-                id: req.params.id
+                id: req.params.id,
             });
 
-            if(participante === null) {
+            if (participante === null) {
                 res.status(404);
                 res.send();
                 return;
             }
             res.json(participante);
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
@@ -42,8 +39,7 @@ export class ParticipantesApiController {
 
             res.status(200);
             res.send();
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
@@ -51,10 +47,10 @@ export class ParticipantesApiController {
     public static async update(req: Request, res: Response, next: NextFunction) {
         try {
             const participante = await Database.em.findOneBy(Participante, {
-                id: req.params.id
+                id: req.params.id,
             });
 
-            if(participante === null) {
+            if (participante === null) {
                 res.status(404);
                 res.send();
                 return;
@@ -66,8 +62,7 @@ export class ParticipantesApiController {
 
             res.status(200);
             res.send();
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
@@ -75,10 +70,10 @@ export class ParticipantesApiController {
     public static async remove(req: Request, res: Response, next: NextFunction) {
         try {
             const participante = await Database.em.findOneBy(Participante, {
-                id: req.params.id
+                id: req.params.id,
             });
 
-            if(participante === null) {
+            if (participante === null) {
                 res.status(404);
                 res.send();
                 return;
@@ -87,8 +82,25 @@ export class ParticipantesApiController {
             await Database.em.remove(participante);
             res.status(200);
             res.send();
+        } catch (e) {
+            next(e);
         }
-        catch (e) {
+    }
+    public static async getParticipante(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = await Database.em.findOneBy(Participante, {
+                id: req.params.id,
+            });
+
+            if (id === null) {
+                res.status(404);
+                res.send();
+                return;
+            }
+            res.json({
+                participante: id,
+            });
+        } catch (e) {
             next(e);
         }
     }
