@@ -7,13 +7,13 @@ export class Ubicacion {
     @PrimaryGeneratedColumn()
     id: string;
 
-    @Column({ name: "calle", type: "varchar" })
+    @Column({ name: "calle", type: "varchar", nullable: true })
     calle: string;
 
-    @Column({ name: "altura", type: "int" })
+    @Column({ name: "altura", type: "int", nullable: true })
     altura: number;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     localidad: string;
 
     @Column({ type: "float", nullable: true })
@@ -22,7 +22,7 @@ export class Ubicacion {
     @Column({ type: "float", nullable: true })
     longitud?: number;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     ciudad: string;
 
     constructor() {}
