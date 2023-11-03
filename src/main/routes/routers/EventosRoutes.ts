@@ -11,7 +11,7 @@ export class EventosRoutes {
     static {
         this.router = Router();
         this.router.get("/", EventosApiController.index);
-        this.router.get("/", EventosApiController.show);
+        this.router.get("/:id", EventosApiController.show);
         this.router.put("/", EventosApiController.update);
         this.router.post("/", EventosApiController.store);
         this.router.delete("/:id", EventosApiController.remove);
