@@ -26,16 +26,14 @@ export class EventosApiController {
     }
     public static async show(req: Request, res: Response, next: NextFunction) {
         try {
-            const eventos = await Database.em.findOneBy(Evento, {
+            const evento = await Database.em.findOneBy(Evento, {
                 id: req.params.id,
             });
 
-            if (eventos === null) {
-                res.status(404);
-                res.send();
-                return;
+            if (!evento) {
+                return res.status(404).send();
             }
-            res.json(eventos);
+            res.json({ evento });
         } catch (e) {
             next(e);
         }

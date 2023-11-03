@@ -1,4 +1,12 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn,
+} from "typeorm";
 import { Evento } from "../evento/Evento";
 import { Participante } from "../persona/Participante";
 import { Rol } from "../roles/Rol";
@@ -6,94 +14,108 @@ import { Asistencia } from "./Asistencia";
 import { AsistenteNotificacion } from "./AsistenteNotificacion";
 import { Invitacion } from "./Invitacion";
 
-
-
 @Entity({
-	name: "asistente",
+    name: "asistente",
 })
 export class Asistente {
-	@PrimaryGeneratedColumn()
-	id: string;
+    @PrimaryGeneratedColumn()
+    id: string;
 
-	@ManyToOne(() => Evento)
-	@JoinColumn({ name: "evento_id" })
-	evento: Evento;
+    @ManyToOne(() => Evento)
+    @JoinColumn({ name: "evento_id" })
+    evento: Evento;
 
-	@ManyToOne(() => Participante, { eager: true })
-	@JoinColumn({ name: "participante_id" })
-	participante: Participante;
+    @ManyToOne(() => Participante, { eager: true })
+    @JoinColumn({ name: "participante_id" })
+    participante: Participante;
 
-	@ManyToOne(() => Rol, { eager: true })
-	@JoinColumn({ name: "rol_id" })
-	rol: Rol;
+    @ManyToOne(() => Rol, { eager: true, nullable: true })
+    @JoinColumn({ name: "rol_id" })
+    rol: Rol;
 
-	@OneToOne(() => Invitacion)
-	invitacion: Invitacion;
+    @OneToOne(() => Invitacion)
+    invitacion: Invitacion;
 
-	@OneToOne(() => Asistencia)
-	@JoinColumn({ name: "asistencia_id" })
-	asistencia: Asistencia;
+    @OneToOne(() => Asistencia)
+    @JoinColumn({ name: "asistencia_id" })
+    asistencia: Asistencia;
 
-	@OneToMany(
-		() => AsistenteNotificacion,
-		asistenteNotificacion => asistenteNotificacion.asistente
-	)
-	asistenteNotificaciones: AsistenteNotificacion[];
+    @Column({ type: "boolean", default: false })
+    estaAceptado: boolean;
 
-	@Column("boolean", {
-		default: true
-	})
-	activo: boolean;
+    @Column({ type: "boolean", default: false })
+    esAdministrador: boolean;
 
-	constructor() {}
+    @OneToMany(
+        () => AsistenteNotificacion,
+        (asistenteNotificacion) => asistenteNotificacion.asistente,
+    )
+    asistenteNotificaciones: AsistenteNotificacion[];
 
-	public getId(): string {
-		return this.id;
-	}
+    @Column("boolean", {
+        default: true,
+    })
+    activo: boolean;
 
-	public setId(id: string): void {
-		this.id = id;
-	}
+    constructor() {}
 
-	public getEvento(): Evento {
-		return this.evento;
-	}
+    public getId(): string {
+        return this.id;
+    }
 
-	public setEvento(evento: Evento): void {
-		this.evento = evento;
-	}
+    public setId(id: string): void {
+        this.id = id;
+    }
 
-	public getParticipante(): Participante {
-		return this.participante;
-	}
+    public getEvento(): Evento {
+        return this.evento;
+    }
 
-	public setParticipante(participante: Participante): void {
-		this.participante = participante;
-	}
+    public setEvento(evento: Evento): void {
+        this.evento = evento;
+    }
 
-	public getRol(): Rol {
-		return this.rol;
-	}
+    public getParticipante(): Participante {
+        return this.participante;
+    }
 
-	public setRol(rol: Rol): void {
-		this.rol = rol;
-	}
+    public setParticipante(participante: Participante): void {
+        this.participante = participante;
+    }
 
-	public getInvitacion(): Invitacion {
-		return this.invitacion;
-	}
+    public getRol(): Rol {
+        return this.rol;
+    }
 
-	public setInvitacion(invitacion: Invitacion): void {
-		this.invitacion = invitacion;
-	}
+    public setRol(rol: Rol): void {
+        this.rol = rol;
+    }
 
-	public getAsistenciaNotificaciones(): AsistenteNotificacion[] {
-		return this.asistenteNotificaciones;
-	}
+    public getInvitacion(): Invitacion {
+        return this.invitacion;
+    }
 
-	public setAsistenciaNotificaciones(
-		asistenciaNotificaciones: AsistenteNotificacion[]
-	): void {
-		this.asistenteNotificaciones = asistenciaNotificaciones;
-	}
+    public setInvitacion(invitacion: Invitacion): void {
+        this.invitacion = invitacion;
+    }
+
+    public getAsistenciaNotificaciones(): AsistenteNotificacion[] {
+        return this.asistenteNotificaciones;
+    }
+
+    public setAsistenciaNotificaciones(asistenciaNotificaciones: AsistenteNotificacion[]): void {
+        this.asistenteNotificaciones = asistenciaNotificaciones;
+    }
+
+    public setEstaAceptado(estaAceptado: boolean) {
+        this.estaAceptado = estaAceptado;
+    }
+
+    public setEsAdministrador(esAdministrador: boolean) {
+        this.esAdministrador = esAdministrador;
+    }
+
+    public setActivo(activo: boolean) {
+        this.activo = activo;
+    }
 }

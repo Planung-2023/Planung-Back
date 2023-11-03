@@ -105,6 +105,18 @@ export class ParticipantesApiController {
         }
     }
 
+    public static async findOneById(id: string) {
+        const participante = await Database.em.findOneBy(Participante, { id });
+
+        return participante;
+    }
+
+    public static async findOneByMail(mail: string) {
+        const participante = await Database.em.findOneBy(Participante, { mail });
+
+        return participante;
+    }
+
     private static asignarParametros(participante: Participante, params: any) {
         participante.setApellido(params.apellido);
         participante.setNombre(params.nombre);
