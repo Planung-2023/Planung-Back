@@ -182,7 +182,9 @@ export class AsistentesApiController {
             if (!(await EventosApiController.findOneById(idEvento)))
                 return res.status(404).json({ msg: "Evento not found" });
 
-            await Database.em.remove(asistenteDb);
+            asistenteDb.setActivo(false);
+            asistenteDb.setEstaAceptado(false);
+            await Database.em.save(asistenteDb);
 
             return res.json({ eliminado: true, asistenteDb }).send();
         } catch (error) {

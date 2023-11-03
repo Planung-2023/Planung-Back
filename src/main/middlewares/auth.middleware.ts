@@ -17,6 +17,9 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
         if (response.status >= 400) {
             return res.status(401).json({ msg: "Token de autorización no válido" });
         }
+        req.headers["user"] = JSON.stringify(response.body);
+
+        // console.log({ usuario: req.headers["user_info"] });
 
         next();
     } catch (error) {
