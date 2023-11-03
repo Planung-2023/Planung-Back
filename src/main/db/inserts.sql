@@ -64,14 +64,14 @@ INSERT INTO `ahk_eventos`.`asignacion_recurso` (`id`, `fecha_hora`, `cantidad`, 
 ('1', '1', '1', '1', '1', '1');
 
 
-INSERT INTO `ahk_eventos`.`asistente_notificacion` (`id`, `visto`, `fechaVisto`, `notificacion_id`, `asistente_id`) VALUES 
-('1', '1', '1', '1', '1');
+-- INSERT INTO `ahk_eventos`.`asistente_notificacion` (`id`, `visto`, `fechaVisto`, `notificacion_id`, `asistente_id`) VALUES 
+-- ('1', '1', '1', '1', '1');
 
-INSERT INTO `ahk_eventos`.`estado_evento` (`id`, `fecha_hora`, `evento_id`, `posible_estado_evento_id`, `asistente_cambio_estado_id`) VALUES 
-('1', '1', '1', '1', '1');
+-- INSERT INTO `ahk_eventos`.`estado_evento` (`id`, `fecha_hora`, `evento_id`, `posible_estado_evento_id`, `asistente_cambio_estado_id`) VALUES 
+-- ('1', '1', '1', '1', '1');
 
-INSERT INTO `ahk_eventos`.`invitacion` (`id`, `fecha_hora_envio`, `fecha_hora_visto`, `fecha_hora_respuesta`, `esta_visto`, `esta_aceptado`, `asistente_id`) VALUES 
-('1', '1', '1', '1', '1', '1', '1');
+-- INSERT INTO `ahk_eventos`.`invitacion` (`id`, `fecha_hora_envio`, `fecha_hora_visto`, `fecha_hora_respuesta`, `esta_visto`, `esta_aceptado`, `asistente_id`) VALUES 
+-- ('1', '1', '1', '1', '1', '1', '1');
 
-INSERT INTO `ahk_eventos`.`notificacion` (`id`, `fecha_hora`, `mensaje`) VALUES 
-('1', 'a', '1');
+-- INSERT INTO `ahk_eventos`.`notificacion` (`id`, `fecha_hora`, `mensaje`) VALUES 
+-- ('1', 'a', '1');
