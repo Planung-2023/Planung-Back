@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Asistente } from "../asistencia/Asistente";
 import { Recurso } from "./Recurso";
 
@@ -10,11 +10,13 @@ export class AsignacionRecurso {
     id: string;
 
     @ManyToOne(() => Recurso)
+    @JoinColumn({ name: "recurso_id" })
     recurso: Recurso;
 
     @ManyToOne(() => Asistente, {
         eager: true,
     })
+    @JoinColumn({ name: "asistente_id" })
     asistente: Asistente;
 
     @Column({

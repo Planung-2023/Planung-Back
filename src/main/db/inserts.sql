@@ -21,10 +21,10 @@ INSERT INTO ubicacion (id, calle, altura, localidad, latitud, longitud) VALUES
 (3, 'Av. La Cámpora', 3900, 'Pablo Nogués', 30, 30),
 (4, 'Av. 9 de Julio', 50, 'C.A.B.A.', -3, 10);
 
-INSERT INTO evento (id, nombre, fecha, hora_inicio, hora_fin, es_visible, descripcion, tipo_evento, ubicacion_id, evento_anterior_id, presentador_asistente_id, usuario_id) VALUES 
-(1, 'Juntada dia del amigo', '2022-04-22', '00:00:00', '00:00:00', 0,"descripcion 1", 'Informal', 1, NULL, NULL, 1),
-(2, 'Presentacion inmueble', '2022-04-23','00:00:00', '00:00:00', 1,"descripcion 2", 'Formal', 2, NULL, NULL, 1),
-(3, 'Juntada de Spidermans', '2023-10-29','15:00:00', '18:00:00', 1,"ROMPER RECORD GUINESS", 'Formal', 4, NULL, NULL, 1);
+INSERT INTO evento (id, nombre, fecha, hora_inicio, hora_fin, es_visible, descripcion, tipo_evento, ubicacion_id, evento_anterior_id, presentador_asistente_id, usuario_id, tipo_invitacion) VALUES 
+(1, 'Juntada dia del amigo', '2022-04-22', '00:00:00', '00:00:00', 0,"descripcion 1", 'Informal', 1, NULL, NULL, 1, "Directa"),
+(2, 'Presentacion inmueble', '2022-04-23','00:00:00', '00:00:00', 1,"descripcion 2", 'Formal', 2, NULL, NULL, 1, "Por aprobacion"),
+(3, 'Juntada de Spidermans', '2023-10-29','15:00:00', '18:00:00', 1,"ROMPER RECORD GUINESS", 'Formal', 4, NULL, NULL, 1, "Directa");
 
 INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('Bebida', 1, 'Bebida');
 INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('Mobiliario', 2, 'Mobiliario');
@@ -60,18 +60,7 @@ INSERT INTO asistencia(id, asistente_id) VALUES
 (7, 7);
 
 
-INSERT INTO `ahk_eventos`.`asignacion_recurso` (`id`, `fecha_hora`, `cantidad`, `comentarios`, `recursoId`, `asistenteId`) VALUES
-('1', '1', '1', '1', '1', '1');
+INSERT INTO `ahk_eventos`.`asignacion_recurso` (`id`, `fecha_hora`, `cantidad`, `comentarios`, `recurso_id`, `asistente_id`) VALUES
+('1', '2023-10-25 14:00:00', '1', '1', '1', '1');
 
 
--- INSERT INTO `ahk_eventos`.`asistente_notificacion` (`id`, `visto`, `fechaVisto`, `notificacion_id`, `asistente_id`) VALUES 
--- ('1', '1', '1', '1', '1');
-
--- INSERT INTO `ahk_eventos`.`estado_evento` (`id`, `fecha_hora`, `evento_id`, `posible_estado_evento_id`, `asistente_cambio_estado_id`) VALUES 
--- ('1', '1', '1', '1', '1');
-
--- INSERT INTO `ahk_eventos`.`invitacion` (`id`, `fecha_hora_envio`, `fecha_hora_visto`, `fecha_hora_respuesta`, `esta_visto`, `esta_aceptado`, `asistente_id`) VALUES 
--- ('1', '1', '1', '1', '1', '1', '1');
-
--- INSERT INTO `ahk_eventos`.`notificacion` (`id`, `fecha_hora`, `mensaje`) VALUES 
--- ('1', 'a', '1');
