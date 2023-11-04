@@ -3,6 +3,7 @@ import { check } from "express-validator";
 import { EventosApiController } from "../../controllers/api/eventos/EventosApiController";
 import { AsistentesApiController } from "../../controllers/api/personas/AsistentesApiController";
 import { RecursosApiController } from "../../controllers/api/recursos/RecursosApiController";
+import { authValidation } from "../../middlewares/auth.middleware";
 import { validarCampos } from "../../middlewares/validar-campos";
 
 export class EventosRoutes {
@@ -10,8 +11,8 @@ export class EventosRoutes {
 
     static {
         this.router = Router();
-        this.router.get("/", EventosApiController.index);
-        this.router.get("/", EventosApiController.show);
+        this.router.get("/", authValidation, EventosApiController.index);
+        this.router.get("/:id", EventosApiController.show);
         this.router.put("/", EventosApiController.update);
         this.router.post("/", EventosApiController.store);
         this.router.delete("/:id", EventosApiController.remove);
@@ -54,6 +55,13 @@ export class EventosRoutes {
                 validarCampos,
             ],
             AsistentesApiController.update,
+        );
+
+        this.router.post("/:idEvento/unirse", AsistentesApiController.unirseEvento);
+        this.router.post("/:idEvento/aceptar-asistente", AsistentesApiController.aceptarAsistente);
+        this.router.post(
+            "/:idEvento/rechazar-asistente",
+            AsistentesApiController.rechazarAsistente,
         );
     }
 }

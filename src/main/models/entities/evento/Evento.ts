@@ -8,7 +8,6 @@ import {
     PrimaryGeneratedColumn,
 } from "typeorm";
 import { Asistente } from "../asistencia/Asistente";
-import { TipoInvitacion } from "../asistencia/TipoInvitacion";
 import { Ubicacion } from "../otros/Ubicacion";
 import { Usuario } from "../persona/Usuario";
 import { Recurso } from "../recursos/Recurso";
@@ -64,10 +63,8 @@ export class Evento {
     @JoinColumn({ name: "usuario_id", referencedColumnName: "id" })
     creador: Usuario;
 
-    //TODO: string --> Directa / Por aprobacion
-    @OneToOne(() => TipoInvitacion)
-    @JoinColumn({ name: "tipo_invitacion_id", referencedColumnName: "id" })
-    tipoInvitacion: TipoInvitacion;
+    @Column({ name: "tipo_invitacion", type: "varchar", length: 100 })
+    tipoInvitacion: string;
 
     @Column({ name: "descripcion", type: "varchar", length: 255, nullable: true })
     descripcion: string;
@@ -127,7 +124,7 @@ export class Evento {
         this.horaFin = hora;
     }
 
-    public getTipoInvitacion(): TipoInvitacion {
+    public getTipoInvitacion(): string {
         return this.tipoInvitacion;
     }
 
@@ -177,7 +174,7 @@ export class Evento {
     public setTipoEvento(tipoEvento: string) {
         this.tipoEvento = tipoEvento;
     }
-    public setTipoInvitacion(tipoInvitacion: TipoInvitacion) {
+    public setTipoInvitacion(tipoInvitacion: string) {
         this.tipoInvitacion = tipoInvitacion;
     }
 }

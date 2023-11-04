@@ -2,42 +2,42 @@ import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "ty
 import { Asistente } from "./Asistente";
 
 @Entity({
-	name: "asistencia",
+    name: "asistencia",
 })
 export class Asistencia {
-	@PrimaryGeneratedColumn()
-	id: string;
+    @PrimaryGeneratedColumn()
+    id: string;
 
-	@OneToOne(() => Asistente)
-	@JoinColumn({ name: "asistente_id" })
-	asistente: Asistente;
+    @OneToOne(() => Asistente)
+    @JoinColumn({ name: "asistente_id" })
+    asistente: Asistente;
 
-	@Column({ name: "fecha_hora", type: "datetime", default: () => "CURRENT_TIMESTAMP" })
-	fechaHora: Date;
+    @Column({ name: "fecha_hora", type: "datetime", default: () => "CURRENT_TIMESTAMP" })
+    fechaHora: Date;
 
-	constructor() {}
+    constructor() {}
 
-	public getId(): string {
-		return this.id;
-	}
+    public getId(): string {
+        return this.id;
+    }
 
-	public setId(id: string): void {
-		this.id = id;
-	}
+    public setId(id: string): void {
+        this.id = id;
+    }
 
-	public getAsistente(): Asistente {
-		return this.asistente;
-	}
+    public getAsistente(): Asistente {
+        return this.asistente;
+    }
 
-	public setAsistente(asistente: Asistente): void {
-		this.asistente = asistente;
-	}
+    public setAsistente(asistente: Asistente): void {
+        this.asistente = asistente;
+    }
 
-	public getFechaHora(): Date {
-		return this.fechaHora;
-	}
+    public getFechaHora(): Date {
+        return this.fechaHora;
+    }
 
-	public setFechaHora(fechaHora: Date): void {
-		this.fechaHora = fechaHora;
-	}
+    public setFechaHora(fechaHora: Date): void {
+        this.fechaHora = fechaHora;
+    }
 }

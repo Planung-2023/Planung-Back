@@ -5,28 +5,24 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
     try {
         const authorizationHeader = req.headers.authorization;
 
-		if (!authorizationHeader) {
-			return res
-				.status(401)
-				.json({ msg: "Token de autorización no proporcionado" });
-		}
-
-		const token = authorizationHeader.split(" ")[1];
-		const response = await post(process.env.AUTH_URL!).auth(token!, {
-			type: "bearer",
-		});
-
-		if (response.status >= 400) {
-			return res
-				.status(401)
-				.json({ msg: "Token de autorización no válido" });
+        if (!authorizationHeader) {
+            return res.status(401).json({ msg: "Token de autorización no proporcionado" });
         }
-        
+
+        const token = authorizationHeader.split(" ")[1];
+        const response = await post(process.env.AUTH_URL!).auth(token!, {
+            type: "bearer",
+        });
+
+        if (response.status >= 400) {
+            return res.status(401).json({ msg: "Token de autorización no válido" });
+        }
+        req.headers["user"] = JSON.stringify(response.body);
+
+        // console.log({ usuario: req.headers["user_info"] });
+
         next();
-        
     } catch (error) {
         return res.status(500).json({ msg: "Error en la autenticación" });
     }
-    
-
-}
+};
