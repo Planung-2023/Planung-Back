@@ -1,4 +1,3 @@
-
 import { Server , Socket } from "socket.io";
 import { Server as Servidor } from "./Server";
 
@@ -20,21 +19,20 @@ export class ServerSocket {
             socket.on("disconnect", () => {
                 console.log(`disconnect ${socket.id}`);
             });
-            // Logica agregada de web socket
-            socket.on ("start", () => {
-                socket.emit ("presentacion", "start");
-                console.log(`Empezar presentación`);
+
+            // Logica agregada de web socket           
+            socket.on ("leer", (condicion) => {
+                console.log(condicion)
+                if (condicion == "anterior"){
+                    rutaSocket.emit("enviar", "prev");
+                    console.log(`Anterior diapositiva`);
+                }
+                else if (condicion == "siguiente"){
+                    rutaSocket.emit("enviar", "next");
+                    console.log(`Siguiente diapositiva`);
+                    
+                }
             });
-
-            socket.on ("next", () => {
-                socket.emit("presentacion", "next");
-                console.log(`Siguiente diapositiva`);
-            })
-
-            socket.on ("prev", () => {
-                socket.emit ("presentacion", "start");
-                console.log(`Diapositiva anterior`);
-            })
         });
     }
  
