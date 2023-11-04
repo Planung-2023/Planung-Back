@@ -3,7 +3,6 @@ import { check } from "express-validator";
 import { EventosApiController } from "../../controllers/api/eventos/EventosApiController";
 import { AsistentesApiController } from "../../controllers/api/personas/AsistentesApiController";
 import { RecursosApiController } from "../../controllers/api/recursos/RecursosApiController";
-import { authValidation } from "../../middlewares/auth.middleware";
 import { validarCampos } from "../../middlewares/validar-campos";
 
 export class EventosRoutes {
@@ -19,34 +18,42 @@ export class EventosRoutes {
 
         // Recursos
         this.router.get("/:id/recursos", RecursosApiController.index);
-        
-        this.router.get("/:id/recursos", RecursosApiController.show);
-        
-        this.router.put("/:id/recursos", [
-            check("recursos", "Recursos debe ser un array").notEmpty().isArray(),
-            validarCampos
-        ], RecursosApiController.update);
 
-        this.router.post("/:id/recursos", [
-            check("recursos", "Recursos debe ser un array").notEmpty().isArray(),
-            validarCampos
-        ], RecursosApiController.store);
-        
+        this.router.get("/:id/recursos", RecursosApiController.show);
+
+        this.router.put(
+            "/:id/recursos",
+            [check("recursos", "Recursos debe ser un array").notEmpty().isArray(), validarCampos],
+            RecursosApiController.update,
+        );
+
+        this.router.post(
+            "/:id/recursos",
+            [check("recursos", "Recursos debe ser un array").notEmpty().isArray(), validarCampos],
+            RecursosApiController.store,
+        );
+
         this.router.delete("/:id/recursos", RecursosApiController.remove);
 
-        
-
         // Asistentes
-        this.router.get("/:id/asistentes", AsistentesApiController.index)
+        this.router.get("/:id/asistentes", AsistentesApiController.index);
 
-        this.router.post("/:id/asistentes", [
-            check("asistentes", "Asistentes debe ser un array").notEmpty().isArray(),
-            validarCampos
-        ], AsistentesApiController.store);
+        this.router.post(
+            "/:id/asistentes",
+            [
+                check("asistentes", "Asistentes debe ser un array").notEmpty().isArray(),
+                validarCampos,
+            ],
+            AsistentesApiController.store,
+        );
 
-        this.router.put("/:id/asistentes", [
-            check("asistentes", "Asistentes debe ser un array").notEmpty().isArray(),
-            validarCampos
-        ], AsistentesApiController.update)
+        this.router.put(
+            "/:id/asistentes",
+            [
+                check("asistentes", "Asistentes debe ser un array").notEmpty().isArray(),
+                validarCampos,
+            ],
+            AsistentesApiController.update,
+        );
     }
 }
