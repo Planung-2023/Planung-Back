@@ -190,7 +190,7 @@ export class RecursosApiController {
         recurso.setProveedor(params.proveedor ? params.proveedor : null);
     }
 
-    private static async crearRecursos(recursos: any[], idEvento: string) {
+    public static async crearRecursos(recursos: any[], idEvento: string) {
         const recursosInsertados: Recurso[] = [];
         for (const recursoData of recursos) {
             const recurso = new Recurso();

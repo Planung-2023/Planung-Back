@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { Database } from "../../../server/Database";
-import { Participante } from "../../../models/entities/persona/Participante";
 import { Ubicacion } from "../../../models/entities/otros/Ubicacion";
+import { Database } from "../../../server/Database";
 
 export class UbicacionApiController {
 
@@ -94,7 +93,7 @@ export class UbicacionApiController {
         }
     }
 
-    private static asignarParametros(ubicacion: Ubicacion, params: any) {
+    public static asignarParametros(ubicacion: Ubicacion, params: any) {
         ubicacion.setCalle(params.calle);
         ubicacion.setAltura(params.altura);
         ubicacion.setLocalidad(params.localidad);
