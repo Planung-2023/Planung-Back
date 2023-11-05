@@ -3,6 +3,7 @@ import { check } from "express-validator";
 import { EventosApiController } from "../../controllers/api/eventos/EventosApiController";
 import { AsistentesApiController } from "../../controllers/api/personas/AsistentesApiController";
 import { RecursosApiController } from "../../controllers/api/recursos/RecursosApiController";
+import { authValidation } from "../../middlewares/auth.middleware";
 import { validarCampos } from "../../middlewares/validar-campos";
 
 export class EventosRoutes {
@@ -10,14 +11,10 @@ export class EventosRoutes {
 
     static {
         this.router = Router();
-        this.router.get(
-            "/",
-            // authValidation,
-            EventosApiController.index,
-        );
+        this.router.get("/", authValidation, EventosApiController.index);
         this.router.get("/:id", EventosApiController.show);
         this.router.put("/", EventosApiController.update);
-        this.router.post("/", EventosApiController.store);
+        this.router.post("/", authValidation, EventosApiController.store);
         this.router.delete("/:id", EventosApiController.remove);
 
         // Recursos
@@ -60,10 +57,15 @@ export class EventosRoutes {
             AsistentesApiController.update,
         );
 
-        this.router.post("/:idEvento/unirse", AsistentesApiController.unirseEvento);
-        this.router.post("/:idEvento/aceptar-asistente", AsistentesApiController.aceptarAsistente);
+        this.router.post("/:idEvento/unirse", authValidation, AsistentesApiController.unirseEvento);
+        this.router.post(
+            "/:idEvento/aceptar-asistente",
+            authValidation,
+            AsistentesApiController.aceptarAsistente,
+        );
         this.router.post(
             "/:idEvento/rechazar-asistente",
+            authValidation,
             AsistentesApiController.rechazarAsistente,
         );
     }

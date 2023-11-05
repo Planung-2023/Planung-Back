@@ -1,42 +1,41 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({
-	name: "usuario",
+    name: "usuario",
 })
 export class Usuario {
+    @PrimaryGeneratedColumn()
+    id: string;
 
-	@PrimaryGeneratedColumn()
-	id: string;
+    @Column({ name: "nombre_usuario", type: "varchar", length: 255 })
+    nombreUsuario: string;
 
-	@Column({ name: "nombre_usuario", type: "varchar", length: 255 })
-	nombreUsuario: string;
+    @Column({ name: "contrasenia", type: "varchar", length: 255, nullable: true })
+    contrasenia: string;
 
-	@Column({name: "contrasenia", type: "varchar", length: 255})
-	contrasenia: string;
-	
-	constructor() { }
-	
-	public getId(): string {
-		return this.id;
-	}
+    constructor() {}
 
-	public setId(id: string): void {
-		this.id = id;
-	}
+    public getId(): string {
+        return this.id;
+    }
 
-	public getNombreUsuario(): string {
-		return this.nombreUsuario;
-	}
+    public setId(id: string): void {
+        this.id = id;
+    }
 
-	public setNombreUsuario(nombreUsuario: string): void {
-		this.nombreUsuario = nombreUsuario;
-	}
+    public getNombreUsuario(): string {
+        return this.nombreUsuario;
+    }
 
-	public getContrasenia(): string {
-		return this.contrasenia;
-	}
+    public setNombreUsuario(nombreUsuario: string): void {
+        this.nombreUsuario = nombreUsuario;
+    }
 
-	public setContrasenia(contrasenia: string): void {
-		this.contrasenia = contrasenia;
-	}
+    public getContrasenia(): string {
+        return this.contrasenia;
+    }
+
+    public setContrasenia(contrasenia: string): void {
+        this.contrasenia = contrasenia;
+    }
 }

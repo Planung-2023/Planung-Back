@@ -4,6 +4,7 @@ import { Evento } from "../../../models/entities/evento/Evento";
 import { Participante } from "../../../models/entities/persona/Participante";
 import { Rol } from "../../../models/entities/roles/Rol";
 import { Database } from "../../../server/Database";
+import { getAuthUser } from "../../helpers/GetAuthUser";
 import { EventosApiController } from "../eventos/EventosApiController";
 import { ParticipantesApiController } from "./ParticipantesApiController";
 export class AsistentesApiController {
@@ -113,9 +114,8 @@ export class AsistentesApiController {
 
     public static async unirseEvento(req: Request, res: Response) {
         try {
-            // const { email } = req.user;
+            const { email } = getAuthUser(req);
             const { idEvento } = req.params;
-            const email = "tomaskatz@gmail.com";
             const participante = await ParticipantesApiController.findOneByMail(email);
 
             const evento = await EventosApiController.findOneById(idEvento);
@@ -190,6 +190,21 @@ export class AsistentesApiController {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    public static async crearAsistenteAdmin(evento: Evento) {
+        const asistente = new Asistente();
+        const params = {
+            activo: true,
+            evento: evento,
+            participante: evento.creador,
+            esAdministrador: true,
+            estaAceptado: true,
+        };
+
+        AsistentesApiController.asignarParametros(asistente, params);
+
+        await Database.em.save(asistente);
     }
 
     private static asignarParametros(asistente: Asistente, params: any) {

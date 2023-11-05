@@ -19,8 +19,6 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
         }
         req.headers["user"] = JSON.stringify(response.body);
 
-        // console.log({ usuario: req.headers["user_info"] });
-
         next();
     } catch (error) {
         return res.status(500).json({ msg: "Error en la autenticación" });
