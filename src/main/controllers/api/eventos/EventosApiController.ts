@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { Brackets } from "typeorm";
 import { Evento } from "../../../models/entities/evento/Evento";
 import { Ubicacion } from "../../../models/entities/otros/Ubicacion";
 import { Database } from "../../../server/Database";
@@ -8,19 +9,24 @@ import { UbicacionApiController } from "../ubicacion/UbicacionApiController";
 export class EventosApiController {
     public static async index(req: Request, res: Response, next: NextFunction) {
         try {
-            const userInfo = JSON.parse(req.headers["user"] as string);
-            console.log(userInfo);
-
             const idUsuario = req.query.usuario_id;
-            const eventoRepository = Database.em.getRepository("evento");
+            const eventoRepository = Database.em.getRepository(Evento);
             const eventos = await eventoRepository
                 .createQueryBuilder("evento")
-                .select(["evento", "ubicacion", "usuario.id", "usuario.nombreUsuario"])
-                .addSelect("eventoAnterior")
-                .where("evento.creador.id = :idUsuario", { idUsuario })
-                .leftJoin("evento.ubicacion", "ubicacion")
-                .leftJoin("evento.creador", "usuario")
-                .leftJoin("evento.eventoAnterior", "eventoAnterior")
+                .select(["evento"])
+                .innerJoin("evento.asistentes", "asistente")
+                .innerJoin("asistente.participante", "participante")
+                .innerJoin("participante.usuario", "usuario")
+                .where("usuario.id = :idUsuario", { idUsuario })
+                .andWhere("evento.fecha >= :fechaActual", { fechaActual: new Date() })
+                .andWhere(
+                    new Brackets((qb) => {
+                        qb.where("evento.fecha > :fechaActual", { fechaActual: new Date() }) // Eventos después de la fecha actual
+                            .orWhere("evento.horaInicio >= :horaActual", {
+                                horaActual: new Date(),
+                            }); // Eventos en o después de la hora actual
+                    }),
+                )
                 .getMany();
             res.json(eventos);
         } catch (e) {
