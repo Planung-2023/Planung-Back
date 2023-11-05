@@ -3,7 +3,6 @@ import { check } from "express-validator";
 import { EventosApiController } from "../../controllers/api/eventos/EventosApiController";
 import { AsistentesApiController } from "../../controllers/api/personas/AsistentesApiController";
 import { RecursosApiController } from "../../controllers/api/recursos/RecursosApiController";
-import { authValidation } from "../../middlewares/auth.middleware";
 import { validarCampos } from "../../middlewares/validar-campos";
 
 export class EventosRoutes {
@@ -11,7 +10,11 @@ export class EventosRoutes {
 
     static {
         this.router = Router();
-        this.router.get("/", authValidation, EventosApiController.index);
+        this.router.get(
+            "/",
+            // authValidation,
+            EventosApiController.index,
+        );
         this.router.get("/:id", EventosApiController.show);
         this.router.put("/", EventosApiController.update);
         this.router.post("/", EventosApiController.store);

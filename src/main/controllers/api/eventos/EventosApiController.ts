@@ -13,26 +13,41 @@ export class EventosApiController {
             const eventoRepository = Database.em.getRepository(Evento);
             const eventos = await eventoRepository
                 .createQueryBuilder("evento")
-                .select(["evento"])
+                .select(["evento", "ubicacion", "asistente"])
                 .innerJoin("evento.asistentes", "asistente")
                 .innerJoin("asistente.participante", "participante")
                 .innerJoin("participante.usuario", "usuario")
+                .leftJoin("evento.ubicacion", "ubicacion")
+                .addSelect(["asistente.esAdministrador"])
                 .where("usuario.id = :idUsuario", { idUsuario })
                 .andWhere("evento.fecha >= :fechaActual", { fechaActual: new Date() })
                 .andWhere(
                     new Brackets((qb) => {
-                        qb.where("evento.fecha > :fechaActual", { fechaActual: new Date() }) // Eventos después de la fecha actual
-                            .orWhere("evento.horaInicio >= :horaActual", {
-                                horaActual: new Date(),
-                            }); // Eventos en o después de la hora actual
+                        qb.where("evento.fecha > :fechaActual", {
+                            fechaActual: new Date(),
+                        }).orWhere("evento.horaInicio >= :horaActual", {
+                            horaActual: new Date(),
+                        });
                     }),
                 )
                 .getMany();
-            res.json(eventos);
+
+            const eventosConEsAdministrador = eventos.map((evento) => {
+                const { asistentes, ...eventoSinAsistentes } = evento;
+                return {
+                    esAdministrador: evento.asistentes.some(
+                        (asistente) => asistente.esAdministrador,
+                    ),
+                    ...eventoSinAsistentes,
+                };
+            });
+
+            res.json(eventosConEsAdministrador);
         } catch (e) {
             next(e);
         }
     }
+
     public static async show(req: Request, res: Response, next: NextFunction) {
         try {
             const evento = await Database.em.findOneBy(Evento, {
