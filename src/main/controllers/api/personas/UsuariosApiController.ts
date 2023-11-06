@@ -73,18 +73,13 @@ export class UsuariosApiController {
                 id: req.params.id,
             });
 
-            if (usuario === null) {
-                res.status(404);
-                res.send();
-                return;
-            }
+            if (!usuario) return res.json({ msg: "Not found" }).status(404).send();
 
             UsuariosApiController.asignarParametros(usuario!!, req.body);
 
             await Database.em.save(usuario);
 
-            res.status(200);
-            res.send();
+            res.json({ usuario }).status(200).send();
         } catch (e) {
             next(e);
         }
@@ -112,5 +107,6 @@ export class UsuariosApiController {
     private static asignarParametros(usuario: Usuario, params: any) {
         usuario.setNombreUsuario(params.nombreUsuario);
         usuario.setContrasenia(params.contrasenia);
+        usuario.setFotoPerfil(params.fotoPerfil);
     }
 }

@@ -14,10 +14,9 @@ export class Usuario {
     @Column({ name: "contrasenia", type: "varchar", length: 255, nullable: true })
     contrasenia: string;
 
-	@ManyToOne(() => FotoPerfil)
-  	@JoinColumn({ name: "foto_perfil_id" })
-  	fotoPerfil: FotoPerfil;
-
+    @ManyToOne(() => FotoPerfil, { eager: true })
+    @JoinColumn({ name: "foto_perfil_id" })
+    fotoPerfil: FotoPerfil;
 
     public getId(): string {
         return this.id;
@@ -41,5 +40,9 @@ export class Usuario {
 
     public setContrasenia(contrasenia: string): void {
         this.contrasenia = contrasenia;
+    }
+
+    public setFotoPerfil(fotoPerfil: FotoPerfil): void {
+        this.fotoPerfil = fotoPerfil;
     }
 }

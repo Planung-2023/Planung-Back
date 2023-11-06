@@ -1,3 +1,13 @@
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('1', 'foto-perfil-3.png');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('2', 'gigachad1.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('3', 'gigachad2.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('4', 'chad1.jpeg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('5', 'girl-chad.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('6', 'foto-perfil-6.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('7', 'foto-perfil-5.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('8', 'chad3.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('9', 'foto-perfil-2.png');
+
 INSERT INTO usuario (id, nombre_usuario, contrasenia, foto_perfil_id) VALUES 
 (1, "Bruno", "Abc123", 1),
 (2, "Tomas", "Abc123", 3),
@@ -37,17 +47,6 @@ INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('Comida', 3, '
 INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('Juego', 4, 'Juego');
 INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('Tecnologia', 5, 'Tecnologia');
 INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('Otro', 6, 'Otro');
-
-
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('1', 'foto-perfil-3.png');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('2', 'gigachad1.jpg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('3', 'gigachad2.jpg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('4', 'chad1.jpeg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('5', 'girl-chad.jpg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('6', 'foto-perfil-6.jpg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('7', 'foto-perfil-5.jpg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('8', 'chad3.jpg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('9', 'foto-perfil-2.png')
 
 
 INSERT INTO recurso (id, nombre, descripcion, cantidad_necesaria, cantidad_actual, proveedor, evento_id, recurso_categoria_id) VALUES 
