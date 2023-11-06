@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { FotoPerfil } from "./FotoPerfil";
 
 @Entity({
     name: "usuario",
@@ -13,7 +14,10 @@ export class Usuario {
     @Column({ name: "contrasenia", type: "varchar", length: 255, nullable: true })
     contrasenia: string;
 
-    constructor() {}
+	@ManyToOne(() => FotoPerfil)
+  	@JoinColumn({ name: "foto_perfil_id" })
+  	fotoPerfil: FotoPerfil;
+
 
     public getId(): string {
         return this.id;
