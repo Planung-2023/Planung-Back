@@ -8,11 +8,11 @@ INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('7', 'foto-perf
 INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('8', 'chad3.jpg');
 INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('9', 'foto-perfil-2.png');
 
-INSERT INTO usuario (id, nombre_usuario, contrasenia, foto_perfil_id) VALUES 
-(1, "Bruno", "Abc123", 1),
-(2, "Tomas", "Abc123", 3),
-(3, "Sebastian", "Abc123", 4),
-(4, "Matías", "Abc123", 7);
+INSERT INTO usuario (id, nombre_usuario, email, foto_perfil_id) VALUES
+(1, "Bruno",  "bruno@example.com", 1),
+(2, "Tomas", "tomi@example.com", 3),
+(3, "Sebastian", "sebas@example.com", 4),
+(4, "Matías",  "mati@example.com", 7);
 
 
 INSERT INTO participante (id, nombre, apellido, mail, usuario_id) VALUES

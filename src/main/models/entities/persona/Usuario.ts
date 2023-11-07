@@ -8,11 +8,20 @@ export class Usuario {
     @PrimaryGeneratedColumn()
     id: string;
 
-    @Column({ name: "nombre_usuario", type: "varchar", length: 255 })
+    @Column({ name: "idAuth0", type: "varchar", length: 255, nullable: true })
+    idAuth0: string;
+
+    @Column({ name: "nombre_usuario", type: "varchar", length: 255, nullable: true })
     nombreUsuario: string;
 
-    @Column({ name: "contrasenia", type: "varchar", length: 255, nullable: true })
-    contrasenia: string;
+    @Column({ name: "email", type: "varchar", length: 255 })
+    email: string;
+
+    @Column({ name: "nombre", type: "varchar", length: 255, nullable: true })
+    nombre: string;
+
+    @Column({ name: "apellido", type: "varchar", length: 255, nullable: true })
+    apellido: string;
 
     @ManyToOne(() => FotoPerfil, { eager: true })
     @JoinColumn({ name: "foto_perfil_id" })
@@ -34,15 +43,7 @@ export class Usuario {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public getContrasenia(): string {
-        return this.contrasenia;
-    }
-
-    public setContrasenia(contrasenia: string): void {
-        this.contrasenia = contrasenia;
-    }
-
-    public setFotoPerfil(fotoPerfil: FotoPerfil): void {
+    public setFotoPerfil(fotoPerfil: FotoPerfil|any): void {
         this.fotoPerfil = fotoPerfil;
     }
 }

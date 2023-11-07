@@ -12,7 +12,8 @@ import { UbicacionApiController } from "../ubicacion/UbicacionApiController";
 export class EventosApiController {
     public static async index(req: Request, res: Response, next: NextFunction) {
         try {
-            const idUsuario = req.query.usuario_id;
+            const usuario = await getAuthUser(req);
+            const idUsuario = usuario === null? req.query.usuario_id : usuario.id;
             const eventoRepository = Database.em.getRepository(Evento);
             const eventos = await eventoRepository
                 .createQueryBuilder("evento")
@@ -68,7 +69,7 @@ export class EventosApiController {
 
     public static async store(req: Request, res: Response, next: NextFunction) {
         try {
-            const { email } = getAuthUser(req);
+            const { email } = await getAuthUser(req);
             const { evento } = req.body;
             const { ubicacion } = evento;
 

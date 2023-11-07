@@ -114,7 +114,7 @@ export class AsistentesApiController {
 
     public static async unirseEvento(req: Request, res: Response) {
         try {
-            const { email } = getAuthUser(req);
+            const { email } = await getAuthUser(req);
             const { idEvento } = req.params;
             const participante = await ParticipantesApiController.findOneByMail(email);
 

@@ -11,7 +11,7 @@ const host = process.env.HOST;
 const servidor = new Server(port, host);
 const servidorSocket = new ServerSocket(servidor);
 
-//Database.connect();
+Database.connect();
 
 servidorSocket.configurarMensajes();
 

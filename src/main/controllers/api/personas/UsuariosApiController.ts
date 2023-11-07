@@ -31,9 +31,8 @@ export class UsuariosApiController {
                 return;
             }
 
-            const { contrasenia, ...usuario } = usuarioDb;
 
-            res.json(usuario).send();
+            res.json(usuarioDb).send();
             return;
         } catch (e) {
             next(e);
@@ -106,7 +105,6 @@ export class UsuariosApiController {
     }
     private static asignarParametros(usuario: Usuario, params: any) {
         usuario.setNombreUsuario(params.nombreUsuario);
-        usuario.setContrasenia(params.contrasenia);
         usuario.setFotoPerfil(params.fotoPerfil);
     }
 }
