@@ -4,60 +4,58 @@ import { Evento } from "./Evento";
 import { PosibleEstadoEvento } from "./PosibleEstadoEvento";
 
 @Entity({
-	name: "estado_evento",
+    name: "estado_evento",
 })
 export class EstadoEvento {
-	@PrimaryGeneratedColumn()
-	id: string;
+    @PrimaryGeneratedColumn()
+    id: string;
 
-	@ManyToOne(() => Evento)
-	@JoinColumn({ name: "evento_id" })
-	evento: Evento;
+    @ManyToOne(() => Evento)
+    @JoinColumn({ name: "evento_id" })
+    evento: Evento;
 
-	@Column({ name: "fecha_hora", type: "date" })
-	fechaHora: Date;
+    @Column({ name: "fecha_hora", type: "date" })
+    fechaHora: Date;
 
-	@ManyToOne(() => PosibleEstadoEvento)
-	@JoinColumn({ name: "posible_estado_evento_id" })
-	posibleEstadoEvento: PosibleEstadoEvento;
+    @ManyToOne(() => PosibleEstadoEvento)
+    @JoinColumn({ name: "posible_estado_evento_id" })
+    posibleEstadoEvento: PosibleEstadoEvento;
 
-	@ManyToOne(() => Asistente)
-	@JoinColumn({ name: "asistente_cambio_estado_id" })
-	asistenteCambioEstado: Asistente;
+    @ManyToOne(() => Asistente)
+    @JoinColumn({ name: "asistente_cambio_estado_id" })
+    asistenteCambioEstado: Asistente;
 
-	constructor() {}
+    constructor() {}
 
-	public getId(): string {
-		return this.id;
-	}
+    public getId(): string {
+        return this.id;
+    }
 
-	public setId(id: string): void {
-		this.id = id;
-	}
+    public setId(id: string): void {
+        this.id = id;
+    }
 
-	public getFechaHora(): Date {
-		return this.fechaHora;
-	}
+    public getFechaHora(): Date {
+        return this.fechaHora;
+    }
 
-	public setFechaHora(fechaHora: Date): void {
-		this.fechaHora = fechaHora;
-	}
+    public setFechaHora(fechaHora: Date): void {
+        this.fechaHora = fechaHora;
+    }
 
-	public getPosibleEstadoEvento(): PosibleEstadoEvento {
-		return this.posibleEstadoEvento;
-	}
+    public getPosibleEstadoEvento(): PosibleEstadoEvento {
+        return this.posibleEstadoEvento;
+    }
 
-	public setPosibleEstadoEvento(
-		posibleEstadoEvento: PosibleEstadoEvento
-	): void {
-		this.posibleEstadoEvento = posibleEstadoEvento;
-	}
+    public setPosibleEstadoEvento(posibleEstadoEvento: PosibleEstadoEvento): void {
+        this.posibleEstadoEvento = posibleEstadoEvento;
+    }
 
-	public getAsistenteCambioEstado(): Asistente {
-		return this.asistenteCambioEstado;
-	}
+    public getAsistenteCambioEstado(): Asistente {
+        return this.asistenteCambioEstado;
+    }
 
-	public setAsistenteCambioEstado(asistenteCambioEstado: Asistente): void {
-		this.asistenteCambioEstado = asistenteCambioEstado;
-	}
+    public setAsistenteCambioEstado(asistenteCambioEstado: Asistente): void {
+        this.asistenteCambioEstado = asistenteCambioEstado;
+    }
 }

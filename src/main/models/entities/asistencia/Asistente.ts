@@ -40,10 +40,10 @@ export class Asistente {
     @JoinColumn({ name: "asistencia_id" })
     asistencia: Asistencia;
 
-    @Column({ type: "boolean", default: false })
+    @Column({ type: "boolean", default: false, name: "esta_aceptado" })
     estaAceptado: boolean;
 
-    @Column({ type: "boolean", default: false })
+    @Column({ type: "boolean", default: false, name: "es_administrador" })
     esAdministrador: boolean;
 
     @OneToMany(

@@ -5,7 +5,6 @@ export class UsuariosRoutes {
     public static router: Router;
 
     static{
-
         this.router= Router()
         this.router.get("", UsuariosApiController.index);
         this.router.get("/:id", UsuariosApiController.show);

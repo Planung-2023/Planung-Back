@@ -1,7 +1,11 @@
 import { NextFunction, Request, Response } from "express";
+import { Brackets } from "typeorm";
 import { Evento } from "../../../models/entities/evento/Evento";
 import { Ubicacion } from "../../../models/entities/otros/Ubicacion";
+import { Participante } from "../../../models/entities/persona/Participante";
 import { Database } from "../../../server/Database";
+import { getAuthUser } from "../../helpers/GetAuthUser";
+import { AsistentesApiController } from "../personas/AsistentesApiController";
 import { RecursosApiController } from "../recursos/RecursosApiController";
 import { UbicacionApiController } from "../ubicacion/UbicacionApiController";
 
@@ -9,21 +13,44 @@ export class EventosApiController {
     public static async index(req: Request, res: Response, next: NextFunction) {
         try {
             const idUsuario = req.query.usuario_id;
-            const eventoRepository = Database.em.getRepository("evento");
+            const eventoRepository = Database.em.getRepository(Evento);
             const eventos = await eventoRepository
                 .createQueryBuilder("evento")
-                .select(["evento", "ubicacion", "usuario.id", "usuario.nombreUsuario"])
-                .addSelect("eventoAnterior")
-                .where("evento.creador.id = :idUsuario", { idUsuario })
+                .select(["evento", "ubicacion", "asistente"])
+                .innerJoin("evento.asistentes", "asistente")
+                .innerJoin("asistente.participante", "participante")
+                .innerJoin("participante.usuario", "usuario")
                 .leftJoin("evento.ubicacion", "ubicacion")
-                .leftJoin("evento.creador", "usuario")
-                .leftJoin("evento.eventoAnterior", "eventoAnterior")
+                .addSelect(["asistente.esAdministrador"])
+                .where("usuario.id = :idUsuario", { idUsuario })
+                .andWhere("evento.fecha >= :fechaActual", { fechaActual: new Date() })
+                .andWhere(
+                    new Brackets((qb) => {
+                        qb.where("evento.fecha > :fechaActual", {
+                            fechaActual: new Date(),
+                        }).orWhere("evento.horaInicio >= :horaActual", {
+                            horaActual: new Date(),
+                        });
+                    }),
+                )
                 .getMany();
-            res.json(eventos);
+
+            const eventosConEsAdministrador = eventos.map((evento) => {
+                const { asistentes, ...eventoSinAsistentes } = evento;
+                return {
+                    esAdministrador: evento.asistentes.some(
+                        (asistente) => asistente.esAdministrador,
+                    ),
+                    ...eventoSinAsistentes,
+                };
+            });
+
+            return res.json(eventosConEsAdministrador);
         } catch (e) {
             next(e);
         }
     }
+
     public static async show(req: Request, res: Response, next: NextFunction) {
         try {
             const evento = await Database.em.findOneBy(Evento, {
@@ -41,8 +68,15 @@ export class EventosApiController {
 
     public static async store(req: Request, res: Response, next: NextFunction) {
         try {
+            const { email } = getAuthUser(req);
             const { evento } = req.body;
             const { ubicacion } = evento;
+
+            const participanteRepository = Database.em.getRepository(Participante);
+            const participante = await participanteRepository.findOne({
+                where: { mail: email },
+                relations: ["usuario"],
+            });
 
             const ubicacionDb = new Ubicacion();
             UbicacionApiController.asignarParametros(ubicacionDb, ubicacion);
@@ -50,9 +84,12 @@ export class EventosApiController {
 
             const eventoDb = new Evento();
             eventoDb.setUbicacion(ubicacionDb);
+            eventoDb.setCreador(participante!.usuario);
             EventosApiController.asignarParametros(eventoDb!!, evento);
-
             await Database.em.save(eventoDb);
+
+            await AsistentesApiController.crearAsistenteAdmin(eventoDb);
+
             RecursosApiController.crearRecursos(evento.recursos, eventoDb.id);
 
             res.status(201).send({

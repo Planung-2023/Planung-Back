@@ -86,6 +86,7 @@ export class ParticipantesApiController {
             next(e);
         }
     }
+
     public static async getParticipante(req: Request, res: Response, next: NextFunction) {
         try {
             const id = await Database.em.findOneBy(Participante, {
@@ -117,9 +118,9 @@ export class ParticipantesApiController {
         return participante;
     }
 
-    private static asignarParametros(participante: Participante, params: any) {
-        participante.setApellido(params.apellido);
+    public static asignarParametros(participante: Participante, params: any) {
         participante.setNombre(params.nombre);
+        participante.setApellido(params.apellido);
         participante.setMail(params.mail);
         participante.setUsuario(params.usuario);
     }
