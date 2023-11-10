@@ -21,9 +21,7 @@ export class AsistentesApiController {
 
             const asistentes = await Database.em.findBy(Asistente, { evento: { id } });
 
-            return res.json({
-                asistentes,
-            });
+            return res.json(asistentes);
         } catch (e) {
             next(e);
         }
