@@ -68,6 +68,7 @@ export class Evento {
 
     @Column({ name: "descripcion", type: "varchar", length: 255, nullable: true })
     descripcion: string;
+    evento_presentaciones: any;
 
     constructor() {}
 

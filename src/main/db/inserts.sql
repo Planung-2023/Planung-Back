@@ -37,8 +37,8 @@ INSERT INTO ubicacion (id, calle, altura, localidad, latitud, longitud) VALUES
 
 INSERT INTO evento (id, nombre, fecha, hora_inicio, hora_fin, es_visible, descripcion, tipo_evento, ubicacion_id, evento_anterior_id, presentador_asistente_id, usuario_id, tipo_invitacion) VALUES 
 (1, 'Juntada dia del amigo', '2022-04-22', '17:55:00', '23:59:59', 0,"descripcion 1", 'Informal', 1, NULL, NULL, 1, "Directa"),
-(2, 'Presentacion inmueble', '2022-04-23','14:05:00', '19:08:09', 1,"descripcion 2", 'Formal', 2, NULL, NULL, 1, "Por aprobacion"),
-(3, 'Juntada de Spidermans', '2023-10-29','15:00:00', '18:00:00', 1,"ROMPER RECORD GUINESS", 'Formal', 4, NULL, NULL, 1, "Directa");
+(2, 'Presentacion inmueble', '2023-12-23','14:05:00', '19:08:09', 1,"descripcion 2", 'Formal', 2, NULL, NULL, 1, "Por aprobacion"),
+(3, 'Juntada de Spidermans', '2024-10-29','15:00:00', '18:00:00', 1,"ROMPER RECORD GUINESS", 'Formal', 4, NULL, NULL, 1, "Directa");
 
 
 INSERT INTO `recurso_categoria` (`icono`, `id`, `nombre`) values ('Bebida', 1, 'Bebida');
@@ -79,3 +79,4 @@ INSERT INTO `ahk_eventos`.`asignacion_recurso` (`id`, `fecha_hora`, `cantidad`, 
 ('1', '2023-10-25 14:00:00', '1', '1', '1', '1');
 
 
+INSERT INTO `ahk_eventos`.`evento_presentacion` (`idevento_presentacion`, `referencia_archivo`, `nombre`, `evento_id`) VALUES ('1', 'presentador/archivos/Planung_Slides.pdf', 'ejemplo', '1');
