@@ -190,18 +190,16 @@ export class AsistentesApiController {
         }
     }
 
-    public static async crearAsistenteAdmin(evento: Evento) {
+    public static async crearAsistenteAdmin(evento: Evento, participante: Participante) {
         const asistente = new Asistente();
         const params = {
             activo: true,
             evento: evento,
-            participante: evento.creador,
+            participante,
             esAdministrador: true,
             estaAceptado: true,
         };
-
         AsistentesApiController.asignarParametros(asistente, params);
-
         await Database.em.save(asistente);
     }
 

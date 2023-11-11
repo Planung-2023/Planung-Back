@@ -89,7 +89,7 @@ export class EventosApiController {
             EventosApiController.asignarParametros(eventoDb!!, evento);
             await Database.em.save(eventoDb);
 
-            await AsistentesApiController.crearAsistenteAdmin(eventoDb);
+            await AsistentesApiController.crearAsistenteAdmin(eventoDb, participante!);
 
             RecursosApiController.crearRecursos(evento.recursos, eventoDb.id);
 
