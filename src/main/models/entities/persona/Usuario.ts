@@ -43,7 +43,7 @@ export class Usuario {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public setFotoPerfil(fotoPerfil: FotoPerfil|any): void {
+    public setFotoPerfil(fotoPerfil: FotoPerfil | any): void {
         this.fotoPerfil = fotoPerfil;
     }
 }

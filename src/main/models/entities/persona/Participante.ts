@@ -15,7 +15,7 @@ export class Participante {
     @Column({ name: "nombre", type: "varchar", length: 255 })
     nombre: string;
 
-    @Column({ name: "apellido", type: "varchar", length: 255 })
+    @Column({ name: "apellido", type: "varchar", length: 255, nullable: true })
     apellido: string;
 
     @Column({ name: "mail", type: "varchar", length: 255 })

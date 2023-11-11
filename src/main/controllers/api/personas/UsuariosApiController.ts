@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { Participante } from "../../../models/entities/persona/Participante";
 import { Usuario } from "../../../models/entities/persona/Usuario";
 import { Database } from "../../../server/Database";
+import { getAuthUser } from "../../helpers/GetAuthUser";
 import { ParticipantesApiController } from "./ParticipantesApiController";
 
 export class UsuariosApiController {
@@ -30,7 +31,6 @@ export class UsuariosApiController {
                     .send();
                 return;
             }
-
 
             res.json(usuarioDb).send();
             return;
@@ -103,6 +103,20 @@ export class UsuariosApiController {
             next(e);
         }
     }
+
+    public static async getUsuarioByToken(req: Request, res: Response, next: NextFunction) {
+        try {
+            const usuario = await getAuthUser(req);
+            return res
+                .json({
+                    usuario,
+                })
+                .send();
+        } catch (error) {
+            next(error);
+        }
+    }
+
     private static asignarParametros(usuario: Usuario, params: any) {
         usuario.setNombreUsuario(params.nombreUsuario);
         usuario.setFotoPerfil(params.fotoPerfil);

@@ -13,7 +13,7 @@ export class EventosApiController {
     public static async index(req: Request, res: Response, next: NextFunction) {
         try {
             const usuario = await getAuthUser(req);
-            const idUsuario = usuario === null? req.query.usuario_id : usuario.id;
+            const idUsuario = usuario.id;
             const eventoRepository = Database.em.getRepository(Evento);
             const eventos = await eventoRepository
                 .createQueryBuilder("evento")
