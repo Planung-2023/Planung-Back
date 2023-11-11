@@ -7,11 +7,11 @@ export class UsuariosRoutes {
 
     static {
         this.router = Router();
-        this.router.get("", UsuariosApiController.index);
-        this.router.get("/:id", UsuariosApiController.show);
-        this.router.put("/:id", UsuariosApiController.update);
-        this.router.post("", UsuariosApiController.store);
-        this.router.delete("/:id", UsuariosApiController.remove);
+        this.router.get("", authValidation, UsuariosApiController.index);
+        this.router.get("/:id", authValidation, UsuariosApiController.show);
+        this.router.put("/:id", authValidation, UsuariosApiController.update);
+        this.router.post("", authValidation, UsuariosApiController.store);
+        this.router.delete("/:id", authValidation, UsuariosApiController.remove);
 
         this.router.get("/token/usuario", authValidation, UsuariosApiController.getUsuarioByToken);
     }
