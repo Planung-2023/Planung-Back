@@ -22,15 +22,15 @@ export class ServerSocket {
 
             // Logica agregada de web socket           
             socket.on ("leer", (condicion) => {
-                console.log(condicion)
-                if (condicion == "anterior"){
-                    rutaSocket.emit("enviar", "prev");
-                    console.log(`Anterior diapositiva`);
-                }
-                else if (condicion == "siguiente"){
-                    rutaSocket.emit("enviar", "next");
-                    console.log(`Siguiente diapositiva`);
+                if (condicion == "empezar"){
+                    rutaSocket.emit("empezar");
+                    console.log(`Iniciar presentacion`);
                     
+                }
+                else {
+                    console.log(condicion)
+                    rutaSocket.emit("enviar", condicion)
+
                 }
             });
         });
