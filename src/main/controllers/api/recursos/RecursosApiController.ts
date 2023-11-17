@@ -211,8 +211,8 @@ export class RecursosApiController {
         recurso.setNombre(params.nombre);
         recurso.setEvento(params.evento);
         recurso.setDescripcion(params.descripcion);
-        recurso.setCantidadNecesaria(params.cantidad);
-        recurso.setCantidadActual(params.cantidad);
+        recurso.setCantidadNecesaria(params.cantidadNecesaria);
+        recurso.setCantidadActual(0);
         recurso.setCategoria(params.categoria);
         recurso.setProveedor(params.proveedor ? params.proveedor : null);
         recurso.setColorTarjeta(params.colorTarjeta);
