@@ -89,7 +89,7 @@ export class UbicacionApiController {
 
     public static asignarParametros(ubicacion: Ubicacion, params: any) {
         ubicacion.setCalle(params.calle);
-        ubicacion.setAltura(params.altura);
+        ubicacion.setAltura(params.altura ? params.altura : null);
         ubicacion.setLocalidad(params.localidad);
         ubicacion.setCiudad(params.ciudad);
         ubicacion.setLatitud(params.latitud);
