@@ -150,20 +150,18 @@ export class AsistentesApiController {
         try {
             const { idEvento } = req.params;
             const usuario = await getAuthUser(req);
-            const asistente = await AsistentesApiController.getAsistenteAdministrador(
-                usuario,
-                idEvento,
-            );
             if (!(await EventosApiController.findOneById(idEvento)))
                 return res.status(404).json({ msg: "Evento not found" });
 
-            if (!asistente) res.status(401).json({ msg: `No autorizado` }).send();
-
             const idAsistente = req.query["asistente_id"] as string;
-
             const asistenteDb = await Database.em.findOneBy(Asistente, { id: idAsistente });
-
             if (!asistenteDb) return res.status(404).json({ msg: "Asistente not found" });
+
+            const asistenteAdmin = await AsistentesApiController.getAsistenteAdministrador(
+                usuario,
+                idEvento,
+            );
+            if (!asistenteAdmin) res.status(401).json({ msg: `No autorizado` }).send();
 
             asistenteDb?.setEstaAceptado(true);
 
@@ -178,14 +176,19 @@ export class AsistentesApiController {
     public static async rechazarAsistente(req: Request, res: Response, next: NextFunction) {
         try {
             const { idEvento } = req.params;
-            const idAsistente = req.query["asistente_id"] as string;
-
-            const asistenteDb = await Database.em.findOneBy(Asistente, { id: idAsistente });
-
-            if (!asistenteDb) return res.status(404).json({ msg: "Asistente not found" });
-
+            const usuario = await getAuthUser(req);
             if (!(await EventosApiController.findOneById(idEvento)))
                 return res.status(404).json({ msg: "Evento not found" });
+
+            const idAsistente = req.query["asistente_id"] as string;
+            const asistenteDb = await Database.em.findOneBy(Asistente, { id: idAsistente });
+            if (!asistenteDb) return res.status(404).json({ msg: "Asistente not found" });
+
+            const asistenteAdmin = await AsistentesApiController.getAsistenteAdministrador(
+                usuario,
+                idEvento,
+            );
+            if (!asistenteAdmin) res.status(401).json({ msg: `No autorizado` }).send();
 
             asistenteDb.setActivo(false);
             asistenteDb.setEstaAceptado(false);
