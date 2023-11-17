@@ -134,7 +134,7 @@ export class RecursosApiController {
                 })
                 .send();
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 

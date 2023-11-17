@@ -14,7 +14,6 @@ export class AsistentesApiController {
         try {
             const { id } = req.params;
             const evento = await EventosApiController.findOneById(id);
-            console.log({ evento });
             if (!evento) {
                 return res.status(404).json({ msg: `Evento con id ${id} no encontrado` });
             }
@@ -110,7 +109,7 @@ export class AsistentesApiController {
         }
     }
 
-    public static async unirseEvento(req: Request, res: Response) {
+    public static async unirseEvento(req: Request, res: Response, next: NextFunction) {
         try {
             const { email } = await getAuthUser(req);
             const { idEvento } = req.params;
@@ -142,11 +141,11 @@ export class AsistentesApiController {
                 .status(201)
                 .send();
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
-    public static async aceptarAsistente(req: Request, res: Response) {
+    public static async aceptarAsistente(req: Request, res: Response, next: NextFunction) {
         try {
             const { idEvento } = req.params;
             const idAsistente = req.query["asistente_id"] as string;
@@ -164,11 +163,11 @@ export class AsistentesApiController {
 
             return res.json({ asistenteDb }).send();
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
-    public static async rechazarAsistente(req: Request, res: Response) {
+    public static async rechazarAsistente(req: Request, res: Response, next: NextFunction) {
         try {
             const { idEvento } = req.params;
             const idAsistente = req.query["asistente_id"] as string;
@@ -186,7 +185,7 @@ export class AsistentesApiController {
 
             return res.json({ eliminado: true, asistenteDb }).send();
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 
