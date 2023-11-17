@@ -34,7 +34,7 @@ export class EventosApiController {
                         });
                     }),
                 )
-                .orderBy({ "evento.fecha": "DESC" })
+                .orderBy({ "evento.fecha": "ASC" })
                 .getMany();
 
             const eventosConEsAdministrador = eventos.map((evento) => {
