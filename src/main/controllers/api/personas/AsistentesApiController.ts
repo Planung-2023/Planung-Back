@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { Asistente } from "../../../models/entities/asistencia/Asistente";
 import { Evento } from "../../../models/entities/evento/Evento";
 import { Participante } from "../../../models/entities/persona/Participante";
+import { Usuario } from "../../../models/entities/persona/Usuario";
 import { Rol } from "../../../models/entities/roles/Rol";
 import { Database } from "../../../server/Database";
 import { getAuthUser } from "../../helpers/GetAuthUser";
@@ -148,14 +149,21 @@ export class AsistentesApiController {
     public static async aceptarAsistente(req: Request, res: Response, next: NextFunction) {
         try {
             const { idEvento } = req.params;
+            const usuario = await getAuthUser(req);
+            const asistente = await AsistentesApiController.getAsistenteAdministrador(
+                usuario,
+                idEvento,
+            );
+            if (!(await EventosApiController.findOneById(idEvento)))
+                return res.status(404).json({ msg: "Evento not found" });
+
+            if (!asistente) res.status(401).json({ msg: `No autorizado` }).send();
+
             const idAsistente = req.query["asistente_id"] as string;
 
             const asistenteDb = await Database.em.findOneBy(Asistente, { id: idAsistente });
 
             if (!asistenteDb) return res.status(404).json({ msg: "Asistente not found" });
-
-            if (!(await EventosApiController.findOneById(idEvento)))
-                return res.status(404).json({ msg: "Evento not found" });
 
             asistenteDb?.setEstaAceptado(true);
 
@@ -246,5 +254,19 @@ export class AsistentesApiController {
                 await Database.em.save(asistenteExistente);
             }
         }
+    }
+
+    private static async getAsistenteAdministrador(usuario: Usuario, eventoId: string) {
+        const participante = await ParticipantesApiController.findOneByMail(usuario.email);
+
+        const asistente = await Database.em.findOne(Asistente, {
+            where: {
+                participante: { id: participante!.id },
+                esAdministrador: true,
+                evento: { id: eventoId },
+            },
+        });
+
+        return asistente;
     }
 }

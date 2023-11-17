@@ -102,4 +102,8 @@ export class Recurso {
     public setProveedor(proveedor: string) {
         this.proveedor = proveedor;
     }
+
+    public setColorTarjeta(colorTarjeta: string) {
+        this.colorTarjeta = colorTarjeta;
+    }
 }

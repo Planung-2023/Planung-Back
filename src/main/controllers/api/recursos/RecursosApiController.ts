@@ -215,6 +215,7 @@ export class RecursosApiController {
         recurso.setCantidadActual(params.cantidad);
         recurso.setCategoria(params.categoria);
         recurso.setProveedor(params.proveedor ? params.proveedor : null);
+        recurso.setColorTarjeta(params.colorTarjeta);
     }
 
     public static async crearRecursos(recursos: any[], idEvento: string) {

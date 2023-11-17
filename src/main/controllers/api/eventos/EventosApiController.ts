@@ -46,7 +46,7 @@ export class EventosApiController {
                 };
             });
 
-            return res.json(eventosConEsAdministrador);
+            return res.json(eventosConEsAdministrador).send();
         } catch (e) {
             next(e);
         }
