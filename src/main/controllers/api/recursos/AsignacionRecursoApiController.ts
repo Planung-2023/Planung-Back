@@ -19,10 +19,10 @@ export class AsignacionRecursoApiController {
             const evento = await asistente.evento;
             const asistenteAdministrador = await AsistentesApiController.getAsistenteAdministrador(
                 usuario,
-                await evento.id,
+                evento.id,
             );
             if (!asistenteAdministrador)
-                return res.status(401).json({ msg: "Unauthorized" }).send();
+                return res.status(401).json({ msg: "No es administrador" }).send();
 
             const asignacionRecurso = new AsignacionRecurso();
             AsignacionRecursoApiController.asignarParametros(asignacionRecurso, req.body);
@@ -34,9 +34,42 @@ export class AsignacionRecursoApiController {
         }
     }
 
+    public static async update(req: Request, res: Response, next: NextFunction) {
+        try {
+            const usuario = await getAuthUser(req);
+            const { idAsignacion } = req.params;
+            const asignacionRecurso = await Database.em.findOneBy(AsignacionRecurso, {
+                id: idAsignacion,
+            });
+
+            if (!asignacionRecurso)
+                return res.status(404).json({ msg: "AsignacionRecurso not found" }).send();
+
+            const evento = await asignacionRecurso.asistente.evento;
+
+            const asistenteAdministrador = await AsistentesApiController.getAsistenteAdministrador(
+                usuario,
+                evento.id,
+            );
+            if (!asistenteAdministrador)
+                return res.status(401).json({ msg: "No es administrador" }).send();
+
+            AsignacionRecursoApiController.asignarParametros(asignacionRecurso, req.body);
+            await Database.em.save(asignacionRecurso);
+
+            return res.json({ asignacionRecurso }).send();
+        } catch (error) {
+            next(error);
+        }
+    }
+
     private static async asignarParametros(asignacionRecurso: AsignacionRecurso, params: any) {
-        asignacionRecurso.setCantidad(params.cantidad);
-        asignacionRecurso.setComentarios(params.comentarios);
+        asignacionRecurso.setCantidad(
+            params.cantidad ? params.cantidad : asignacionRecurso.getCantidad(),
+        );
+        asignacionRecurso.setComentarios(
+            params.comentarios ? params.comentarios : asignacionRecurso.getComentarios(),
+        );
         asignacionRecurso.setRecurso(params.recursoId);
         asignacionRecurso.setAsistente(params.asistenteId);
     }

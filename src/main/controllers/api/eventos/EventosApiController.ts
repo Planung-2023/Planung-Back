@@ -74,8 +74,6 @@ export class EventosApiController {
             const { evento } = req.body;
             const { ubicacion } = evento;
 
-            console.log("evento: ", req.body);
-
             const participanteRepository = Database.em.getRepository(Participante);
             const participante = await participanteRepository.findOne({
                 where: { mail: email },

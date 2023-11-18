@@ -22,5 +22,7 @@ export class AsignacionRecursoRoutes {
             ],
             AsignacionRecursoApiController.store,
         );
+
+        this.router.put("/:idAsignacion", [authValidation], AsignacionRecursoApiController.update);
     }
 }
