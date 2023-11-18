@@ -1,4 +1,5 @@
 import { Express } from "express";
+import { AsignacionRecursoRoutes } from "./routers/AsignacionRecursoRoutes";
 import { CategoriaRecursosRoutes } from "./routers/CategoriaRecursosRoutes";
 import { EventosRoutes } from "./routers/EventosRoutes";
 import { ParticipantesRoutes } from "./routers/ParticipantesRoutes";
@@ -10,7 +11,6 @@ import { UsuariosRoutes } from "./routers/UsuariosRoutes";
 import { WelcomeRoutes } from "./routers/WelcomeRoutes";
 
 export class Router {
-
     constructor(private app: Express) {
         this.inicializar();
     }
@@ -25,5 +25,6 @@ export class Router {
         this.app.use("/ubicaciones", UbicacionRoutes.router);
         this.app.use("/categoriarecursos", CategoriaRecursosRoutes.router);
         this.app.use("/recursos", RecursosRoutes.router);
+        this.app.use("/asignacion-recurso", AsignacionRecursoRoutes.router);
     }
 }

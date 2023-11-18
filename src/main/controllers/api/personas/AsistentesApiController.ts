@@ -259,7 +259,7 @@ export class AsistentesApiController {
         }
     }
 
-    private static async getAsistenteAdministrador(usuario: Usuario, eventoId: string) {
+    public static async getAsistenteAdministrador(usuario: Usuario, eventoId: string) {
         const participante = await ParticipantesApiController.findOneByMail(usuario.email);
 
         const asistente = await Database.em.findOne(Asistente, {

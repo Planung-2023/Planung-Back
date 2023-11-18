@@ -21,7 +21,7 @@ export class Asistente {
     @PrimaryGeneratedColumn()
     id: string;
 
-    @ManyToOne(() => Evento)
+    @ManyToOne(() => Evento, { lazy: true })
     @JoinColumn({ name: "evento_id" })
     evento: Evento;
 
