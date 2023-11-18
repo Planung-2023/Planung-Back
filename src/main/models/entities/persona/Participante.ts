@@ -12,7 +12,7 @@ export class Participante {
     @JoinColumn({ name: "usuario_id" })
     usuario: Usuario;
 
-    @Column({ name: "nombre", type: "varchar", length: 255 })
+    @Column({ name: "nombre", type: "varchar", length: 255, nullable: true })
     nombre: string;
 
     @Column({ name: "apellido", type: "varchar", length: 255, nullable: true })
