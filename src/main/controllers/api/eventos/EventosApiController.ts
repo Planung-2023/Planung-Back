@@ -94,7 +94,7 @@ export class EventosApiController {
 
             RecursosApiController.crearRecursos(evento.recursos, eventoDb.id);
 
-            res.status(201).send({
+            return res.status(201).send({
                 evento: eventoDb,
             });
         } catch (e) {
