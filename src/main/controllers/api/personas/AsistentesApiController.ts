@@ -201,8 +201,6 @@ export class AsistentesApiController {
     }
 
     public static async crearAsistenteAdmin(evento: Evento, participante: Participante) {
-        console.log({ evento, participante });
-
         const asistente = new Asistente();
         const params = {
             activo: true,

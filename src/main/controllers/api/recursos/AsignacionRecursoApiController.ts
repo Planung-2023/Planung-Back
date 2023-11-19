@@ -11,15 +11,19 @@ export class AsignacionRecursoApiController {
         try {
             const { recursoId, asistenteId } = req.body;
             const usuario = await getAuthUser(req);
-            const asistente = await Database.em.findOneBy(Asistente, { id: asistenteId });
             const recurso = await Database.em.findOneBy(Recurso, { id: recursoId });
+            const asistente = await Database.em
+                .getRepository(Asistente)
+                .createQueryBuilder("asistente")
+                .leftJoinAndSelect("asistente.evento", "evento")
+                .where("asistente.id = :asistenteId", { asistenteId })
+                .getOne();
 
             if (!asistente || !recurso) return res.status(404).send();
 
-            const evento = await asistente.evento;
             const asistenteAdministrador = await AsistentesApiController.getAsistenteAdministrador(
                 usuario,
-                evento.id,
+                asistente.evento.id,
             );
             if (!asistenteAdministrador)
                 return res.status(401).json({ msg: "No es administrador" }).send();
@@ -45,11 +49,18 @@ export class AsignacionRecursoApiController {
             if (!asignacionRecurso)
                 return res.status(404).json({ msg: "AsignacionRecurso not found" }).send();
 
-            const evento = await asignacionRecurso.asistente.evento;
+            const asistente = await Database.em
+                .getRepository(Asistente)
+                .createQueryBuilder("asistente")
+                .leftJoinAndSelect("asistente.evento", "evento")
+                .where("asistente.id = :asistenteId", {
+                    asistenteId: asignacionRecurso.asistente.id,
+                })
+                .getOne();
 
             const asistenteAdministrador = await AsistentesApiController.getAsistenteAdministrador(
                 usuario,
-                evento.id,
+                asistente!.evento.id,
             );
             if (!asistenteAdministrador)
                 return res.status(401).json({ msg: "No es administrador" }).send();
