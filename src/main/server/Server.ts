@@ -12,7 +12,7 @@ export class Server {
 
   constructor(
       private puerto: number | string = 8000,
-      private host: string = "localhost"
+      private host: string = "0.0.0.0"
   ) {
     this.app = express();
     this.app.use(express.json());
