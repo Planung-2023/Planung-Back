@@ -59,10 +59,20 @@ export class EventosApiController {
                 id: req.params.id,
             });
 
+            const evento2 = await Database.em
+                .getRepository(Evento)
+                .createQueryBuilder("evento")
+                .leftJoinAndSelect("evento.creador", "creador")
+                .leftJoinAndSelect("evento.ubicacion", "ubicacion")
+                .leftJoinAndSelect("evento.presentador", "presentador")
+                .leftJoinAndSelect("evento.eventoAnterior", "eventoAnterior")
+                .where("evento.id = :idEvento", { idEvento: req.params.id })
+                .getOne();
+
             if (!evento) {
                 return res.status(404).send();
             }
-            res.json({ evento });
+            res.json({ evento2 });
         } catch (e) {
             next(e);
         }
