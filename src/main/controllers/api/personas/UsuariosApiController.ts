@@ -77,8 +77,9 @@ export class UsuariosApiController {
             UsuariosApiController.asignarParametros(usuario!!, req.body);
 
             await Database.em.save(usuario);
+            const usuarioActualizado = await Database.em.findOneBy(Usuario, { id: req.params.id });
 
-            res.json({ usuario }).status(200).send();
+            res.json({ usuario: usuarioActualizado }).status(200).send();
         } catch (e) {
             next(e);
         }
@@ -118,6 +119,8 @@ export class UsuariosApiController {
     }
 
     private static asignarParametros(usuario: Usuario, params: any) {
+        usuario.setNombre(params.nombre);
+        usuario.setApellido(params.apellido);
         usuario.setNombreUsuario(params.nombreUsuario);
         usuario.setFotoPerfil(params.fotoPerfil);
     }

@@ -46,4 +46,12 @@ export class Usuario {
     public setFotoPerfil(fotoPerfil: FotoPerfil | any): void {
         this.fotoPerfil = fotoPerfil;
     }
+
+    public setNombre(nombre: string): void {
+        this.nombre = nombre;
+    }
+
+    public setApellido(apellido: string): void {
+        this.apellido = apellido;
+    }
 }
