@@ -9,6 +9,7 @@ import { RolesRoutes } from "./routers/RolesRoutes";
 import { UbicacionRoutes } from "./routers/UbicacionRoutes";
 import { UsuariosRoutes } from "./routers/UsuariosRoutes";
 import { WelcomeRoutes } from "./routers/WelcomeRoutes";
+import { AsistentesRoutes } from "./routers/AsistentesRoutes";
 
 export class Router {
     constructor(private app: Express) {
@@ -26,5 +27,6 @@ export class Router {
         this.app.use("/categoriarecursos", CategoriaRecursosRoutes.router);
         this.app.use("/recursos", RecursosRoutes.router);
         this.app.use("/asignacion-recurso", AsignacionRecursoRoutes.router);
+        this.app.use("/asistentes", AsistentesRoutes.router);
     }
 }
