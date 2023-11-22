@@ -43,6 +43,7 @@ export class EventosRoutes {
 
         // Asistentes
         this.router.get("/:id/asistentes", AsistentesApiController.index);
+        this.router.get("/:id/asistentes/:idAsistente", AsistentesApiController.getAsistenteById);
 
         this.router.post(
             "/:id/asistentes",
