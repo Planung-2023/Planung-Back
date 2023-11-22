@@ -4,7 +4,7 @@ services:
   db:
     image: mysql:5.7
     ports:
-      - 3306:3306
+      - 4000:3306
     volumes:
       - mysql-data:/var/lib/mysql
     environment:
@@ -27,6 +27,11 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
       - DB_PORT=3306
-
+  ahk_front:
+    container_name: ahk_planung_front
+    image: antoniodmk/gestioneventofront:80.3
+    expose: [80]
+    volumes:
+          - ./index.html:/usr/local/apache2/htdocs/index.html
 volumes:
   mysql-data: {}
