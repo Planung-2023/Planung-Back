@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { UsuariosApiController } from "../../controllers/api/personas/UsuariosApiController";
-import { authValidation } from "../../middlewares/auth.middleware";
+import { authCookie, authValidation } from "../../middlewares/auth.middleware";
 
 export class UsuariosRoutes {
     public static router: Router;
@@ -13,6 +13,7 @@ export class UsuariosRoutes {
         this.router.post("", authValidation, UsuariosApiController.store);
         this.router.delete("/:id", authValidation, UsuariosApiController.remove);
 
-        this.router.get("/token/usuario", authValidation, UsuariosApiController.getUsuarioByToken);
+        this.router.get("/token/usuario", authCookie, UsuariosApiController.getUsuarioByToken);
+        this.router.get("/validar/usuario", authCookie, UsuariosApiController.validarUsuario);
     }
 }

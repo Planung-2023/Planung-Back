@@ -118,6 +118,12 @@ export class UsuariosApiController {
         }
     }
 
+    public static async validarUsuario(req: Request, res: Response, next: NextFunction) {
+        try {
+            res.send();
+        } catch (error) {}
+    }
+
     private static asignarParametros(usuario: Usuario, params: any) {
         usuario.setNombre(params.nombre);
         usuario.setApellido(params.apellido);
