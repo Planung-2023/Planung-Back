@@ -108,11 +108,9 @@ export class UsuariosApiController {
     public static async getUsuarioByToken(req: Request, res: Response, next: NextFunction) {
         try {
             const usuario = await getAuthUser(req);
-            return res
-                .json({
-                    usuario,
-                })
-                .send();
+            res.json({
+                usuario,
+            });
         } catch (error) {
             next(error);
         }
@@ -123,7 +121,6 @@ export class UsuariosApiController {
             res.send();
         } catch (error) {}
     }
-
     private static asignarParametros(usuario: Usuario, params: any) {
         usuario.setNombre(params.nombre);
         usuario.setApellido(params.apellido);

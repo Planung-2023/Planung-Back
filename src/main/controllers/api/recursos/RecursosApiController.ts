@@ -181,7 +181,7 @@ export class RecursosApiController {
     public static async getTodasLasCategorias(req: Request, res: Response, next: NextFunction) {
         try {
             const categorias = await Database.em.find(CategoriaRecurso);
-            res.json(categorias).send();
+            res.json(categorias);
         } catch (e) {
             next(e);
         }

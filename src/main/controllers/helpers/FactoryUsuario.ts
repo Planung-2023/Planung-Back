@@ -17,6 +17,7 @@ export const factoryUsuario = async (userAuth0: any) => {
             apellido: userAuth0.family_name,
             email: userAuth0.email,
             usuario: userAuth0.nickname,
+            token: userAuth0.token,
         });
 
         const participante = await FactoryParticipante.crearParticipante({
@@ -28,5 +29,8 @@ export const factoryUsuario = async (userAuth0: any) => {
 
         await Database.em.save(user);
         await Database.em.save(participante);
+    } else {
+        user.setToken(userAuth0.token);
+        await Database.em.save(user);
     }
 };

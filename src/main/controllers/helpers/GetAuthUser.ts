@@ -7,7 +7,7 @@ export const getAuthUser = async (req: Request) => {
 
     let user = await Database.em.findOne(Usuario, {
         where: {
-            email: userAuth0.email,
+            email: userAuth0.mail,
         },
     });
 

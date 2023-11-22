@@ -14,7 +14,12 @@ export class EventosRoutes {
         this.router.get("/", authValidation, EventosApiController.index);
         this.router.get("/:id", EventosApiController.show);
         this.router.put("/", EventosApiController.update);
-        this.router.post("/", authValidation, EventosApiController.store);
+        this.router.post(
+            "/",
+            [check("evento", "Evento debe ser una propiedad").exists(), validarCampos],
+            authValidation,
+            EventosApiController.store,
+        );
         this.router.delete("/:id", EventosApiController.remove);
 
         // Recursos

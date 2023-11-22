@@ -27,6 +27,9 @@ export class Usuario {
     @JoinColumn({ name: "foto_perfil_id" })
     fotoPerfil: FotoPerfil;
 
+    @Column({ name: "token", type: "longtext", nullable: true })
+    token: string;
+
     public getId(): string {
         return this.id;
     }
@@ -53,5 +56,13 @@ export class Usuario {
 
     public setApellido(apellido: string): void {
         this.apellido = apellido;
+    }
+
+    public getToken(): string {
+        return this.token;
+    }
+
+    public setToken(token: string): void {
+        this.token = token;
     }
 }

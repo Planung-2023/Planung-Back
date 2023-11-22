@@ -20,10 +20,10 @@ export class Recurso {
     @Column({ name: "descripcion", type: "varchar", length: 255, nullable: true })
     descripcion: string;
 
-    @Column({ name: "cantidad_necesaria", type: "int" })
+    @Column({ name: "cantidad_necesaria", type: "int", nullable: true })
     cantidadNecesaria: number;
 
-    @Column({ name: "cantidad_actual", type: "int" })
+    @Column({ name: "cantidad_actual", type: "int", nullable: true })
     cantidadActual: number;
 
     @ManyToOne(() => CategoriaRecurso, (categoriaRecurso) => categoriaRecurso.recursos)

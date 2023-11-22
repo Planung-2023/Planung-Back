@@ -118,6 +118,17 @@ export class ParticipantesApiController {
         return participante;
     }
 
+    public static async getParticipanteUsuario(email: string) {
+        const participanteDb = await Database.em
+            .getRepository(Participante)
+            .createQueryBuilder("participante")
+            .leftJoinAndSelect("participante.usuario", "usuario")
+            .where("usuario.email = :email", { email })
+            .getOne();
+
+        return participanteDb;
+    }
+
     public static asignarParametros(participante: Participante, params: any) {
         participante.setNombre(params.nombre);
         participante.setApellido(params.apellido);
