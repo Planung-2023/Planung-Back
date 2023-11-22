@@ -42,6 +42,24 @@ export class AsignacionRecursoApiController {
             next(error);
         }
     }
+    public static async remove(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { idAsignacion } = req.params;
+            const asignacionRecurso = await Database.em.findOneBy(AsignacionRecurso, {
+                id: idAsignacion,
+            });
+
+            if (!asignacionRecurso) {
+                return res.status(404)
+            }
+
+            await Database.em.remove(asignacionRecurso);
+
+            return res.json({ asignacionRecurso }).send();
+        } catch (error) {
+            next(error);
+        }
+    }
 
     private static async asignarParametros(asignacionRecurso: AsignacionRecurso, params: any) {
         asignacionRecurso.setCantidad(
