@@ -36,7 +36,7 @@ export class Asistente {
     @OneToOne(() => Invitacion)
     invitacion: Invitacion;
 
-    @OneToOne(() => Asistencia)
+    @OneToOne(() => Asistencia, { onDelete: "CASCADE" })
     @JoinColumn({ name: "asistencia_id" })
     asistencia: Asistencia;
 
