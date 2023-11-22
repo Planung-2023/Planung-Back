@@ -8,7 +8,7 @@ export class Asistencia {
     @PrimaryGeneratedColumn()
     id: string;
 
-    @OneToOne(() => Asistente)
+    @OneToOne(() => Asistente, { onDelete: "CASCADE" })
     @JoinColumn({ name: "asistente_id" })
     asistente: Asistente;
 
