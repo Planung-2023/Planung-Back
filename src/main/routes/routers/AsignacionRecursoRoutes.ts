@@ -24,5 +24,6 @@ export class AsignacionRecursoRoutes {
         );
 
         this.router.put("/:idAsignacion", [authValidation], AsignacionRecursoApiController.update);
+        this.router.delete("/:idAsignacion", AsignacionRecursoApiController.remove);
     }
 }
