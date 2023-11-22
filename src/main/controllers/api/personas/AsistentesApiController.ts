@@ -160,7 +160,7 @@ export class AsistentesApiController {
                         msg: `Asistente con id ${asistenteId} no existe`,
                     })
                     .send();
-
+                return;
             }
             await Database.em.remove(asistente);
 
