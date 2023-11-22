@@ -130,8 +130,11 @@ export class AsistentesApiController {
             });
 
             if (!asistente) {
-                res.status(404);
-                return;
+                res.status(404)
+                    .json({
+                        msg: `Asistente con id ${asistenteId} no existe`,
+                    })
+                    .send();
             }
             return res.json(asistente);
 
@@ -152,8 +155,12 @@ export class AsistentesApiController {
             });
 
             if (!asistente) {
-                res.status(404);
-                return;
+                res.status(404)
+                    .json({
+                        msg: `Asistente con id ${asistenteId} no existe`,
+                    })
+                    .send();
+
             }
             await Database.em.remove(asistente);
 
