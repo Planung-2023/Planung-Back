@@ -110,6 +110,60 @@ export class AsistentesApiController {
         }
     }
 
+    public static async getAsistenteById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const eventoId = req.params.id;
+            const asistenteId = req.params.idAsistente;
+
+            const evento = await EventosApiController.findOneById(eventoId);
+
+            if (!evento) {
+                res.status(404);
+                return;
+            }
+
+            const asistente = await Database.em.findOne(Asistente, {
+                where: {
+                    id: asistenteId,
+                    evento: { id: eventoId },
+                },
+            });
+
+            if (!asistente) {
+                res.status(404);
+                return;
+            }
+            return res.json(asistente);
+
+            res.status(200);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public static async removeAsistenteById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const asistenteId = req.params.id;
+
+            const asistente = await Database.em.findOne(Asistente, {
+                where: {
+                    id: asistenteId,
+                },
+            });
+
+            if (!asistente) {
+                res.status(404);
+                return;
+            }
+            await Database.em.remove(asistente);
+
+            res.status(200).json({ asistente }).send();
+        } catch (e) {
+            next(e);
+        }
+    }
+    
+
     public static async unirseEvento(req: Request, res: Response, next: NextFunction) {
         try {
             const { email } = await getAuthUser(req);
