@@ -15,6 +15,7 @@ export class AsignacionRecurso {
 
     @ManyToOne(() => Asistente, {
         eager: true,
+        onDelete: "CASCADE",
     })
     @JoinColumn({ name: "asistente_id" })
     asistente: Asistente;
