@@ -1,12 +1,12 @@
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('1', 'foto-perfil-3.png');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('2', 'gigachad1.jpg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('3', 'gigachad2.jpg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('4', 'chad1.jpeg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('5', 'girl-chad.jpg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('6', 'foto-perfil-6.jpg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('7', 'foto-perfil-5.jpg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('8', 'chad3.jpg');
-INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('9', 'foto-perfil-2.png');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('1', 'foto1.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('2', 'foto2.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('3', 'foto3.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('4', 'foto4.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('5', 'foto5.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('6', 'foto6.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('7', 'foto7.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('8', 'foto8.jpg');
+INSERT INTO `ahk_eventos`.`foto_perfil` (`id`, `nombre`) VALUES ('9', 'foto9.jpg');
 
 INSERT INTO usuario (id, nombre_usuario, email, foto_perfil_id) VALUES
 (1, "Bruno",  "bruno@example.com", 1),
