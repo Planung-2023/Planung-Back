@@ -55,11 +55,7 @@ export class EventosApiController {
 
     public static async show(req: Request, res: Response, next: NextFunction) {
         try {
-            const evento = await Database.em.findOneBy(Evento, {
-                id: req.params.id,
-            });
-
-            const evento2 = await Database.em
+            const evento = await Database.em
                 .getRepository(Evento)
                 .createQueryBuilder("evento")
                 .leftJoinAndSelect("evento.creador", "creador")
@@ -72,7 +68,7 @@ export class EventosApiController {
             if (!evento) {
                 return res.status(404).send();
             }
-            res.json({ evento2 });
+            res.json({ evento });
         } catch (e) {
             next(e);
         }

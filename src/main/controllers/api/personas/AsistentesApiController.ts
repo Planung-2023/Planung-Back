@@ -146,6 +146,7 @@ export class AsistentesApiController {
 
     public static async removeAsistenteById(req: Request, res: Response, next: NextFunction) {
         try {
+            const usuario = await getAuthUser(req);
             const asistenteId = req.params.id;
 
             const asistente = await Database.em.findOne(Asistente, {
@@ -162,9 +163,22 @@ export class AsistentesApiController {
                     .send();
                 return;
             }
+            const asistenteDb = await Database.em
+                .getRepository(Asistente)
+                .createQueryBuilder("asistente")
+                .leftJoinAndSelect("asistente.evento", "evento")
+                .where("asistente.id = :asistenteId", { asistenteId })
+                .getOne();
+
+            const asistenteAdmin = await AsistentesApiController.getAsistenteAdministrador(
+                usuario,
+                asistenteDb!.evento.id,
+            );
+            if (!asistenteAdmin) return res.status(401).json({ msg: `No autorizado` });
             await Database.em.remove(asistente);
 
-            res.status(200).json({ asistente }).send();
+            res.status(200).json({ asistente });
+            return;
         } catch (e) {
             next(e);
         }
@@ -188,8 +202,7 @@ export class AsistentesApiController {
             await Database.em.save(asistente);
 
             return res.json({ asistente }).send();
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
