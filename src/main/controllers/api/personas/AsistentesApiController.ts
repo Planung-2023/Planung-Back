@@ -169,8 +169,30 @@ export class AsistentesApiController {
             next(e);
         }
     }
-    
+    public static async cambiarEstadoAceptacion(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const { nuevoEstado } = req.body;
 
+            const asistente = await Database.em.findOne(Asistente, {
+                where: {
+                    id: id,
+                },
+            });
+
+            if (!asistente) {
+                return res.status(404).json({ msg: `Asistente id ${id} no encontrado` });
+            }
+
+            asistente.setEstaAceptado(nuevoEstado);
+            await Database.em.save(asistente);
+
+            return res.json({ asistente }).send();
+        }
+        catch (e) {
+            next(e);
+        }
+    }
     public static async unirseEvento(req: Request, res: Response, next: NextFunction) {
         try {
             const { email } = await getAuthUser(req);
