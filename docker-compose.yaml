@@ -6,13 +6,13 @@ services:
     ports:
       - 4000:3306
     volumes:
-      - mysql-data:/var/lib/mysql
+      - ./mysql-data:/var/lib/mysql
     environment:
-      - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=ahk_eventos
+      - MYSQL_ROOT_PASSWORD=plannung_2023
 
-  app:
-    build: .
+  ahk_back:
+    image: antoniodmk/gestioneventoback:1.0.3
     depends_on:
       - db
     links:
@@ -24,12 +24,16 @@ services:
     environment:
       - DB_HOST=db
       - DB_USER=root
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
+      - DB_PASSWORD=plannung_2023
+      - DB_NAME=ahk_eventos
       - DB_PORT=3306
+      - PORT=8000
+      - APP_URL=http://localhost:8000
   ahk_front:
     container_name: ahk_planung_front
-    image: antoniodmk/gestioneventofront:80.3
+    image: antoniodmk/gestioneventofront:80.4
+    ports:
+      - 80:80
     expose: [80]
     volumes:
           - ./index.html:/usr/local/apache2/htdocs/index.html
