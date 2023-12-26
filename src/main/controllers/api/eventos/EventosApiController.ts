@@ -27,7 +27,7 @@ export class EventosApiController {
                 .andWhere("evento.fecha >= :fechaActual", { fechaActual: new Date() })
                 .andWhere(
                     new Brackets((qb) => {
-                        qb.where("evento.fecha > :fechaActual", {
+                        qb.where("evento.fecha >= :fechaActual", {
                             fechaActual: new Date(),
                         }).orWhere("evento.horaInicio >= :horaActual", {
                             horaActual: new Date(),
