@@ -8,6 +8,7 @@ import { Database } from "../../../server/Database";
 import { getAuthUser } from "../../helpers/GetAuthUser";
 import { EventosApiController } from "../eventos/EventosApiController";
 import { ParticipantesApiController } from "./ParticipantesApiController";
+
 export class AsistentesApiController {
     constructor() {}
 

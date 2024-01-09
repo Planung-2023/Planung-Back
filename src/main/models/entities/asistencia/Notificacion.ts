@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Usuario } from "../persona/Usuario";
 
 @Entity({
 	name: "notificacion",
@@ -12,6 +13,12 @@ export class Notificacion {
 
 	@Column({ type: "text" })
 	mensaje: string;
+
+	@Column({name: "vista", type: "bool"})
+	vista: boolean;
+
+	@ManyToOne(() => Usuario, { eager: true })
+    usuario: Usuario;
 
 	constructor() {}
 
